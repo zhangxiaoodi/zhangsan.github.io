@@ -1,0 +1,1549 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>烧伤ePRO智能症状管理平台</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
+    </script>
+    <style>
+        /* ===== 全局重置 & 字体 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
+            background: #f2f4f8;
+            padding: 28px 20px;
+            color: #1a2635;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1320px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.06), 0 8px 28px -8px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            transition: box-shadow 0.4s;
+        }
+
+        /* ===== 品牌栏（顶栏） ===== */
+        .brand-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px 40px 18px 40px;
+            background: #0f1a2b;
+            border-bottom: 2px solid #c4450c;
+            flex-wrap: wrap;
+            gap: 10px 20px;
+        }
+
+        .brand-left {
+            flex: 0 0 60px;
+        }
+
+        .brand-center {
+            flex: 1;
+            text-align: center;
+        }
+
+        .brand-center .title-main {
+            font-size: 24px;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
+        }
+
+        .brand-right {
+            flex-shrink: 0;
+        }
+
+        .brand-right .signature {
+            font-size: 14px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.85);
+            letter-spacing: 1.2px;
+            padding: 6px 18px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+            backdrop-filter: blur(2px);
+        }
+
+        .brand-right .signature .accent {
+            color: #d4a843;
+            font-weight: 600;
+        }
+
+        .brand-right .signature .sep {
+            color: rgba(255, 255, 255, 0.20);
+            margin: 0 6px;
+        }
+
+        /* ===== 内容区 ===== */
+        .content-wrap {
+            padding: 32px 40px 36px 40px;
+        }
+
+        /* ===== 隐藏原有h2 ===== */
+        .legacy-title {
+            display: none;
+        }
+
+        /* ===== 患者信息区 ===== */
+        .input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 28px;
+            margin-bottom: 28px;
+            background: #f8faff;
+            padding: 18px 28px;
+            border-radius: 18px;
+            border: 1px solid #e9edf4;
+            align-items: center;
+        }
+
+        .input-group .field {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .input-group .field label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+
+        .input-group .field label .required {
+            color: #c0392b;
+            margin-left: 2px;
+        }
+
+        .input-group .field input,
+        .input-group .field select {
+            padding: 9px 14px;
+            border: 1px solid #d5dce6;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #ffffff;
+            transition: border 0.25s, box-shadow 0.25s;
+            min-width: 100px;
+            font-family: inherit;
+            color: #1a2635;
+        }
+
+        .input-group .field input:focus,
+        .input-group .field select:focus {
+            border-color: #c4450c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.10);
+        }
+
+        .input-group .field input[type="number"] {
+            width: 90px;
+        }
+
+        .input-group .field select {
+            min-width: 90px;
+        }
+
+        .input-group .field .total-area-input {
+            width: 80px;
+        }
+
+        .input-group .required-hint {
+            font-size: 13px;
+            color: #9aa9b7;
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .input-group .required-hint .star {
+            color: #c0392b;
+        }
+
+        /* ===== 视图切换 ===== */
+        .switch-view {
+            margin-bottom: 22px;
+            display: flex;
+            gap: 6px;
+        }
+
+        .switch-view button {
+            padding: 9px 22px;
+            border: none;
+            background: #f0f3f8;
+            color: #4a5a6a;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: all 0.25s;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .switch-view button:hover {
+            background: #e4e9ef;
+            transform: translateY(-1px);
+        }
+
+        .switch-view button.active {
+            background: #c4450c;
+            color: #ffffff;
+            box-shadow: 0 4px 14px rgba(196, 69, 12, 0.20);
+        }
+
+        /* ===== 主体区域 ===== */
+        .body-section {
+            display: flex;
+            gap: 36px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        /* 人体图 */
+        .body-map {
+            position: relative;
+            width: 260px;
+            height: 520px;
+            background: #f8fafc;
+            border-radius: 20px;
+            border: 1px solid #e9edf4;
+            overflow: hidden;
+            flex-shrink: 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.3s;
+        }
+
+        .body-map:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+        }
+
+        .body-map svg {
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            display: block;
+        }
+
+        .body-map .part {
+            transition: fill 0.3s, stroke 0.3s, transform 0.15s, filter 0.3s;
+            stroke: #6a7a8a;
+            stroke-width: 1.2;
+            fill: #e2e8ef;
+            cursor: pointer;
+        }
+
+        .body-map .part:hover {
+            fill: #cdd6e0;
+            stroke: #c4450c;
+            stroke-width: 2;
+            filter: drop-shadow(0 2px 6px rgba(196, 69, 12, 0.15));
+        }
+
+        .body-map .part.selected {
+            fill: #d45a2a !important;
+            stroke: #a3340a;
+            stroke-width: 2.5;
+            filter: drop-shadow(0 3px 10px rgba(196, 69, 12, 0.25));
+        }
+
+        /* 右侧面板 */
+        .right-panel {
+            flex: 1;
+            min-width: 280px;
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        /* 已选部位 */
+        .selected-info {
+            background: #f8faff;
+            padding: 20px 24px 22px;
+            border-radius: 18px;
+            border: 1px solid #e9edf4;
+            transition: box-shadow 0.3s;
+        }
+
+        .selected-info:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .selected-info h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #1a2635;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .selected-info h4 span {
+            font-weight: 400;
+            font-size: 13px;
+            color: #8a9aa8;
+        }
+
+        .selected-info ul {
+            list-style: none;
+            padding: 0;
+            max-height: 240px;
+            overflow-y: auto;
+            margin-bottom: 4px;
+        }
+
+        .selected-info ul li {
+            padding: 7px 0;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+            gap: 12px;
+        }
+
+        .selected-info ul li:last-child {
+            border-bottom: none;
+        }
+
+        .selected-info ul li .part-name {
+            font-weight: 500;
+            flex: 1;
+            color: #1a2635;
+        }
+
+        .selected-info ul li .remove-btn {
+            color: #b03a2e;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 1;
+            padding: 0 4px;
+            background: none;
+            border: none;
+            transition: 0.2s;
+            opacity: 0.5;
+            border-radius: 4px;
+        }
+
+        .selected-info ul li .remove-btn:hover {
+            opacity: 1;
+            transform: scale(1.25);
+            background: rgba(176, 58, 46, 0.06);
+        }
+
+        .total-area {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1a2635;
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 2px solid #e9edf4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-area .total-display {
+            color: #c4450c;
+            font-size: 22px;
+        }
+
+        .selected-info .hint {
+            font-size: 12px;
+            color: #9aa9b7;
+            margin-top: 6px;
+            letter-spacing: 0.2px;
+        }
+
+        /* 症状评分 */
+        .symptom-section {
+            background: #f8faff;
+            border: 1px solid #e9edf4;
+            border-radius: 18px;
+            padding: 20px 24px 22px;
+            transition: box-shadow 0.3s;
+        }
+
+        .symptom-section:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .symptom-section h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 18px;
+            color: #1a2635;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .symptom-section h4 span {
+            font-weight: 400;
+            font-size: 13px;
+            color: #8a9aa8;
+        }
+
+        .symptom-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            gap: 12px 20px;
+        }
+
+        .symptom-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            background: #ffffff;
+            padding: 12px 16px 14px;
+            border-radius: 12px;
+            border: 1px solid #eef2f6;
+            transition: box-shadow 0.25s, border-color 0.25s;
+        }
+
+        .symptom-item:hover {
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+            border-color: #d5dce6;
+        }
+
+        .symptom-item .symptom-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            color: #2c3e50;
+            font-size: 14px;
+        }
+
+        .symptom-item .symptom-header .value {
+            color: #c4450c;
+            font-size: 18px;
+            font-weight: 600;
+            min-width: 28px;
+            text-align: center;
+        }
+
+        .symptom-item input[type="range"] {
+            width: 100%;
+            height: 5px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #dce2e9;
+            border-radius: 4px;
+            outline: none;
+            margin: 6px 0 2px;
+            transition: background 0.2s;
+        }
+
+        .symptom-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #c4450c;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+            transition: 0.15s;
+        }
+
+        .symptom-item input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.08);
+            box-shadow: 0 2px 10px rgba(196, 69, 12, 0.25);
+        }
+
+        .symptom-item input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #c4450c;
+            cursor: pointer;
+            border: 2px solid #ffffff;
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+        }
+
+        .symptom-item .range-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: #b0bec5;
+            padding: 0 2px;
+        }
+
+        /* ===== 操作按钮 ===== */
+        .action-buttons {
+            margin: 26px 0 18px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .action-buttons button {
+            padding: 13px 34px;
+            border: none;
+            border-radius: 40px;
+            font-size: 15px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: inherit;
+            letter-spacing: 0.4px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-ai {
+            background: linear-gradient(135deg, #c4450c, #d45a2a);
+            color: #ffffff;
+            box-shadow: 0 4px 18px rgba(196, 69, 12, 0.20);
+        }
+
+        .btn-ai:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(196, 69, 12, 0.30);
+        }
+
+        .btn-ai:active {
+            transform: translateY(0px);
+        }
+
+        .btn-report {
+            background: #1a2a3e;
+            color: #ffffff;
+            box-shadow: 0 4px 18px rgba(26, 42, 62, 0.15);
+        }
+
+        .btn-report:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(26, 42, 62, 0.20);
+            background: #24374e;
+        }
+
+        .btn-report:active {
+            transform: translateY(0px);
+        }
+
+        /* ===== 图表 ===== */
+        .chart-box {
+            width: 100%;
+            max-width: 480px;
+            margin: 18px auto 28px;
+            background: #fafbfc;
+            padding: 18px 18px 10px;
+            border-radius: 20px;
+            border: 1px solid #e9edf4;
+            transition: box-shadow 0.3s;
+        }
+
+        .chart-box:hover {
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
+        }
+
+        /* ===== 聊天面板（可拖动调整高度） ===== */
+        .chat-panel {
+            border: 1px solid #e9edf4;
+            border-radius: 20px;
+            margin-top: 22px;
+            background: #ffffff;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
+            overflow: auto;      /* 使resize生效 */
+            resize: vertical;
+            min-height: 340px;
+            height: 480px;       /* 初始高度，用户可拖动调整 */
+            display: flex;
+            flex-direction: column;
+            transition: box-shadow 0.3s;
+        }
+
+        .chat-panel:hover {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        /* 拖动指示器（可选） */
+        .chat-panel::after {
+            content: '';
+            display: block;
+            height: 8px;
+            background: transparent;
+            cursor: ns-resize;
+            flex-shrink: 0;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #0f1a2b, #1a2a3e);
+            color: #ffffff;
+            padding: 14px 24px;
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .chat-header .avatar {
+            width: 38px;
+            height: 38px;
+            background: rgba(255, 255, 255, 0.10);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+            background: #f8fafc;
+            border-bottom: 1px solid #eef2f6;
+        }
+
+        .chat-messages .msg {
+            margin-bottom: 14px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .msg.user {
+            align-items: flex-end;
+        }
+
+        .msg.assistant {
+            align-items: flex-start;
+        }
+
+        .msg .bubble {
+            max-width: 78%;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 14px;
+            line-height: 1.6;
+            word-wrap: break-word;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+        }
+
+        .msg.user .bubble {
+            background: #c4450c;
+            color: #ffffff;
+            border-bottom-right-radius: 6px;
+        }
+
+        .msg.assistant .bubble {
+            background: #eef2f6;
+            color: #1a2635;
+            border-bottom-left-radius: 6px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 14px 20px;
+            background: #ffffff;
+            gap: 12px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            padding: 11px 18px;
+            border: 1px solid #dce2e9;
+            border-radius: 30px;
+            font-size: 14px;
+            font-family: inherit;
+            background: #f8fafc;
+            transition: border 0.25s, box-shadow 0.25s;
+            color: #1a2635;
+        }
+
+        .chat-input-area input:focus {
+            border-color: #c4450c;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.08);
+        }
+
+        .chat-input-area button {
+            background: #c4450c;
+            color: #ffffff;
+            border: none;
+            padding: 11px 28px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.25s;
+            font-family: inherit;
+            letter-spacing: 0.3px;
+        }
+
+        .chat-input-area button:hover {
+            background: #a3340a;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 14px rgba(196, 69, 12, 0.15);
+        }
+
+        .chat-input-area button:active {
+            transform: translateY(0px);
+        }
+
+        /* ===== 报告区 ===== */
+        #reportArea {
+            display: none;
+            margin-top: 30px;
+            padding-top: 30px;
+            border-top: 2px solid #eef2f6;
+        }
+
+        #reportArea h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #1a2635;
+            letter-spacing: 0.3px;
+        }
+
+        #reportArea p {
+            margin-bottom: 6px;
+            font-size: 15px;
+            color: #2c3e50;
+        }
+
+        #reportArea h4 {
+            margin-top: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 17px;
+            color: #1a2635;
+        }
+
+        #reportArea ul {
+            padding-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        #reportArea ul li {
+            margin-bottom: 4px;
+            font-size: 14px;
+            color: #2c3e50;
+        }
+
+        /* ===== Footer ===== */
+        .footer {
+            margin-top: 34px;
+            padding-top: 22px;
+            border-top: 1px solid #e9edf4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px 20px;
+        }
+
+        .footer .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .footer .footer-left .footer-text {
+            font-size: 13px;
+            color: #5a6a7a;
+            letter-spacing: 0.3px;
+        }
+
+        .footer .footer-left .footer-text .highlight {
+            color: #1a2a3e;
+            font-weight: 600;
+        }
+
+        .footer .footer-right {
+            font-size: 12px;
+            color: #9aa9b7;
+            letter-spacing: 0.3px;
+            text-align: right;
+        }
+
+        .footer .footer-right .brand-name {
+            color: #1a2a3e;
+            font-weight: 500;
+        }
+
+        /* ===== 打印 ===== */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .container {
+                box-shadow: none;
+                margin: 0;
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .content-wrap {
+                padding: 20px 30px;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+
+            #reportArea {
+                display: block !important;
+            }
+
+            .brand-bar {
+                background: #1a2a3e !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .chart-box {
+                max-width: 400px;
+                margin: 15px auto;
+                border: none;
+                padding: 0;
+                background: transparent;
+            }
+
+            .footer {
+                border-top: 1px solid #ccc;
+            }
+
+            .brand-right .signature {
+                background: rgba(255, 255, 255, 0.05) !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .chat-panel {
+                resize: none !important;
+                height: auto !important;
+                min-height: 0 !important;
+                overflow: visible !important;
+            }
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 1024px) {
+            .brand-center .title-main {
+                font-size: 20px;
+            }
+            .brand-right .signature {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .content-wrap {
+                padding: 18px 16px 24px;
+            }
+
+            .brand-bar {
+                padding: 14px 18px 12px;
+                flex-direction: column;
+                align-items: center;
+                gap: 6px;
+            }
+
+            .brand-left {
+                flex: 0 0 auto;
+            }
+
+            .brand-center {
+                text-align: center;
+                width: 100%;
+            }
+
+            .brand-center .title-main {
+                font-size: 18px;
+            }
+
+            .brand-right {
+                width: 100%;
+                text-align: center;
+            }
+
+            .brand-right .signature {
+                font-size: 12px;
+                padding: 4px 14px;
+                white-space: normal;
+                display: inline-block;
+            }
+
+            .input-group {
+                padding: 14px 16px;
+                gap: 10px 16px;
+            }
+
+            .body-map {
+                width: 100%;
+                max-width: 240px;
+                height: auto;
+                aspect-ratio: 260/520;
+                margin: 0 auto;
+            }
+
+            .right-panel {
+                min-width: 0;
+            }
+
+            .symptom-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .action-buttons button {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .footer {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .footer .footer-left {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .chat-panel {
+                height: 400px;
+                min-height: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .symptom-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .brand-center .title-main {
+                font-size: 16px;
+            }
+
+            .brand-right .signature {
+                font-size: 11px;
+                padding: 3px 10px;
+            }
+
+            .input-group .field input,
+            .input-group .field select {
+                min-width: 70px;
+                font-size: 13px;
+                padding: 7px 10px;
+            }
+
+            .selected-info {
+                padding: 16px 16px 18px;
+            }
+
+            .symptom-section {
+                padding: 16px 16px 18px;
+            }
+
+            .chat-panel {
+                height: 350px;
+                min-height: 240px;
+            }
+        }
+
+        /* ===== 工具类 ===== */
+        .field-error {
+            border-color: #c0392b !important;
+            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12) !important;
+        }
+
+        .text-muted {
+            color: #8a9aa8;
+            font-size: 13px;
+        }
+
+        .fw-600 {
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ===== 品牌栏 ===== -->
+        <header class="brand-bar">
+            <!-- 左侧留白（可放置极简装饰，但已移除logo） -->
+            <div class="brand-left"></div>
+
+            <!-- 中间标题（无火图标，无“by 小愈 AI”） -->
+            <div class="brand-center">
+                <span class="title-main">烧伤ePRO智能症状管理平台</span>
+            </div>
+
+            <!-- 右侧署名（保留文字，移除logo图标） -->
+            <div class="brand-right">
+                <span class="signature">
+                    <span class="accent">陆军军医大学</span>
+                    <span class="sep">|</span>
+                    护理系
+                </span>
+            </div>
+        </header>
+
+        <!-- ===== 内容区 ===== -->
+        <div class="content-wrap">
+
+            <!-- 隐藏原有h2（保留兼容） -->
+            <h2 class="legacy-title">烧伤ePRO智能症状管理平台</h2>
+
+            <!-- ===== 患者信息区 ===== -->
+            <div class="input-group no-print">
+                <div class="field">
+                    <label>患者ID <span class="required">*</span></label>
+                    <input type="text" id="patientId" placeholder="如 P001" />
+                </div>
+                <div class="field">
+                    <label>年龄 <span class="required">*</span></label>
+                    <input type="number" id="patientAge" placeholder="岁" min="0" max="150" step="1" />
+                </div>
+                <div class="field">
+                    <label>性别 <span class="required">*</span></label>
+                    <select id="patientGender">
+                        <option value="">请选择</option>
+                        <option value="男">男</option>
+                        <option value="女">女</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>烧伤总面积 <span class="required">*</span></label>
+                    <input type="number" id="totalBurnArea" class="total-area-input" placeholder="%" min="0" max="100" step="0.5" value="0" />
+                    <span>% TBSA</span>
+                </div>
+                <div class="required-hint">
+                    <span class="star">*</span> 必填
+                </div>
+            </div>
+
+            <!-- ===== 视图切换 ===== -->
+            <div class="switch-view no-print">
+                <button id="btnFront" class="active" onclick="switchView('front')">🧍 正面</button>
+                <button id="btnBack" onclick="switchView('back')">🔄 背面</button>
+            </div>
+
+            <!-- ===== 主体 ===== -->
+            <div class="body-section">
+                <div class="body-map" id="bodyMapContainer">
+                    <svg id="frontBody" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+                        <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="70" y="80" width="60" height="110" rx="8" class="part" data-part="前躯干" data-percent="13" onclick="selectPart(this)" />
+                        <rect x="20" y="90" width="28" height="100" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="152" y="90" width="28" height="100" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="45" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="120" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
+                    </svg>
+                    <svg id="backBody" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" style="display: none;">
+                        <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="70" y="80" width="60" height="110" rx="8" class="part" data-part="后躯干" data-percent="13" onclick="selectPart(this)" />
+                        <rect x="20" y="90" width="28" height="100" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="152" y="90" width="28" height="100" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="45" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="120" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
+                    </svg>
+                </div>
+
+                <div class="right-panel">
+                    <div class="selected-info">
+                        <h4>✅ 已选部位 <span>（点击部位选中，✕ 移除）</span></h4>
+                        <ul id="selectedPartsList">
+                            <li style="color: #9aa9b7; justify-content:center;">请在人体图上点击部位</li>
+                        </ul>
+                        <div class="total-area">
+                            <span>🔥 烧伤总面积</span>
+                            <span class="total-display" id="totalPercentDisplay">0.0 %</span>
+                        </div>
+                        <div class="hint">💡 在顶部输入框中填写实际总面积，部位仅用于标记</div>
+                    </div>
+
+                    <div class="symptom-section no-print">
+                        <h4>📋 症状评分 <span>（0=无，4=最严重，拖动滑块）</span></h4>
+                        <div class="symptom-grid" id="symptomGrid"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ===== 操作按钮 ===== -->
+            <div class="action-buttons no-print">
+                <button class="btn-ai" onclick="sendBurnInfoToChat()">🤖 将病情发送给 小愈</button>
+                <button class="btn-report" onclick="printReport()">🖨️ 生成并打印报告</button>
+            </div>
+
+            <!-- ===== 图表 ===== -->
+            <div class="chart-box no-print">
+                <canvas id="burnChart" width="400" height="400"></canvas>
+            </div>
+
+            <!-- ===== 聊天面板（可上下拖动调整高度） ===== -->
+            <div class="chat-panel no-print" id="chatPanel">
+                <div class="chat-header">
+                    <span class="avatar">🤖</span>
+                    <span>💬 小愈 AI 助手</span>
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg assistant"><div class="bubble">你好！我是小愈 😊 请先填写患者信息、烧伤总面积，点击人体图标记烧伤部位，再拖动滑块评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。</div></div>
+                </div>
+                <div class="chat-input-area">
+                    <input type="text" id="chatInput" placeholder="输入补充问题..." onkeypress="if(event.key==='Enter') sendMessage()" />
+                    <button onclick="sendMessage()">发送</button>
+                </div>
+            </div>
+
+            <!-- ===== 报告区 ===== -->
+            <div id="reportArea">
+                <h3>📋 烧伤评估报告</h3>
+                <p><strong>患者ID：</strong><span id="r_id"></span></p>
+                <p><strong>年龄：</strong><span id="r_age"></span> 岁 &nbsp;|&nbsp; <strong>性别：</strong><span id="r_gender"></span></p>
+                <p><strong>烧伤总面积：</strong><span id="r_totalArea"></span> % TBSA</p>
+                <p><strong>评估时间：</strong><span id="r_time"></span></p>
+                <h4>烧伤部位</h4>
+                <ul id="r_parts"></ul>
+                <h4>症状评分（0-4分）</h4>
+                <ul id="r_symptoms"></ul>
+                <p style="color: #8a9aa8; font-size: 14px;">（本报告由系统自动生成，AI 咨询建议请查看聊天记录）</p>
+                <div class="chart-box"><canvas id="reportChart" width="400" height="400"></canvas></div>
+            </div>
+
+            <!-- ===== Footer ===== -->
+            <footer class="footer no-print">
+                <div class="footer-left">
+                    <span class="footer-text">
+                        © 2026 <span class="highlight">陆军军医大学护理系</span> · 烧伤ePRO智能症状管理平台
+                    </span>
+                </div>
+                <div class="footer-right">
+                    <span class="brand-name">陆军军医大学护理系</span> · 临床科研支持系统
+                </div>
+            </footer>
+
+        </div>
+        <!-- /content-wrap -->
+    </div>
+    <!-- /container -->
+
+    <script>
+        // ========== 配置区域 ==========
+        const API_URL = 'https://cloud.fastgpt.cn/api/v1/chat/completions';
+        const API_KEY = 'fastgpt-uqFyIGGcF5SrfET9BSYLyNooreUIUEnRnWVQCEY0GCXBVBECXfV6ob';
+        // ==============================
+
+        let currentView = 'front';
+        let selectedParts = {};
+        let myChart = null;
+        let reportChart = null;
+
+        // ---------- 症状定义 ----------
+        const symptomDefs = [
+            { id: 'sym_pain', label: '疼痛' },
+            { id: 'sym_itch', label: '瘙痒' },
+            { id: 'sym_sleep', label: '睡眠障碍' },
+            { id: 'sym_constipation', label: '便秘' },
+            { id: 'sym_anxiety', label: '忧虑' },
+            { id: 'sym_fear', label: '恐惧' },
+            { id: 'sym_tension', label: '紧张' },
+            { id: 'sym_appetite', label: '食欲不振' }
+        ];
+
+        function initSymptoms() {
+            const grid = document.getElementById('symptomGrid');
+            grid.innerHTML = '';
+            symptomDefs.forEach(def => {
+                const div = document.createElement('div');
+                div.className = 'symptom-item';
+                div.innerHTML = `
+                    <div class="symptom-header">
+                        <span>${def.label}</span>
+                        <span class="value" id="${def.id}_val">0</span>
+                    </div>
+                    <input type="range" id="${def.id}" min="0" max="4" step="1" value="0" 
+                           oninput="updateSymptomValue('${def.id}')">
+                    <div class="range-labels">
+                        <span>0</span>
+                        <span>4</span>
+                    </div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function updateSymptomValue(id) {
+            const slider = document.getElementById(id);
+            const val = parseInt(slider.value);
+            document.getElementById(id + '_val').textContent = val;
+        }
+
+        // ---------- 视图切换 ----------
+        function switchView(view) {
+            currentView = view;
+            document.getElementById('frontBody').style.display = view === 'front' ? 'block' : 'none';
+            document.getElementById('backBody').style.display = view === 'back' ? 'block' : 'none';
+            document.getElementById('btnFront').classList.toggle('active', view === 'front');
+            document.getElementById('btnBack').classList.toggle('active', view === 'back');
+        }
+
+        // ---------- 选择部位 ----------
+        function selectPart(element) {
+            const partName = element.getAttribute('data-part');
+            const defaultPercent = parseFloat(element.getAttribute('data-percent'));
+
+            if (selectedParts.hasOwnProperty(partName)) {
+                delete selectedParts[partName];
+                element.classList.remove('selected');
+            } else {
+                selectedParts[partName] = defaultPercent;
+                element.classList.add('selected');
+            }
+            updateSelectedList();
+            updateTotalDisplay();
+            updateChart();
+        }
+
+        function updateSelectedList() {
+            const listEl = document.getElementById('selectedPartsList');
+            const keys = Object.keys(selectedParts);
+            if (keys.length === 0) {
+                listEl.innerHTML = '<li style="color: #9aa9b7; justify-content:center;">请在人体图上点击部位</li>';
+                return;
+            }
+            let html = '';
+            for (let part of keys) {
+                html += `
+                    <li>
+                        <span class="part-name">${part}</span>
+                        <button class="remove-btn" onclick="removePart('${part}')" title="移除">✕</button>
+                    </li>
+                `;
+            }
+            listEl.innerHTML = html;
+        }
+
+        function removePart(part) {
+            if (selectedParts[part]) {
+                delete selectedParts[part];
+                const svgParts = document.querySelectorAll(`.part[data-part="${part}"]`);
+                svgParts.forEach(el => el.classList.remove('selected'));
+                updateSelectedList();
+                updateTotalDisplay();
+                updateChart();
+            }
+        }
+
+        // ---------- 总面积显示 ----------
+        function updateTotalDisplay() {
+            const totalInput = document.getElementById('totalBurnArea');
+            let val = parseFloat(totalInput.value);
+            if (isNaN(val) || val < 0) val = 0;
+            if (val > 100) val = 100;
+            document.getElementById('totalPercentDisplay').textContent = val.toFixed(1) + ' %';
+            if (totalInput.value !== String(val)) {
+                totalInput.value = val;
+            }
+        }
+
+        document.getElementById('totalBurnArea').addEventListener('input', function() {
+            updateTotalDisplay();
+            updateChart();
+        });
+
+        // ---------- 图表 ----------
+        function updateChart() {
+            const ctx = document.getElementById('burnChart').getContext('2d');
+            const partNames = Object.keys(selectedParts);
+            const totalArea = parseFloat(document.getElementById('totalBurnArea').value) || 0;
+
+            if (myChart) myChart.destroy();
+
+            if (partNames.length === 0 || totalArea === 0) {
+                myChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e4e9ef'] }] },
+                    options: { plugins: { legend: { display: false } } }
+                });
+                return;
+            }
+
+            const weights = partNames.map(p => selectedParts[p]);
+            const sumWeights = weights.reduce((a, b) => a + b, 0);
+            const data = weights.map(w => (w / sumWeights) * totalArea);
+
+            const colors = ['#c4450c', '#d45a2a', '#e67e22', '#f39c12', '#c0392b', '#e74c3c', '#8e44ad', '#2980b9', '#1abc9c',
+                '#27ae60'
+            ];
+            myChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: partNames,
+                    datasets: [{
+                        data: data,
+                        backgroundColor: colors.slice(0, partNames.length),
+                        borderColor: '#ffffff',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                padding: 16,
+                                font: { size: 13, family: '-apple-system, sans-serif' },
+                                color: '#2c3e50'
+                            }
+                        },
+                        title: {
+                            display: true,
+                            text: '烧伤部位分布（基于总面积）',
+                            font: { size: 16, weight: '600', family: '-apple-system, sans-serif' },
+                            color: '#1a2635',
+                            padding: { bottom: 12 }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%`
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // ---------- 症状获取 ----------
+        function getSymptomValues() {
+            return symptomDefs.map(def => ({
+                name: def.label,
+                value: parseInt(document.getElementById(def.id).value) || 0
+            }));
+        }
+
+        function getSymptomReport() {
+            return getSymptomValues().map(s => `${s.name} ${s.value}分`).join('，');
+        }
+
+        // ---------- 聊天 ----------
+        function addMessage(role, text) {
+            if (text === undefined || text === null) text = '（空消息）';
+            text = String(text);
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = `msg ${role}`;
+            div.innerHTML = `<div class="bubble">${text.replace(/\n/g, '<br>')}</div>`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        async function callFastGPT(userMessage) {
+            addMessage('user', userMessage);
+            const thinkingDiv = document.createElement('div');
+            thinkingDiv.className = 'msg assistant';
+            thinkingDiv.innerHTML = '<div class="bubble" style="font-style:italic;">⏳ 小愈正在思考...</div>';
+            const container = document.getElementById('chatMessages');
+            container.appendChild(thinkingDiv);
+            container.scrollTop = container.scrollHeight;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [{ role: "user", content: userMessage }],
+                        stream: false,
+                        temperature: 0.7
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+
+                const data = await response.json();
+                thinkingDiv.remove();
+
+                let reply = null;
+                if (data.choices && data.choices[0] && data.choices[0].message && data.choices[0].message.content) {
+                    reply = data.choices[0].message.content;
+                } else if (data.error) {
+                    reply = '❌ API 错误：' + data.error.message;
+                } else {
+                    reply = '❌ 未知回复格式：' + JSON.stringify(data);
+                }
+
+                if (reply) addMessage('assistant', reply);
+                else addMessage('assistant', '❌ 未能解析任何有效回复。');
+
+            } catch (error) {
+                thinkingDiv.remove();
+                let errorMsg = '❌ 请求失败：' + error.message;
+                if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
+                    errorMsg += '\n💡 可能是跨域问题，请尝试：\n• 使用浏览器插件（Allow CORS）\n• 部署到同域服务器\n• 使用代理服务';
+                }
+                addMessage('assistant', errorMsg);
+            }
+        }
+
+        // ---------- 验证 ----------
+        function validateAllFields() {
+            let valid = true;
+            const fields = [
+                { id: 'patientId', name: '患者ID' },
+                { id: 'patientAge', name: '年龄' },
+                { id: 'patientGender', name: '性别' },
+                { id: 'totalBurnArea', name: '烧伤总面积' }
+            ];
+            for (let f of fields) {
+                const el = document.getElementById(f.id);
+                const val = el.value.trim();
+                if (!val) {
+                    el.classList.add('field-error');
+                    valid = false;
+                } else {
+                    el.classList.remove('field-error');
+                }
+            }
+            if (document.getElementById('patientGender').value === '') {
+                document.getElementById('patientGender').classList.add('field-error');
+                valid = false;
+            } else {
+                document.getElementById('patientGender').classList.remove('field-error');
+            }
+
+            const totalArea = parseFloat(document.getElementById('totalBurnArea').value);
+            if (isNaN(totalArea) || totalArea < 0 || totalArea > 100) {
+                document.getElementById('totalBurnArea').classList.add('field-error');
+                alert('⚠️ 烧伤总面积须为 0-100 之间的数值。');
+                valid = false;
+            }
+
+            if (Object.keys(selectedParts).length === 0) {
+                alert('⚠️ 请至少选择一个烧伤部位。');
+                valid = false;
+            }
+
+            return valid;
+        }
+
+        // ---------- 发送病情 ----------
+        function sendBurnInfoToChat() {
+            if (!validateAllFields()) return;
+
+            const patientId = document.getElementById('patientId').value.trim();
+            const age = document.getElementById('patientAge').value.trim();
+            const gender = document.getElementById('patientGender').value;
+            const totalArea = parseFloat(document.getElementById('totalBurnArea').value).toFixed(1);
+            const partsDesc = Object.keys(selectedParts).join('、');
+            const symptomReport = getSymptomReport();
+
+            const message =
+                `患者ID：${patientId}，年龄：${age}岁，性别：${gender}，烧伤总面积：${totalArea}% TBSA，烧伤部位：${partsDesc}，症状评分：${symptomReport}。`;
+
+            callFastGPT(message);
+        }
+
+        // ---------- 聊天发送 ----------
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+            input.value = '';
+            const pid = document.getElementById('patientId').value.trim();
+            const age = document.getElementById('patientAge').value.trim();
+            const gender = document.getElementById('patientGender').value;
+            let prefix = '';
+            if (pid || age || gender) {
+                prefix = `【患者${pid ? 'ID：'+pid : ''}${age ? '，年龄：'+age+'岁' : ''}${gender ? '，性别：'+gender : ''}】`;
+            }
+            callFastGPT(prefix + text);
+        }
+
+        // ---------- 打印报告 ----------
+        function printReport() {
+            if (!validateAllFields()) return;
+
+            const patientId = document.getElementById('patientId').value.trim();
+            const age = document.getElementById('patientAge').value.trim();
+            const gender = document.getElementById('patientGender').value;
+            const totalArea = parseFloat(document.getElementById('totalBurnArea').value).toFixed(1);
+
+            document.getElementById('r_id').textContent = patientId;
+            document.getElementById('r_age').textContent = age;
+            document.getElementById('r_gender').textContent = gender;
+            document.getElementById('r_totalArea').textContent = totalArea;
+            document.getElementById('r_time').textContent = new Date().toLocaleString();
+
+            const partsList = document.getElementById('r_parts');
+            const keys = Object.keys(selectedParts);
+            if (keys.length === 0) {
+                partsList.innerHTML = '<li>未选择任何部位</li>';
+            } else {
+                let html = '';
+                for (let part of keys) html += `<li>${part}</li>`;
+                partsList.innerHTML = html;
+            }
+
+            const symObjs = getSymptomValues();
+            let symHtml = '';
+            for (let s of symObjs) symHtml += `<li>${s.name}：${s.value} 分</li>`;
+            document.getElementById('r_symptoms').innerHTML = symHtml;
+
+            const reportCanvas = document.getElementById('reportChart');
+            if (myChart) {
+                if (reportChart) reportChart.destroy();
+                reportChart = new Chart(reportCanvas, {
+                    type: 'pie',
+                    data: JSON.parse(JSON.stringify(myChart.data)),
+                    options: JSON.parse(JSON.stringify(myChart.options))
+                });
+            }
+            window.print();
+        }
+
+        // ---------- 初始化 ----------
+        window.addEventListener('load', () => {
+            initSymptoms();
+            updateTotalDisplay();
+            updateChart();
+            document.querySelectorAll('input, select').forEach(el => {
+                el.addEventListener('focus', () => el.classList.remove('field-error'));
+            });
+            document.getElementById('totalBurnArea').addEventListener('change', updateChart);
+        });
+    </script>
+</body>
+</html>

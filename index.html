@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>烧伤ePRO · 智能症状管理</title>
+    <title>烧伤ePRO智能症状管理</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
     </script>
     <style>
@@ -106,19 +106,21 @@
             background: var(--bg);
         }
         .page {
-            position: absolute;
-            inset: 0;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 12px 14px 16px;
-            background: var(--bg);
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            transform: translateY(6px);
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
-        }
+    position: absolute;
+    inset: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 12px 14px 16px;
+    background: var(--bg);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;          /* 去掉 transform 过渡，只保留透明度，更快 */
+    transform: none;                        /* 去掉位移动画，或者保留但缩短时间 */
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
+    will-change: opacity;                   /* 开启硬件加速 */
+    overscroll-behavior: contain;           /* 防止滚动链 */
+}
         .page.active {
             opacity: 1;
             pointer-events: auto;
@@ -492,8 +494,8 @@
         }
         .page-eval .symptom-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 6px 10px;
+            grid-template-columns: 1fr;
+            gap: 6px 0;
         }
         .page-eval .symptom-grid .sym-item {
             background: #fff;
@@ -1132,88 +1134,129 @@
         }
 
         @media (max-width: 480px) {
-            .app-header .title {
-                font-size: 14px;
-            }
-            .app-header .sub {
-                font-size: 10px;
-                padding: 1px 10px;
-            }
-            .page-eval .patient-card {
-                padding: 10px 12px;
-                gap: 6px 10px;
-            }
-            .page-eval .patient-card .field label {
-                font-size: 10px;
-            }
-            .page-eval .patient-card .field input,
-            .page-eval .patient-card .field select {
-                font-size: 12px;
-                padding: 5px 8px;
-            }
-            .page-eval .body-map-wrap {
-                max-width: 180px;
-            }
-            .page-eval .symptom-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 4px 8px;
-            }
-            .page-eval .symptom-grid .sym-item {
-                padding: 4px 8px 6px;
-            }
-            .page-eval .symptom-grid .sym-item .sym-header {
-                font-size: 11px;
-            }
-            .page-eval .symptom-grid .sym-item .sym-header .val {
-                font-size: 13px;
-            }
-            .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
-                width: 20px;
-                height: 20px;
-            }
-            .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
-                width: 20px;
-                height: 20px;
-            }
-            .page-chat .chat-messages-wrap .msg .bubble {
-                font-size: 13px;
-                padding: 8px 12px;
-                max-width: 86%;
-            }
-            .page-chat .chat-input-bar input {
-                font-size: 13px;
-                padding: 8px 14px;
-                min-height: 38px;
-            }
-            .page-chat .chat-input-bar button {
-                font-size: 13px;
-                padding: 0 16px;
-                min-height: 38px;
-                min-width: 56px;
-            }
-            .page-learn .learn-grid {
-                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-                gap: 8px;
-            }
-            .page-learn .learn-header {
-                padding: 10px 12px;
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .page-learn .learn-header .actions {
-                justify-content: flex-start;
-            }
-            .bottom-nav .nav-item .nav-label {
-                font-size: 9px;
-            }
-            .bottom-nav .nav-item .nav-icon {
-                font-size: 20px;
-            }
-            :root {
-                --nav-height: 60px;
-                --header-height: 46px;
-            }
-        }
+    .app-header .title {
+        font-size: 14px;
+    }
+    .app-header .sub {
+        font-size: 10px;
+        padding: 1px 10px;
+    }
+    .page-eval .patient-card {
+        padding: 10px 12px;
+        gap: 6px 10px;
+    }
+    .page-eval .patient-card .field label {
+        font-size: 10px;
+    }
+    .page-eval .patient-card .field input,
+    .page-eval .patient-card .field select {
+        font-size: 12px;
+        padding: 5px 8px;
+    }
+    .page-eval .body-map-wrap {
+        max-width: 180px;
+    }
+
+    /* ===== 症状评分：单列 + 滑块撑满 ===== */
+    .page-eval .symptom-grid {
+        grid-template-columns: 1fr;
+        gap: 6px 0;
+    }
+    .page-eval .symptom-grid .sym-item {
+        padding: 8px 12px;               /* 增加内部空间，更好触摸 */
+    }
+    .page-eval .symptom-grid .sym-item .sym-header {
+        font-size: 11px;
+    }
+    .page-eval .symptom-grid .sym-item .sym-header .val {
+        font-size: 13px;
+    }
+
+    /* 滑块本身：宽度 100%，轨道加高，触摸区域加大 */
+    .page-eval .symptom-grid .sym-item input[type="range"] {
+        width: 100% !important;
+        display: block;
+        height: 8px;                     /* 轨道加高，更容易滑动 */
+        padding: 6px 0;                 /* 上下增加触摸面积 */
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        appearance: none;
+        background: #dce2e9;
+        border-radius: 4px;
+        outline: none;
+        margin: 4px 0 0;
+        touch-action: manipulation;
+    }
+
+    /* 滑块拇指（圆形按钮）放大，便于手指操作 */
+    .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--primary);
+        cursor: pointer;
+        border: 2px solid #fff;
+        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+        touch-action: manipulation;
+    }
+    .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: var(--primary);
+        cursor: pointer;
+        border: 2px solid #fff;
+        touch-action: manipulation;
+    }
+
+    /* 聊天区域 */
+    .page-chat .chat-messages-wrap .msg .bubble {
+        font-size: 13px;
+        padding: 8px 12px;
+        max-width: 86%;
+    }
+    .page-chat .chat-input-bar input {
+        font-size: 13px;
+        padding: 8px 14px;
+        min-height: 38px;
+    }
+    .page-chat .chat-input-bar button {
+        font-size: 13px;
+        padding: 0 16px;
+        min-height: 38px;
+        min-width: 56px;
+    }
+
+    /* 学习中心 */
+    .page-learn .learn-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+        gap: 8px;
+    }
+    .page-learn .learn-header {
+        padding: 10px 12px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .page-learn .learn-header .actions {
+        justify-content: flex-start;
+    }
+
+    /* 底部导航 */
+    .bottom-nav .nav-item .nav-label {
+        font-size: 9px;
+    }
+    .bottom-nav .nav-item .nav-icon {
+        font-size: 20px;
+    }
+
+    /* 全局变量 */
+    :root {
+        --nav-height: 60px;
+        --header-height: 46px;
+    }
+}
 
         /* ===== 暗色模式页面 ===== */
         @media (prefers-color-scheme: dark) {

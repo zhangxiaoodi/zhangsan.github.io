@@ -3,516 +3,344 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>烧伤ePRO智能症状管理平台</title>
+    <title>烧伤ePRO · 智能症状管理</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
     </script>
     <style>
-        /* ===== 全局重置 & 字体 ===== */
+        /* ===== 全局重置 ===== */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
+        :root {
+            --primary: #c4450c;
+            --primary-dark: #a3340a;
+            --primary-light: #d45a2a;
+            --bg: #f2f4f8;
+            --card-bg: #ffffff;
+            --text: #1a2635;
+            --text-secondary: #4a5a6a;
+            --border: #e9edf4;
+            --shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+            --radius: 20px;
+            --nav-height: 68px;
+            --header-height: 52px;
+            --safe-bottom: env(safe-area-inset-bottom, 0px);
+        }
         html,
         body {
             height: 100%;
             overflow: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
-            background: #f2f4f8;
-            color: #1a2635;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+            background: var(--bg);
+            color: var(--text);
             -webkit-font-smoothing: antialiased;
         }
-        body {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0;
-            margin: 0;
-            background: #0f1a2b;
-        }
 
-        /* ===== APP容器 ===== */
-        .app-container {
-            width: 100%;
-            max-width: 480px;
-            height: 100vh;
-            max-height: 100vh;
-            background: #ffffff;
+        /* ===== 容器 ===== */
+        #app {
             display: flex;
             flex-direction: column;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.25);
+            height: 100vh;
+            height: 100dvh;
+            max-width: 480px;
             margin: 0 auto;
-        }
-        @media (min-width: 481px) {
-            .app-container {
-                max-width: 480px;
-                height: 95vh;
-                max-height: 95vh;
-                border-radius: 28px;
-                margin: 2.5vh auto;
-                box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.4);
-            }
-        }
-        @media (max-width: 480px) {
-            .app-container {
-                max-width: 100%;
-                height: 100vh;
-                border-radius: 0;
-            }
+            background: var(--card-bg);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 60px rgba(0, 0, 0, 0.04);
         }
 
-        /* ===== 品牌栏 ===== */
-        .brand-bar {
+        /* ===== 头部 ===== */
+        .app-header {
             flex-shrink: 0;
+            background: #0f1a2b;
+            padding: 10px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding: 12px 16px 10px 16px;
-            background: #0f1a2b;
-            border-bottom: 2px solid #c4450c;
-            min-height: 54px;
+            min-height: var(--header-height);
+            border-bottom: 2px solid var(--primary);
             z-index: 10;
-            flex-wrap: nowrap;
-            gap: 6px;
         }
-        .brand-left {
-            flex: 0 0 0;
-            display: none;
-        }
-        .brand-center {
-            flex: 1;
-            text-align: center;
-            min-width: 0;
-        }
-        .brand-center .title-main {
-            font-size: 17px;
+        .app-header .title {
+            color: #fff;
+            font-size: 16px;
             font-weight: 600;
-            color: #ffffff;
             letter-spacing: 0.3px;
-            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
             white-space: nowrap;
         }
-        .brand-right {
-            flex-shrink: 0;
-        }
-        .brand-right .signature {
+        .app-header .sub {
+            color: rgba(255, 255, 255, 0.6);
             font-size: 11px;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.85);
+            font-weight: 400;
             letter-spacing: 0.5px;
-            padding: 3px 10px;
             background: rgba(255, 255, 255, 0.06);
+            padding: 2px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.06);
             white-space: nowrap;
-            backdrop-filter: blur(2px);
-            display: inline-block;
         }
-        .brand-right .signature .accent {
+        .app-header .sub .accent {
             color: #d4a843;
             font-weight: 600;
         }
-        .brand-right .signature .sep {
-            color: rgba(255, 255, 255, 0.20);
-            margin: 0 3px;
-        }
-        @media (max-width: 420px) {
-            .brand-center .title-main {
-                font-size: 14px;
-            }
-            .brand-right .signature {
-                font-size: 10px;
-                padding: 2px 8px;
-            }
+        .app-header .header-back {
+            display: none;
+            color: #fff;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+            border: none;
+            background: none;
+            touch-action: manipulation;
         }
 
         /* ===== 页面容器 ===== */
-        .pages-wrapper {
+        .page-container {
             flex: 1;
-            position: relative;
             overflow: hidden;
-            touch-action: pan-y;
-        }
-        .pages-track {
-            display: flex;
-            height: 100%;
-            width: 300%;
-            transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            will-change: transform;
+            position: relative;
+            background: var(--bg);
         }
         .page {
-            width: 33.333%;
-            height: 100%;
+            position: absolute;
+            inset: 0;
             overflow-y: auto;
             overflow-x: hidden;
-            padding: 12px 14px 20px;
-            background: #f8fafc;
+            padding: 12px 14px 16px;
+            background: var(--bg);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(6px);
             -webkit-overflow-scrolling: touch;
-            scroll-behavior: smooth;
-            flex-shrink: 0;
+            padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
+        }
+        .page.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
         }
         .page::-webkit-scrollbar {
-            width: 3px;
-        }
-        .page::-webkit-scrollbar-track {
+            width: 4px;
             background: transparent;
         }
         .page::-webkit-scrollbar-thumb {
-            background: rgba(196, 69, 12, 0.25);
-            border-radius: 10px;
-        }
-        /* 暗色模式滚动条 */
-        @media (prefers-color-scheme: dark) {
-            .page {
-                background: #1a2330;
-            }
-            .page::-webkit-scrollbar-thumb {
-                background: rgba(196, 69, 12, 0.35);
-            }
+            background: rgba(0, 0, 0, 0.12);
+            border-radius: 8px;
         }
 
         /* ===== 底部导航 ===== */
-        .nav-bar {
+        .bottom-nav {
             flex-shrink: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-            padding: 10px 0 12px;
+            height: var(--nav-height);
             background: #ffffff;
-            border-top: 1px solid #e9edf4;
-            position: relative;
-            z-index: 10;
-            min-height: 52px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            align-items: stretch;
+            justify-content: space-around;
+            padding-bottom: var(--safe-bottom);
+            z-index: 20;
+            backdrop-filter: blur(8px);
+            background: rgba(255, 255, 255, 0.96);
         }
-        .nav-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #d5dce6;
-            transition: all 0.3s;
-            cursor: pointer;
+        .nav-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 2px;
             border: none;
-            padding: 0;
-            touch-action: manipulation;
-            flex-shrink: 0;
-        }
-        .nav-dot.active {
-            background: #c4450c;
-            transform: scale(1.3);
-            box-shadow: 0 0 0 4px rgba(196, 69, 12, 0.15);
-        }
-        .nav-dot:active {
-            transform: scale(0.85);
-        }
-        .nav-label {
-            font-size: 11px;
+            background: none;
             color: #8a9aa8;
+            font-size: 10px;
             font-weight: 500;
-            letter-spacing: 0.3px;
-            position: absolute;
-            right: 16px;
-            bottom: 10px;
+            cursor: pointer;
+            transition: color 0.2s;
+            touch-action: manipulation;
+            padding: 4px 0;
+            position: relative;
+            min-height: 48px;
+            font-family: inherit;
         }
-        .nav-label .page-num {
-            color: #c4450c;
+        .nav-item .nav-icon {
+            font-size: 22px;
+            line-height: 1.2;
+            transition: transform 0.2s;
+        }
+        .nav-item .nav-label {
+            font-size: 10px;
+            letter-spacing: 0.3px;
+        }
+        .nav-item.active {
+            color: var(--primary);
+        }
+        .nav-item.active .nav-icon {
+            transform: scale(1.05);
+        }
+        .nav-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 2.5px;
+            background: var(--primary);
+            border-radius: 0 0 4px 4px;
+            opacity: 0;
+            transition: opacity 0.25s;
+        }
+        .nav-item.active::after {
+            opacity: 1;
+        }
+        .nav-item .badge {
+            position: absolute;
+            top: 2px;
+            right: 50%;
+            transform: translateX(calc(50% + 18px));
+            background: #e74c3c;
+            color: #fff;
+            font-size: 9px;
+            padding: 0 6px;
+            border-radius: 10px;
+            line-height: 16px;
+            min-width: 16px;
+            text-align: center;
             font-weight: 600;
         }
-        @media (max-width: 480px) {
-            .nav-bar {
-                padding: 8px 0 10px;
-                min-height: 46px;
-                gap: 16px;
-            }
-            .nav-dot {
-                width: 8px;
-                height: 8px;
-            }
-            .nav-label {
-                font-size: 10px;
-                right: 12px;
-                bottom: 8px;
-            }
-        }
+
+        /* ===== 暗色模式导航 ===== */
         @media (prefers-color-scheme: dark) {
-            .nav-bar {
-                background: #1a2330;
-                border-top-color: #2a3a4a;
+            :root {
+                --bg: #12181f;
+                --card-bg: #1a2330;
+                --text: #e8edf3;
+                --text-secondary: #8a9aa8;
+                --border: #2a3a4a;
+                --shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
             }
-            .nav-dot {
-                background: #2a3a4a;
+            .bottom-nav {
+                background: rgba(26, 35, 48, 0.96);
+                border-top-color: var(--border);
             }
-            .nav-dot.active {
-                background: #c4450c;
-                box-shadow: 0 0 0 4px rgba(196, 69, 12, 0.20);
-            }
-            .nav-label {
+            .nav-item {
                 color: #6a7a8a;
             }
-            .nav-label .page-num {
+            .nav-item.active {
                 color: #d45a2a;
+            }
+            .app-header {
+                background: #0d1520;
             }
         }
 
-        /* ===== 第一页 - 内容 ===== */
-        .page-1 .input-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px 12px;
-            margin-bottom: 12px;
-            background: #ffffff;
-            padding: 12px 14px;
+        /* ============================================================ */
+        /* ===== 页面1：评估 ===== */
+        /* ============================================================ */
+
+        .page-eval .patient-card {
+            background: #f8faff;
             border-radius: 14px;
-            border: 1px solid #e9edf4;
-            align-items: center;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            margin-bottom: 12px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 12px;
         }
-        .page-1 .input-group .field {
+        .page-eval .patient-card .field {
             display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-            flex: 1 1 auto;
-            min-width: 100px;
+            flex-direction: column;
+            gap: 2px;
         }
-        .page-1 .input-group .field label {
-            font-size: 12px;
+        .page-eval .patient-card .field label {
+            font-size: 11px;
             font-weight: 500;
-            color: #2c3e50;
-            white-space: nowrap;
+            color: var(--text-secondary);
         }
-        .page-1 .input-group .field label .required {
+        .page-eval .patient-card .field label .required {
             color: #c0392b;
-            margin-left: 2px;
         }
-        .page-1 .input-group .field input,
-        .page-1 .input-group .field select {
+        .page-eval .patient-card .field input,
+        .page-eval .patient-card .field select {
             padding: 6px 10px;
             border: 1px solid #d5dce6;
             border-radius: 8px;
             font-size: 13px;
-            background: #ffffff;
-            transition: border 0.25s, box-shadow 0.25s;
-            min-width: 60px;
+            background: #fff;
+            transition: border 0.2s;
             font-family: inherit;
-            color: #1a2635;
+            color: var(--text);
+            width: 100%;
             -webkit-appearance: none;
             appearance: none;
-            height: 36px;
         }
-        .page-1 .input-group .field input:focus,
-        .page-1 .input-group .field select:focus {
-            border-color: #c4450c;
+        .page-eval .patient-card .field input:focus,
+        .page-eval .patient-card .field select:focus {
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.10);
+            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.08);
         }
-        .page-1 .input-group .field input[type="number"] {
-            width: 64px;
-            min-width: 50px;
+        .page-eval .patient-card .field input[type="number"] {
+            width: 100%;
         }
-        .page-1 .input-group .field select {
-            min-width: 70px;
+        .page-eval .patient-card .field select {
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236a7a8a'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 10px center;
             padding-right: 28px;
         }
-        .page-1 .input-group .field .total-area-input {
-            width: 60px;
-            min-width: 46px;
-        }
-        .page-1 .input-group .required-hint {
-            font-size: 11px;
-            color: #9aa9b7;
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .page-1 .input-group .required-hint .star {
-            color: #c0392b;
-        }
-        @media (max-width: 480px) {
-            .page-1 .input-group {
-                flex-direction: column;
-                align-items: stretch;
-                padding: 10px 12px;
-                gap: 6px 10px;
-            }
-            .page-1 .input-group .field {
-                min-width: 0;
-            }
-            .page-1 .input-group .field input,
-            .page-1 .input-group .field select {
-                font-size: 14px;
-                height: 40px;
-                flex: 1;
-            }
-            .page-1 .input-group .field input[type="number"] {
-                width: 56px;
-                min-width: 44px;
-                flex: 0 1 auto;
-            }
-            .page-1 .input-group .field .total-area-input {
-                width: 54px;
-                min-width: 40px;
-            }
-            .page-1 .input-group .required-hint {
-                margin-left: 0;
-                justify-content: flex-end;
-                font-size: 10px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .page-1 .input-group {
-                background: #1e2a3a;
-                border-color: #2a3a4a;
-            }
-            .page-1 .input-group .field label {
-                color: #c8d4e0;
-            }
-            .page-1 .input-group .field input,
-            .page-1 .input-group .field select {
-                background: #15202b;
-                border-color: #2a3a4a;
-                color: #e8edf3;
-            }
-            .page-1 .input-group .field input:focus,
-            .page-1 .input-group .field select:focus {
-                border-color: #c4450c;
-                box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.15);
-            }
-            .page-1 .input-group .required-hint {
-                color: #7a8a9a;
-            }
+        .page-eval .patient-card .field-full {
+            grid-column: 1 / -1;
         }
 
-        /* ===== 第一页 - 视图切换 ===== */
-        .switch-view {
-            margin-bottom: 12px;
-            display: flex;
-            gap: 4px;
-            justify-content: center;
-        }
-        .switch-view button {
-            padding: 6px 14px;
-            border: none;
-            background: #f0f3f8;
-            color: #4a5a6a;
-            border-radius: 30px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 12px;
-            transition: all 0.25s;
-            font-family: inherit;
-            letter-spacing: 0.3px;
-            touch-action: manipulation;
-            min-height: 34px;
-            flex: 1;
-            max-width: 120px;
-        }
-        .switch-view button:hover {
-            background: #e4e9ef;
-        }
-        .switch-view button:active {
-            transform: scale(0.96);
-        }
-        .switch-view button.active {
-            background: #c4450c;
-            color: #ffffff;
-            box-shadow: 0 4px 14px rgba(196, 69, 12, 0.20);
-        }
-        .gender-badge {
-            display: inline-block;
-            font-size: 11px;
-            font-weight: 600;
-            padding: 2px 12px;
-            border-radius: 20px;
-            margin-left: 4px;
-            background: rgba(196, 69, 12, 0.12);
-            color: #c4450c;
-            line-height: 1.6;
-            flex-shrink: 0;
-        }
-        .gender-badge.female {
-            background: rgba(196, 69, 12, 0.10);
-            color: #c4450c;
-        }
-        @media (max-width: 480px) {
-            .switch-view button {
-                font-size: 11px;
-                padding: 5px 10px;
-                min-height: 32px;
-                max-width: 100%;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .switch-view button {
-                background: #1e2a3a;
-                color: #8a9aa8;
-            }
-            .switch-view button:hover {
-                background: #2a3a4a;
-            }
-            .switch-view button.active {
-                background: #c4450c;
-                color: #ffffff;
-            }
-        }
-
-        /* ===== 第一页 - 主体 ===== */
-        .body-section {
+        .page-eval .body-section {
             display: flex;
             gap: 14px;
             flex-wrap: wrap;
             margin-bottom: 12px;
         }
-        .body-map {
-            position: relative;
+        .page-eval .body-map-wrap {
+            flex: 0 0 auto;
             width: 100%;
             max-width: 220px;
             margin: 0 auto;
-            background: #ffffff;
-            border-radius: 16px;
-            border: 1px solid #e9edf4;
+            background: #f8fafc;
+            border-radius: 14px;
+            border: 1px solid var(--border);
             overflow: hidden;
-            flex-shrink: 0;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
             touch-action: manipulation;
         }
-        .body-map svg {
+        .page-eval .body-map-wrap svg {
             width: 100%;
             height: auto;
             display: block;
-            touch-action: manipulation;
         }
-        .body-map .part {
-            transition: fill 0.25s, stroke 0.25s, transform 0.15s, filter 0.3s;
+        .page-eval .body-map-wrap .part {
+            transition: fill 0.2s, stroke 0.2s, filter 0.3s;
             stroke: #6a7a8a;
             stroke-width: 1.5;
             fill: #e2e8ef;
             cursor: pointer;
             touch-action: manipulation;
         }
-        .body-map .part:hover {
+        .page-eval .body-map-wrap .part:hover {
             fill: #cdd6e0;
-            stroke: #c4450c;
+            stroke: var(--primary);
             stroke-width: 2.5;
-            filter: drop-shadow(0 2px 6px rgba(196, 69, 12, 0.15));
         }
-        .body-map .part:active {
-            transform: scale(0.97);
-        }
-        .body-map .part.selected {
-            fill: #d45a2a !important;
-            stroke: #a3340a;
+        .page-eval .body-map-wrap .part.selected {
+            fill: var(--primary) !important;
+            stroke: var(--primary-dark);
             stroke-width: 3;
-            filter: drop-shadow(0 3px 10px rgba(196, 69, 12, 0.30));
-            animation: partPulse 0.4s ease;
+            filter: drop-shadow(0 2px 10px rgba(196, 69, 12, 0.25));
+            animation: pulse 0.3s ease;
         }
-        @keyframes partPulse {
+        @keyframes pulse {
             0% {
                 transform: scale(1);
             }
@@ -523,930 +351,567 @@
                 transform: scale(1);
             }
         }
-        .body-map .part.buttock {
+        .page-eval .body-map-wrap .part.buttock {
             fill: #d5dce6;
         }
-        .body-map .part.buttock:hover {
-            fill: #c0c8d4;
+        .page-eval .body-map-wrap .part.buttock.selected {
+            fill: var(--primary) !important;
         }
-        .body-map .part.buttock.selected {
-            fill: #d45a2a !important;
-        }
-        .body-map .part.breast {
+        .page-eval .body-map-wrap .part.breast {
             fill: #dce0e8;
         }
-        .body-map .part.breast:hover {
-            fill: #c8ced8;
-        }
-        .body-map .part.breast.selected {
-            fill: #d45a2a !important;
-        }
-        @media (max-width: 480px) {
-            .body-map {
-                max-width: 180px;
-            }
-            .body-map .part {
-                stroke-width: 2;
-            }
-            .body-map .part.selected {
-                stroke-width: 3.5;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .body-map {
-                background: #15202b;
-                border-color: #2a3a4a;
-            }
-            .body-map .part {
-                fill: #2a3a4a;
-                stroke: #4a5a6a;
-            }
-            .body-map .part:hover {
-                fill: #3a4a5a;
-                stroke: #c4450c;
-            }
-            .body-map .part.selected {
-                fill: #c4450c !important;
-                stroke: #a3340a;
-            }
-            .body-map .part.buttock {
-                fill: #2a3a4a;
-            }
-            .body-map .part.buttock:hover {
-                fill: #3a4a5a;
-            }
-            .body-map .part.breast {
-                fill: #2a3a4a;
-            }
-            .body-map .part.breast:hover {
-                fill: #3a4a5a;
-            }
+        .page-eval .body-map-wrap .part.breast.selected {
+            fill: var(--primary) !important;
         }
 
-        /* ===== 右侧面板 ===== */
-        .right-panel {
+        .page-eval .right-panel {
             flex: 1;
             min-width: 160px;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
-        .selected-info {
-            background: #ffffff;
-            padding: 12px 14px 14px;
+        .page-eval .selected-box {
+            background: #f8faff;
             border-radius: 14px;
-            border: 1px solid #e9edf4;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
         }
-        .selected-info h4 {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #1a2635;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        .selected-info h4 span {
-            font-weight: 400;
-            font-size: 11px;
-            color: #8a9aa8;
-        }
-        .selected-info ul {
-            list-style: none;
-            padding: 0;
-            max-height: 100px;
-            overflow-y: auto;
-            margin-bottom: 2px;
-        }
-        .selected-info ul li {
-            padding: 4px 0;
-            border-bottom: 1px solid #eef2f6;
+        .page-eval .selected-box .title-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             font-size: 13px;
-            gap: 8px;
+            font-weight: 600;
+            margin-bottom: 6px;
         }
-        .selected-info ul li:last-child {
+        .page-eval .selected-box .title-row span {
+            font-weight: 400;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .page-eval .selected-box ul {
+            list-style: none;
+            max-height: 100px;
+            overflow-y: auto;
+            margin-bottom: 4px;
+        }
+        .page-eval .selected-box ul li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            font-size: 13px;
+            border-bottom: 1px solid #eef2f6;
+        }
+        .page-eval .selected-box ul li:last-child {
             border-bottom: none;
         }
-        .selected-info ul li .part-name {
-            font-weight: 500;
-            flex: 1;
-            color: #1a2635;
-            font-size: 12px;
-        }
-        .selected-info ul li .remove-btn {
+        .page-eval .selected-box ul li .remove-btn {
             color: #b03a2e;
             cursor: pointer;
-            font-weight: 400;
             font-size: 18px;
             line-height: 1;
             padding: 0 4px;
             background: none;
             border: none;
+            opacity: 0.4;
             transition: 0.2s;
-            opacity: 0.5;
-            border-radius: 4px;
             touch-action: manipulation;
-            min-width: 30px;
-            min-height: 30px;
+            min-width: 32px;
+            min-height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .selected-info ul li .remove-btn:hover {
+        .page-eval .selected-box ul li .remove-btn:hover {
             opacity: 1;
-            transform: scale(1.2);
-            background: rgba(176, 58, 46, 0.06);
         }
-        .selected-info ul li .remove-btn:active {
-            transform: scale(0.9);
-        }
-        .total-area {
-            font-size: 15px;
+        .page-eval .selected-box .total-row {
+            display: flex;
+            justify-content: space-between;
             font-weight: 600;
-            color: #1a2635;
-            margin-top: 6px;
+            font-size: 15px;
             padding-top: 6px;
-            border-top: 2px solid #e9edf4;
+            border-top: 2px solid var(--border);
+        }
+        .page-eval .selected-box .total-row .num {
+            color: var(--primary);
+        }
+        .page-eval .selected-box .hint {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        .page-eval .view-toggle {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 8px;
+            justify-content: center;
+        }
+        .page-eval .view-toggle button {
+            padding: 4px 14px;
+            border: none;
+            background: #f0f3f8;
+            color: var(--text-secondary);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            touch-action: manipulation;
+            min-height: 32px;
+        }
+        .page-eval .view-toggle button.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(196, 69, 12, 0.2);
+        }
+
+        .page-eval .symptom-section {
+            background: #f8faff;
+            border-radius: 14px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            margin-top: 4px;
+        }
+        .page-eval .symptom-section .sym-title {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 2px;
         }
-        .total-area .total-display {
-            color: #c4450c;
-            font-size: 18px;
-        }
-        .selected-info .hint {
-            font-size: 11px;
-            color: #9aa9b7;
-            margin-top: 4px;
-            letter-spacing: 0.2px;
-        }
-        @media (max-width: 480px) {
-            .right-panel {
-                min-width: 0;
-            }
-            .selected-info {
-                padding: 10px 12px 12px;
-            }
-            .selected-info h4 {
-                font-size: 12px;
-            }
-            .selected-info ul li {
-                font-size: 12px;
-                padding: 3px 0;
-            }
-            .selected-info ul li .part-name {
-                font-size: 11px;
-            }
-            .selected-info ul li .remove-btn {
-                font-size: 16px;
-                min-width: 28px;
-                min-height: 28px;
-            }
-            .total-area {
-                font-size: 13px;
-            }
-            .total-area .total-display {
-                font-size: 16px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .selected-info {
-                background: #1e2a3a;
-                border-color: #2a3a4a;
-            }
-            .selected-info h4 {
-                color: #e8edf3;
-            }
-            .selected-info h4 span {
-                color: #7a8a9a;
-            }
-            .selected-info ul li {
-                border-bottom-color: #2a3a4a;
-                color: #c8d4e0;
-            }
-            .selected-info ul li .part-name {
-                color: #e8edf3;
-            }
-            .selected-info ul li .remove-btn {
-                color: #e06050;
-            }
-            .total-area {
-                border-top-color: #2a3a4a;
-                color: #e8edf3;
-            }
-            .total-area .total-display {
-                color: #d45a2a;
-            }
-            .selected-info .hint {
-                color: #7a8a9a;
-            }
-        }
-
-        /* ===== 症状评分 ===== */
-        .symptom-section {
-            background: #ffffff;
-            border: 1px solid #e9edf4;
-            border-radius: 14px;
-            padding: 12px 14px 14px;
-        }
-        .symptom-section h4 {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: #1a2635;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-        }
-        .symptom-section h4 span {
+        .page-eval .symptom-section .sym-title span {
             font-weight: 400;
             font-size: 11px;
-            color: #8a9aa8;
+            color: var(--text-secondary);
         }
-        .symptom-grid {
+        .page-eval .symptom-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 6px 10px;
         }
-        .symptom-item {
-            display: flex;
-            flex-direction: column;
-            gap: 1px;
-            background: #f8faff;
-            padding: 6px 10px 8px;
+        .page-eval .symptom-grid .sym-item {
+            background: #fff;
             border-radius: 10px;
+            padding: 6px 10px 8px;
             border: 1px solid #eef2f6;
-            transition: box-shadow 0.25s, border-color 0.25s;
-            touch-action: manipulation;
         }
-        .symptom-item:hover {
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
-            border-color: #d5dce6;
-        }
-        .symptom-item .symptom-header {
+        .page-eval .symptom-grid .sym-item .sym-header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            color: #2c3e50;
             font-size: 12px;
+            font-weight: 500;
         }
-        .symptom-item .symptom-header .value {
-            color: #c4450c;
-            font-size: 16px;
+        .page-eval .symptom-grid .sym-item .sym-header .val {
+            color: var(--primary);
             font-weight: 600;
-            min-width: 22px;
+            font-size: 15px;
+            min-width: 20px;
             text-align: center;
         }
-        .symptom-item input[type="range"] {
+        .page-eval .symptom-grid .sym-item input[type="range"] {
             width: 100%;
-            height: 5px;
+            height: 4px;
             -webkit-appearance: none;
             appearance: none;
             background: #dce2e9;
             border-radius: 4px;
             outline: none;
-            margin: 4px 0 1px;
-            transition: background 0.2s;
+            margin: 4px 0 0;
             touch-action: manipulation;
         }
-        .symptom-item input[type="range"]::-webkit-slider-thumb {
+        .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
-            background: #c4450c;
+            background: var(--primary);
             cursor: pointer;
-            border: 2px solid #ffffff;
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.15);
-            transition: 0.15s;
-            touch-action: manipulation;
-        }
-        .symptom-item input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.08);
-            box-shadow: 0 2px 10px rgba(196, 69, 12, 0.25);
-        }
-        .symptom-item input[type="range"]::-webkit-slider-thumb:active {
-            transform: scale(0.92);
-        }
-        .symptom-item input[type="range"]::-moz-range-thumb {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: #c4450c;
-            cursor: pointer;
-            border: 2px solid #ffffff;
+            border: 2px solid #fff;
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
             touch-action: manipulation;
         }
-        .symptom-item .range-labels {
+        .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 2px solid #fff;
+            touch-action: manipulation;
+        }
+        .page-eval .symptom-grid .sym-item .range-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 9px;
+            font-size: 8px;
             color: #b0bec5;
             padding: 0 2px;
         }
-        @media (max-width: 480px) {
-            .symptom-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 4px 8px;
-            }
-            .symptom-item {
-                padding: 5px 8px 6px;
-                border-radius: 8px;
-            }
-            .symptom-item .symptom-header {
-                font-size: 11px;
-            }
-            .symptom-item .symptom-header .value {
-                font-size: 14px;
-                min-width: 20px;
-            }
-            .symptom-item input[type="range"] {
-                height: 6px;
-            }
-            .symptom-item input[type="range"]::-webkit-slider-thumb {
-                width: 22px;
-                height: 22px;
-            }
-            .symptom-item input[type="range"]::-moz-range-thumb {
-                width: 22px;
-                height: 22px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .symptom-section {
-                background: #1e2a3a;
-                border-color: #2a3a4a;
-            }
-            .symptom-section h4 {
-                color: #e8edf3;
-            }
-            .symptom-section h4 span {
-                color: #7a8a9a;
-            }
-            .symptom-item {
-                background: #15202b;
-                border-color: #2a3a4a;
-            }
-            .symptom-item .symptom-header {
-                color: #c8d4e0;
-            }
-            .symptom-item .symptom-header .value {
-                color: #d45a2a;
-            }
-            .symptom-item input[type="range"] {
-                background: #2a3a4a;
-            }
-            .symptom-item input[type="range"]::-webkit-slider-thumb {
-                background: #c4450c;
-                border-color: #1a2330;
-            }
-            .symptom-item input[type="range"]::-moz-range-thumb {
-                background: #c4450c;
-                border-color: #1a2330;
-            }
-            .symptom-item .range-labels {
-                color: #6a7a8a;
-            }
-        }
 
-        /* ===== 第一页 - 发送按钮 ===== */
-        .btn-send-wrapper {
-            margin-top: 14px;
-            margin-bottom: 4px;
-        }
-        .btn-send-wrapper button {
-            width: 100%;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 40px;
-            font-size: 17px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-            letter-spacing: 0.6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            min-height: 56px;
-            touch-action: manipulation;
-            background: linear-gradient(135deg, #c4450c, #d45a2a);
-            color: #ffffff;
-            box-shadow: 0 4px 24px rgba(196, 69, 12, 0.25);
-        }
-        .btn-send-wrapper button:active {
-            transform: scale(0.96);
-        }
-        .btn-send-wrapper button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 32px rgba(196, 69, 12, 0.35);
-        }
-        .btn-send-wrapper button:disabled {
-            opacity: 0.6;
-            transform: none !important;
-            box-shadow: none !important;
-            cursor: not-allowed;
-        }
-        @media (max-width: 480px) {
-            .btn-send-wrapper button {
-                font-size: 15px;
-                padding: 12px 16px;
-                min-height: 50px;
-                border-radius: 30px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .btn-send-wrapper button {
-                background: linear-gradient(135deg, #c4450c, #d45a2a);
-            }
-        }
-
-        /* ===== 第二页 - 图表 ===== */
-        .chart-box {
-            width: 100%;
-            max-width: 100%;
-            margin: 0 auto 12px;
-            background: #ffffff;
-            padding: 12px 12px 6px;
+        .page-eval .chart-mini {
+            background: #f8faff;
             border-radius: 14px;
-            border: 1px solid #e9edf4;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            margin: 8px 0 4px;
         }
-        .chart-box canvas {
+        .page-eval .chart-mini canvas {
             width: 100% !important;
             height: auto !important;
-            max-height: 260px;
-        }
-        @media (max-width: 480px) {
-            .chart-box {
-                padding: 10px 10px 4px;
-                border-radius: 12px;
-            }
-            .chart-box canvas {
-                max-height: 200px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .chart-box {
-                background: #15202b;
-                border-color: #2a3a4a;
-            }
+            max-height: 180px;
         }
 
-        /* ===== 第二页 - 聊天面板 ===== */
-        .chat-panel {
-            border: 1px solid #e9edf4;
-            border-radius: 14px;
-            margin: 0 0 12px;
-            background: #ffffff;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
-            overflow: hidden;
+        .page-eval .btn-send {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 18px rgba(196, 69, 12, 0.2);
+            font-family: inherit;
+            touch-action: manipulation;
+            margin-top: 6px;
+            min-height: 50px;
+        }
+        .page-eval .btn-send:active {
+            transform: scale(0.96);
+        }
+        .page-eval .btn-send:disabled {
+            opacity: 0.6;
+            transform: none;
+        }
+
+        /* ============================================================ */
+        /* ===== 页面2：小愈 ===== */
+        /* ============================================================ */
+
+        .page-chat {
+            padding: 0 !important;
+            background: #f0f2f5;
             display: flex;
             flex-direction: column;
-            height: 320px;
-            min-height: 240px;
-            transition: box-shadow 0.3s;
-            touch-action: pan-y;
         }
-        .chat-panel:hover {
-            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        .page-chat .chat-header-bar {
+            flex-shrink: 0;
+            background: #0f1a2b;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: #fff;
         }
-        .chat-header {
-            background: linear-gradient(135deg, #0f1a2b, #1a2a3e);
-            color: #ffffff;
-            padding: 10px 14px;
-            font-weight: 600;
-            font-size: 14px;
+        .page-chat .chat-header-bar .chat-title {
             display: flex;
             align-items: center;
             gap: 8px;
-            flex-shrink: 0;
-            border-radius: 14px 14px 0 0;
+            font-weight: 600;
+            font-size: 15px;
         }
-        .chat-header .avatar {
+        .page-chat .chat-header-bar .chat-title .avatar {
             width: 30px;
             height: 30px;
-            background: rgba(255, 255, 255, 0.10);
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            flex-shrink: 0;
         }
-        .chat-messages {
+        .page-chat .chat-header-bar .chat-actions {
+            display: flex;
+            gap: 6px;
+        }
+        .page-chat .chat-header-bar .chat-actions button {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            touch-action: manipulation;
+            min-height: 30px;
+        }
+        .page-chat .chat-header-bar .chat-actions button:hover {
+            background: rgba(255, 255, 255, 0.12);
+        }
+        .page-chat .chat-header-bar .chat-actions button:active {
+            transform: scale(0.94);
+        }
+
+        .page-chat .chat-messages-wrap {
             flex: 1;
             overflow-y: auto;
-            padding: 12px 14px;
-            background: #f8fafc;
-            border-bottom: 1px solid #eef2f6;
+            padding: 12px 14px 8px;
+            background: #ededed;
             -webkit-overflow-scrolling: touch;
         }
-        .chat-messages .msg {
-            margin-bottom: 10px;
+        .page-chat .chat-messages-wrap .msg {
             display: flex;
-            flex-direction: column;
+            margin-bottom: 12px;
+            animation: msgIn 0.25s ease;
         }
-        .msg.user {
-            align-items: flex-end;
+        @keyframes msgIn {
+            0% {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
-        .msg.assistant {
-            align-items: flex-start;
+        .page-chat .chat-messages-wrap .msg.user {
+            justify-content: flex-end;
         }
-        .msg .bubble {
-            max-width: 84%;
-            padding: 8px 14px;
-            border-radius: 16px;
-            font-size: 13px;
+        .page-chat .chat-messages-wrap .msg.assistant {
+            justify-content: flex-start;
+        }
+        .page-chat .chat-messages-wrap .msg .bubble {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 18px;
+            font-size: 14px;
             line-height: 1.6;
             word-wrap: break-word;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            position: relative;
         }
-        .msg.user .bubble {
-            background: #c4450c;
-            color: #ffffff;
+        .page-chat .chat-messages-wrap .msg.user .bubble {
+            background: var(--primary);
+            color: #fff;
             border-bottom-right-radius: 4px;
         }
-        .msg.assistant .bubble {
-            background: #eef2f6;
-            color: #1a2635;
+        .page-chat .chat-messages-wrap .msg.assistant .bubble {
+            background: #fff;
+            color: var(--text);
             border-bottom-left-radius: 4px;
         }
-        .chat-input-area {
+        .page-chat .chat-messages-wrap .msg .bubble .time {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 4px;
+            text-align: right;
+            display: block;
+        }
+        .page-chat .chat-messages-wrap .msg.assistant .bubble .time {
+            color: #9aa9b7;
+        }
+        .page-chat .chat-messages-wrap .msg .avatar-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
             display: flex;
-            padding: 8px 12px;
-            background: #ffffff;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+            margin-right: 8px;
+            background: rgba(0, 0, 0, 0.04);
+        }
+        .page-chat .chat-messages-wrap .msg.user .avatar-icon {
+            margin-right: 0;
+            margin-left: 8px;
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .page-chat .chat-input-bar {
+            flex-shrink: 0;
+            padding: 8px 12px 12px;
+            background: #fff;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
             gap: 8px;
             align-items: center;
-            flex-shrink: 0;
-            border-radius: 0 0 14px 14px;
+            padding-bottom: calc(12px + var(--safe-bottom));
         }
-        .chat-input-area input {
+        .page-chat .chat-input-bar input {
             flex: 1;
-            padding: 8px 14px;
+            padding: 10px 16px;
             border: 1px solid #dce2e9;
-            border-radius: 30px;
-            font-size: 13px;
+            border-radius: 24px;
+            font-size: 14px;
             font-family: inherit;
-            background: #f8fafc;
-            transition: border 0.25s, box-shadow 0.25s;
-            color: #1a2635;
-            min-height: 38px;
+            background: #f5f6f8;
+            transition: border 0.2s;
+            min-height: 42px;
+            color: var(--text);
             -webkit-appearance: none;
             appearance: none;
         }
-        .chat-input-area input:focus {
-            border-color: #c4450c;
+        .page-chat .chat-input-bar input:focus {
+            border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.08);
+            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.06);
         }
-        .chat-input-area button {
-            background: #c4450c;
-            color: #ffffff;
+        .page-chat .chat-input-bar button {
+            background: var(--primary);
+            color: #fff;
             border: none;
-            padding: 8px 18px;
-            border-radius: 30px;
+            padding: 0 20px;
+            border-radius: 24px;
+            font-weight: 600;
+            font-size: 14px;
             cursor: pointer;
-            font-weight: 500;
-            font-size: 13px;
-            transition: 0.25s;
+            transition: 0.2s;
             font-family: inherit;
-            letter-spacing: 0.3px;
-            min-height: 38px;
-            min-width: 60px;
+            min-height: 42px;
             touch-action: manipulation;
             flex-shrink: 0;
+            min-width: 64px;
         }
-        .chat-input-area button:hover {
-            background: #a3340a;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 14px rgba(196, 69, 12, 0.15);
+        .page-chat .chat-input-bar button:hover {
+            background: var(--primary-dark);
         }
-        .chat-input-area button:active {
-            transform: scale(0.95);
-        }
-        @media (max-width: 480px) {
-            .chat-panel {
-                height: 280px;
-                min-height: 200px;
-                border-radius: 12px;
-            }
-            .chat-header {
-                padding: 8px 12px;
-                font-size: 13px;
-                border-radius: 12px 12px 0 0;
-            }
-            .chat-header .avatar {
-                width: 26px;
-                height: 26px;
-                font-size: 14px;
-            }
-            .chat-messages {
-                padding: 10px 12px;
-            }
-            .msg .bubble {
-                font-size: 12px;
-                padding: 7px 12px;
-                max-width: 88%;
-            }
-            .chat-input-area {
-                padding: 6px 10px;
-                gap: 6px;
-                border-radius: 0 0 12px 12px;
-            }
-            .chat-input-area input {
-                padding: 6px 12px;
-                font-size: 13px;
-                min-height: 34px;
-            }
-            .chat-input-area button {
-                padding: 6px 14px;
-                font-size: 12px;
-                min-height: 34px;
-                min-width: 52px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .chat-panel {
-                background: #1a2330;
-                border-color: #2a3a4a;
-            }
-            .chat-header {
-                background: linear-gradient(135deg, #0d1520, #1a2a3e);
-            }
-            .chat-messages {
-                background: #15202b;
-                border-bottom-color: #2a3a4a;
-            }
-            .msg.assistant .bubble {
-                background: #1e2a3a;
-                color: #c8d4e0;
-            }
-            .msg.user .bubble {
-                background: #c4450c;
-                color: #ffffff;
-            }
-            .chat-input-area {
-                background: #1a2330;
-            }
-            .chat-input-area input {
-                background: #15202b;
-                border-color: #2a3a4a;
-                color: #e8edf3;
-            }
-            .chat-input-area input:focus {
-                border-color: #c4450c;
-                box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.12);
-            }
-            .chat-input-area button {
-                background: #c4450c;
-                color: #ffffff;
-            }
-            .chat-input-area button:hover {
-                background: #a3340a;
-            }
+        .page-chat .chat-input-bar button:active {
+            transform: scale(0.94);
         }
 
-        /* ===== 第二页 - 操作按钮 ===== */
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin: 2px 0 10px;
-        }
-        .action-buttons button {
-            padding: 11px 20px;
-            border: none;
-            border-radius: 40px;
-            font-size: 14px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-family: inherit;
-            letter-spacing: 0.4px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            flex: 1 1 auto;
-            min-width: 120px;
-            min-height: 44px;
-            touch-action: manipulation;
-        }
-        .action-buttons button:active {
-            transform: scale(0.96);
-        }
-        .btn-report {
-            background: #1a2a3e;
-            color: #ffffff;
-            box-shadow: 0 4px 18px rgba(26, 42, 62, 0.15);
-        }
-        .btn-report:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(26, 42, 62, 0.20);
-            background: #24374e;
-        }
-        .btn-report:active {
-            transform: translateY(0px) scale(0.96);
-        }
-        @media (max-width: 480px) {
-            .action-buttons {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .action-buttons button {
-                width: 100%;
-                min-height: 46px;
-                font-size: 14px;
-                padding: 10px 16px;
-                flex: 1 1 auto;
-                min-width: 0;
-                border-radius: 30px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .btn-report {
-                background: #2a3a4a;
-            }
-            .btn-report:hover {
-                background: #3a4a5a;
-            }
-        }
-
-        /* ===== 报告区 ===== */
-        #reportArea {
+        /* ===== 报告区域 ===== */
+        .page-chat .report-area {
             display: none;
-            margin-top: 12px;
-            padding-top: 14px;
-            border-top: 2px solid #eef2f6;
+            background: #fff;
+            border-radius: 14px;
+            padding: 14px 16px;
+            margin: 8px 14px 12px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
         }
-        #reportArea h3 {
-            font-size: 18px;
+        .page-chat .report-area.show {
+            display: block;
+        }
+        .page-chat .report-area h3 {
+            font-size: 17px;
             font-weight: 600;
-            margin-bottom: 10px;
-            color: #1a2635;
-            letter-spacing: 0.3px;
+            margin-bottom: 8px;
+            color: var(--text);
         }
-        #reportArea p {
-            margin-bottom: 3px;
+        .page-chat .report-area p {
             font-size: 13px;
-            color: #2c3e50;
+            color: var(--text-secondary);
+            margin-bottom: 2px;
         }
-        #reportArea h4 {
-            margin-top: 12px;
-            margin-bottom: 4px;
-            font-weight: 600;
+        .page-chat .report-area h4 {
             font-size: 14px;
-            color: #1a2635;
+            font-weight: 600;
+            margin-top: 10px;
+            margin-bottom: 4px;
+            color: var(--text);
         }
-        #reportArea ul {
+        .page-chat .report-area ul {
             padding-left: 16px;
             margin-bottom: 6px;
         }
-        #reportArea ul li {
-            margin-bottom: 2px;
+        .page-chat .report-area ul li {
             font-size: 13px;
-            color: #2c3e50;
+            color: var(--text-secondary);
         }
-        #reportArea .chart-box {
-            max-width: 100%;
-            margin: 8px auto 4px;
+        .page-chat .report-area .chart-box {
+            max-width: 260px;
+            margin: 8px auto;
+            background: #fafbfc;
+            border-radius: 12px;
+            padding: 8px;
         }
-        @media (max-width: 480px) {
-            #reportArea h3 {
-                font-size: 16px;
-            }
-            #reportArea p {
-                font-size: 12px;
-            }
-            #reportArea h4 {
-                font-size: 13px;
-            }
-            #reportArea ul li {
-                font-size: 12px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            #reportArea {
-                border-top-color: #2a3a4a;
-            }
-            #reportArea h3 {
-                color: #e8edf3;
-            }
-            #reportArea p {
-                color: #c8d4e0;
-            }
-            #reportArea h4 {
-                color: #e8edf3;
-            }
-            #reportArea ul li {
-                color: #c8d4e0;
-            }
-            #reportArea .chart-box {
-                background: #15202b;
-                border-color: #2a3a4a;
-            }
+        .page-chat .report-area .chart-box canvas {
+            width: 100% !important;
+            height: auto !important;
+            max-height: 200px;
         }
 
-        /* ===== 第三页 - 学习中心 ===== */
-        .learn-center {
-            border-radius: 14px;
-            border: 1px solid #e9edf4;
-            background: #ffffff;
-            overflow: hidden;
-            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
+        /* ============================================================ */
+        /* ===== 页面3：学习中心 ===== */
+        /* ============================================================ */
+
+        .page-learn {
+            padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
         }
-        .learn-header {
-            background: linear-gradient(135deg, #0f1a2b, #1a2a3e);
-            color: #ffffff;
-            padding: 12px 16px;
+        .page-learn .learn-header {
             display: flex;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 6px 10px;
-            flex-shrink: 0;
+            gap: 8px;
+            margin-bottom: 12px;
+            background: #0f1a2b;
+            padding: 12px 16px;
+            border-radius: 14px;
+            color: #fff;
         }
-        .learn-header h3 {
+        .page-learn .learn-header h3 {
             font-size: 15px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 6px;
-            margin: 0;
+            gap: 8px;
         }
-        .learn-header h3 span {
-            background: rgba(255, 255, 255, 0.12);
-            padding: 1px 10px;
+        .page-learn .learn-header h3 span {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 0 10px;
             border-radius: 20px;
             font-size: 12px;
             font-weight: 500;
         }
-        .learn-header .learn-actions {
+        .page-learn .learn-header .actions {
             display: flex;
             gap: 6px;
-            align-items: center;
             flex-wrap: wrap;
         }
-        .learn-header .learn-actions label {
-            background: rgba(255, 255, 255, 0.08);
-            border: 1px solid rgba(255, 255, 255, 0.10);
+        .page-learn .learn-header .actions label {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             color: #fff;
             padding: 4px 12px;
-            border-radius: 30px;
+            border-radius: 20px;
             font-size: 11px;
             cursor: pointer;
-            transition: 0.25s;
+            transition: 0.2s;
             display: inline-flex;
             align-items: center;
-            gap: 3px;
+            gap: 4px;
+            touch-action: manipulation;
+            min-height: 30px;
         }
-        .learn-header .learn-actions label:hover {
-            background: rgba(255, 255, 255, 0.15);
+        .page-learn .learn-header .actions label:hover {
+            background: rgba(255, 255, 255, 0.12);
         }
-        .learn-header .learn-actions label input {
+        .page-learn .learn-header .actions label input {
             display: none;
         }
-        .learn-header .learn-actions .upload-hint {
+        .page-learn .learn-header .upload-hint {
             font-size: 10px;
-            color: rgba(255, 255, 255, 0.35);
-            margin-left: 2px;
+            color: rgba(255, 255, 255, 0.3);
         }
-        .learn-grid {
+
+        .page-learn .learn-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
             gap: 12px;
-            padding: 14px;
-            background: #fafbfc;
-            flex: 1;
-            overflow-y: auto;
-            align-content: flex-start;
-            -webkit-overflow-scrolling: touch;
         }
-        .learn-grid .media-item {
+        .page-learn .learn-grid .media-item {
             position: relative;
-            background: #ffffff;
+            background: #fff;
             border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            border: 1px solid #eef2f6;
+            border: 1px solid var(--border);
             cursor: pointer;
-            transition: transform 0.25s, box-shadow 0.25s;
+            transition: transform 0.2s, box-shadow 0.2s;
             aspect-ratio: 1 / 1;
             display: flex;
             flex-direction: column;
@@ -1454,207 +919,94 @@
             justify-content: center;
             touch-action: manipulation;
         }
-        .learn-grid .media-item:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+        .page-learn .learn-grid .media-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
         }
-        .learn-grid .media-item:active {
+        .page-learn .learn-grid .media-item:active {
             transform: scale(0.96);
         }
-        .learn-grid .media-item img,
-        .learn-grid .media-item video {
+        .page-learn .learn-grid .media-item img,
+        .page-learn .learn-grid .media-item video {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
             background: #f0f2f5;
         }
-        .learn-grid .media-item .media-badge {
+        .page-learn .learn-grid .media-item .badge {
             position: absolute;
-            top: 6px;
-            right: 6px;
-            background: rgba(0, 0, 0, 0.60);
+            top: 4px;
+            right: 4px;
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(4px);
             color: #fff;
-            font-size: 10px;
-            padding: 1px 8px;
-            border-radius: 20px;
-            letter-spacing: 0.3px;
+            font-size: 9px;
+            padding: 0 8px;
+            border-radius: 12px;
+            line-height: 18px;
             pointer-events: none;
         }
-        .learn-grid .media-item .filename {
+        .page-learn .learn-grid .media-item .filename {
             position: absolute;
             bottom: 0;
             left: 0;
             right: 0;
             padding: 6px 10px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.70));
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
             color: #fff;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
             pointer-events: none;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        .learn-grid .media-item .media-overlay {
+        .page-learn .learn-grid .media-item .del-btn {
             position: absolute;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.20);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        .learn-grid .media-item:hover .media-overlay {
-            opacity: 1;
-        }
-        .learn-grid .media-item .media-overlay span {
-            color: #fff;
-            font-size: 12px;
-            font-weight: 500;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.40);
-            padding: 2px 10px;
-            text-align: center;
-        }
-        .learn-grid .media-item .del-btn {
-            position: absolute;
-            top: 6px;
-            left: 6px;
-            background: rgba(192, 57, 43, 0.85);
-            backdrop-filter: blur(4px);
+            top: 4px;
+            left: 4px;
+            background: rgba(192, 57, 43, 0.8);
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 26px;
-            height: 26px;
-            font-size: 13px;
+            width: 24px;
+            height: 24px;
+            font-size: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.2s;
             opacity: 0;
-            pointer-events: none;
+            transition: 0.2s;
             touch-action: manipulation;
         }
-        .learn-grid .media-item:hover .del-btn,
-        .learn-grid .media-item:focus-within .del-btn {
+        .page-learn .learn-grid .media-item:hover .del-btn,
+        .page-learn .learn-grid .media-item:focus-within .del-btn {
             opacity: 1;
-            pointer-events: auto;
         }
-        .learn-grid .media-item .del-btn:hover {
+        .page-learn .learn-grid .media-item .del-btn:hover {
             background: #c0392b;
-            transform: scale(1.1);
         }
-        .learn-grid .media-item .del-btn:active {
-            transform: scale(0.9);
-        }
-        .learn-grid .learn-empty {
+        .page-learn .learn-grid .learn-empty {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 30px 16px;
-            color: #8a9aa8;
+            padding: 40px 20px;
+            color: var(--text-secondary);
             font-size: 14px;
         }
-        .learn-grid .learn-empty .icon {
+        .page-learn .learn-grid .learn-empty .icon {
             font-size: 40px;
             display: block;
-            margin-bottom: 10px;
-        }
-        @media (max-width: 480px) {
-            .learn-header {
-                padding: 10px 12px;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 6px;
-            }
-            .learn-header h3 {
-                font-size: 14px;
-            }
-            .learn-header .learn-actions {
-                justify-content: flex-start;
-            }
-            .learn-header .learn-actions label {
-                font-size: 10px;
-                padding: 3px 10px;
-            }
-            .learn-grid {
-                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-                gap: 10px;
-                padding: 10px;
-            }
-            .learn-grid .media-item {
-                border-radius: 10px;
-            }
-            .learn-grid .media-item .filename {
-                font-size: 10px;
-                padding: 4px 8px;
-            }
-            .learn-grid .media-item .media-badge {
-                font-size: 9px;
-                padding: 1px 6px;
-                top: 4px;
-                right: 4px;
-            }
-            .learn-grid .media-item .del-btn {
-                width: 22px;
-                height: 22px;
-                font-size: 11px;
-                top: 4px;
-                left: 4px;
-            }
-        }
-        @media (prefers-color-scheme: dark) {
-            .learn-center {
-                background: #1a2330;
-                border-color: #2a3a4a;
-            }
-            .learn-header {
-                background: linear-gradient(135deg, #0d1520, #1a2a3e);
-            }
-            .learn-header h3 {
-                color: #f0f4fa;
-            }
-            .learn-header h3 span {
-                background: rgba(255, 255, 255, 0.10);
-            }
-            .learn-header .learn-actions label {
-                border-color: rgba(255, 255, 255, 0.08);
-            }
-            .learn-grid {
-                background: #15202b;
-            }
-            .learn-grid .media-item {
-                background: #1a2330;
-                border-color: #2a3a4a;
-            }
-            .learn-grid .media-item:hover {
-                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.30);
-            }
-            .learn-grid .media-item img,
-            .learn-grid .media-item video {
-                background: #0d1520;
-            }
-            .learn-grid .media-item .filename {
-                background: linear-gradient(transparent, rgba(0, 0, 0, 0.80));
-            }
-            .learn-grid .media-item .media-badge {
-                background: rgba(0, 0, 0, 0.70);
-            }
-            .learn-grid .learn-empty {
-                color: #7a8a9a;
-            }
+            margin-bottom: 8px;
         }
 
         /* ===== 模态框 ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.80);
+            background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
@@ -1662,7 +1014,7 @@
             z-index: 9999;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.35s ease;
+            transition: opacity 0.3s;
             padding: 20px;
         }
         .modal-overlay.active {
@@ -1673,14 +1025,11 @@
             max-width: 92vw;
             max-height: 88vh;
             background: #1a1a1a;
-            border-radius: 18px;
+            border-radius: 16px;
             overflow: hidden;
-            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.40);
             position: relative;
-            display: flex;
-            flex-direction: column;
             transform: scale(0.92);
-            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .modal-overlay.active .modal-content {
             transform: scale(1);
@@ -1688,68 +1037,301 @@
         .modal-overlay .modal-content img,
         .modal-overlay .modal-content video {
             max-width: 100%;
-            max-height: 72vh;
+            max-height: 76vh;
             display: block;
             margin: 0 auto;
             background: #0a0a0a;
         }
         .modal-overlay .modal-content .modal-info {
-            padding: 10px 16px;
-            background: rgba(0, 0, 0, 0.60);
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.5);
             color: #fff;
             font-size: 13px;
-            font-weight: 500;
             text-align: center;
-            letter-spacing: 0.3px;
             flex-shrink: 0;
         }
         .modal-overlay .modal-close {
             position: absolute;
-            top: 10px;
-            right: 14px;
-            background: rgba(0, 0, 0, 0.50);
-            backdrop-filter: blur(4px);
+            top: 8px;
+            right: 12px;
+            background: rgba(0, 0, 0, 0.4);
             color: #fff;
             border: none;
             border-radius: 50%;
-            width: 36px;
-            height: 36px;
-            font-size: 22px;
+            width: 34px;
+            height: 34px;
+            font-size: 20px;
             cursor: pointer;
+            transition: 0.2s;
+            z-index: 10;
+            touch-action: manipulation;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: 0.25s;
-            z-index: 10;
-            touch-action: manipulation;
         }
         .modal-overlay .modal-close:hover {
-            background: rgba(192, 57, 43, 0.70);
-            transform: rotate(90deg);
+            background: rgba(192, 57, 43, 0.6);
         }
         .modal-overlay .modal-close:active {
             transform: scale(0.9);
         }
+
+        /* ============================================================ */
+        /* ===== 响应式 ===== */
+        /* ============================================================ */
+
+        @media (min-width: 768px) {
+            #app {
+                max-width: 560px;
+                border-radius: 24px;
+                margin-top: 12px;
+                margin-bottom: 12px;
+                box-shadow: 0 20px 80px rgba(0, 0, 0, 0.08);
+                height: 92vh;
+                height: 92dvh;
+            }
+            .page-eval .body-map-wrap {
+                max-width: 200px;
+            }
+            .page-eval .symptom-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .page-learn .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            }
+            .page-eval .patient-card {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+            .page-eval .patient-card .field-full {
+                grid-column: 1 / -1;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #app {
+                max-width: 640px;
+                border-radius: 28px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+                height: 90vh;
+                height: 90dvh;
+            }
+            .page-eval .body-section {
+                flex-wrap: nowrap;
+            }
+            .page-eval .body-map-wrap {
+                max-width: 220px;
+                flex-shrink: 0;
+            }
+            .page-eval .symptom-grid {
+                grid-template-columns: 1fr 1fr 1fr 1fr;
+            }
+            .page-learn .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
+        }
+
         @media (max-width: 480px) {
+            .app-header .title {
+                font-size: 14px;
+            }
+            .app-header .sub {
+                font-size: 10px;
+                padding: 1px 10px;
+            }
+            .page-eval .patient-card {
+                padding: 10px 12px;
+                gap: 6px 10px;
+            }
+            .page-eval .patient-card .field label {
+                font-size: 10px;
+            }
+            .page-eval .patient-card .field input,
+            .page-eval .patient-card .field select {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+            .page-eval .body-map-wrap {
+                max-width: 180px;
+            }
+            .page-eval .symptom-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 4px 8px;
+            }
+            .page-eval .symptom-grid .sym-item {
+                padding: 4px 8px 6px;
+            }
+            .page-eval .symptom-grid .sym-item .sym-header {
+                font-size: 11px;
+            }
+            .page-eval .symptom-grid .sym-item .sym-header .val {
+                font-size: 13px;
+            }
+            .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
+                width: 20px;
+                height: 20px;
+            }
+            .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
+                width: 20px;
+                height: 20px;
+            }
+            .page-chat .chat-messages-wrap .msg .bubble {
+                font-size: 13px;
+                padding: 8px 12px;
+                max-width: 86%;
+            }
+            .page-chat .chat-input-bar input {
+                font-size: 13px;
+                padding: 8px 14px;
+                min-height: 38px;
+            }
+            .page-chat .chat-input-bar button {
+                font-size: 13px;
+                padding: 0 16px;
+                min-height: 38px;
+                min-width: 56px;
+            }
+            .page-learn .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                gap: 8px;
+            }
+            .page-learn .learn-header {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .page-learn .learn-header .actions {
+                justify-content: flex-start;
+            }
+            .bottom-nav .nav-item .nav-label {
+                font-size: 9px;
+            }
+            .bottom-nav .nav-item .nav-icon {
+                font-size: 20px;
+            }
+            :root {
+                --nav-height: 60px;
+                --header-height: 46px;
+            }
+        }
+
+        /* ===== 暗色模式页面 ===== */
+        @media (prefers-color-scheme: dark) {
+            .page-eval .patient-card {
+                background: #1e2a3a;
+                border-color: var(--border);
+            }
+            .page-eval .patient-card .field input,
+            .page-eval .patient-card .field select {
+                background: #15202b;
+                border-color: #2a3a4a;
+                color: #e8edf3;
+            }
+            .page-eval .body-map-wrap {
+                background: #15202b;
+                border-color: var(--border);
+            }
+            .page-eval .body-map-wrap .part {
+                fill: #2a3a4a;
+                stroke: #4a5a6a;
+            }
+            .page-eval .body-map-wrap .part:hover {
+                fill: #3a4a5a;
+                stroke: var(--primary);
+            }
+            .page-eval .body-map-wrap .part.selected {
+                fill: var(--primary) !important;
+                stroke: var(--primary-dark);
+            }
+            .page-eval .body-map-wrap .part.buttock {
+                fill: #2a3a4a;
+            }
+            .page-eval .body-map-wrap .part.breast {
+                fill: #2a3a4a;
+            }
+            .page-eval .selected-box {
+                background: #1e2a3a;
+                border-color: var(--border);
+            }
+            .page-eval .selected-box ul li {
+                border-bottom-color: #2a3a4a;
+                color: #c8d4e0;
+            }
+            .page-eval .symptom-section {
+                background: #1e2a3a;
+                border-color: var(--border);
+            }
+            .page-eval .symptom-grid .sym-item {
+                background: #15202b;
+                border-color: #2a3a4a;
+            }
+            .page-eval .symptom-grid .sym-item .sym-header {
+                color: #c8d4e0;
+            }
+            .page-eval .symptom-grid .sym-item input[type="range"] {
+                background: #2a3a4a;
+            }
+            .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
+                background: var(--primary);
+                border-color: #1a2330;
+            }
+            .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
+                background: var(--primary);
+                border-color: #1a2330;
+            }
+            .page-eval .chart-mini {
+                background: #1e2a3a;
+                border-color: var(--border);
+            }
+            .page-chat .chat-messages-wrap {
+                background: #12181f;
+            }
+            .page-chat .chat-messages-wrap .msg.assistant .bubble {
+                background: #1e2a3a;
+                color: #c8d4e0;
+            }
+            .page-chat .chat-input-bar {
+                background: #1a2330;
+                border-top-color: #2a3a4a;
+            }
+            .page-chat .chat-input-bar input {
+                background: #15202b;
+                border-color: #2a3a4a;
+                color: #e8edf3;
+            }
+            .page-chat .chat-input-bar input:focus {
+                border-color: var(--primary);
+            }
+            .page-chat .report-area {
+                background: #1a2330;
+                border-color: var(--border);
+            }
+            .page-learn .learn-grid .media-item {
+                background: #1a2330;
+                border-color: var(--border);
+            }
+            .page-learn .learn-header {
+                background: #0d1520;
+            }
+            .page-learn .learn-grid .learn-empty {
+                color: #7a8a9a;
+            }
+            .page-chat .chat-header-bar {
+                background: #0d1520;
+            }
+            .page-eval .view-toggle button {
+                background: #1e2a3a;
+                color: #8a9aa8;
+            }
+            .page-eval .view-toggle button.active {
+                background: var(--primary);
+                color: #fff;
+            }
             .modal-overlay .modal-content {
-                max-width: 98vw;
-                max-height: 92vh;
-                border-radius: 14px;
-            }
-            .modal-overlay .modal-content img,
-            .modal-overlay .modal-content video {
-                max-height: 66vh;
-            }
-            .modal-overlay .modal-close {
-                width: 32px;
-                height: 32px;
-                font-size: 18px;
-                top: 8px;
-                right: 10px;
+                background: #0d1520;
             }
             .modal-overlay .modal-content .modal-info {
-                font-size: 12px;
-                padding: 8px 14px;
+                background: rgba(0, 0, 0, 0.6);
             }
         }
 
@@ -1759,410 +1341,277 @@
             box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12) !important;
         }
         .text-muted {
-            color: #8a9aa8;
+            color: var(--text-secondary);
             font-size: 12px;
-        }
-        .fw-600 {
-            font-weight: 600;
-        }
-        .no-print {
-            /* 保留 */;
         }
 
         /* ===== 打印样式 ===== */
         @media print {
-            body {
-                background: white !important;
-                padding: 0 !important;
-                display: block !important;
-                overflow: visible !important;
+            #app {
+                max-width: 100%;
+                border-radius: 0;
+                height: auto;
+                box-shadow: none;
+                margin: 0;
             }
-            .app-container {
-                max-width: 100% !important;
-                height: auto !important;
-                border-radius: 0 !important;
-                box-shadow: none !important;
-                margin: 0 !important;
-            }
-            .brand-bar {
-                background: #1a2a3e !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                padding: 10px 16px !important;
-            }
-            .pages-wrapper {
-                overflow: visible !important;
-                height: auto !important;
-            }
-            .pages-track {
-                display: block !important;
-                width: 100% !important;
-                transform: none !important;
-                transition: none !important;
-                height: auto !important;
-            }
-            .page {
-                display: block !important;
-                width: 100% !important;
-                height: auto !important;
-                overflow: visible !important;
-                padding: 12px 16px !important;
-                background: white !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
-                page-break-after: always;
-            }
-            .page-2 {
-                page-break-after: always;
-            }
-            .nav-bar {
-                display: none !important;
-            }
+            .bottom-nav,
+            .app-header,
+            .page-eval .btn-send,
+            .page-chat .chat-header-bar,
+            .page-chat .chat-input-bar,
+            .page-learn .learn-header .actions,
             .no-print {
                 display: none !important;
             }
-            #reportArea {
+            .page {
+                position: relative !important;
+                opacity: 1 !important;
+                pointer-events: auto !important;
+                transform: none !important;
+                overflow: visible !important;
+                padding: 12px !important;
                 display: block !important;
-                border-top: 1px solid #ccc !important;
-                margin-top: 12px !important;
-                padding-top: 12px !important;
             }
-            .btn-send-wrapper,
-            .action-buttons,
-            .switch-view,
-            .chat-input-area,
-            .chat-panel .chat-header {
+            .page:not(.active) {
                 display: none !important;
             }
-            .chat-panel {
-                border: 1px solid #ddd !important;
-                height: auto !important;
-                min-height: 0 !important;
-                overflow: visible !important;
-                background: transparent !important;
-                box-shadow: none !important;
+            .page-chat .report-area {
+                display: block !important;
             }
-            .chat-messages {
-                max-height: none !important;
-                overflow: visible !important;
-                padding: 8px 12px !important;
-                background: transparent !important;
-                border: none !important;
-            }
-            .msg .bubble {
-                max-width: 100% !important;
-                background: #f5f5f5 !important;
-                color: #1a2635 !important;
-                border: 1px solid #eee !important;
-            }
-            .msg.user .bubble {
-                background: #c4450c !important;
-                color: #fff !important;
-            }
-            .body-map {
+            .page-eval .body-map-wrap {
                 max-width: 160px !important;
-                border: 1px solid #ddd !important;
             }
-            .body-map .part {
+            .page-eval .body-map-wrap .part {
                 stroke-width: 0.8 !important;
             }
-            .selected-info,
-            .symptom-section,
-            .chart-box {
-                border: 1px solid #ddd !important;
-                background: #fafafa !important;
+            .page-chat .chat-messages-wrap {
+                max-height: 300px !important;
+                overflow: visible !important;
+                background: #f5f5f5 !important;
             }
-            .symptom-item {
-                border: 1px solid #eee !important;
-            }
-            .learn-center {
-                border: 1px solid #ddd !important;
-                height: auto !important;
-                page-break-inside: avoid;
-            }
-            .learn-grid {
-                background: transparent !important;
-                padding: 10px !important;
-            }
-            .learn-grid .media-item {
-                border: 1px solid #ddd !important;
-            }
-            .footer {
-                border-top: 1px solid #ccc !important;
-                margin-top: 12px !important;
-                padding-top: 10px !important;
-            }
-            .chart-box canvas {
-                max-height: 200px !important;
-            }
-            .report-chart-wrap {
-                max-width: 280px !important;
-                margin: 8px auto !important;
-            }
-        }
-
-        /* ===== 暗色模式 ===== */
-        @media (prefers-color-scheme: dark) {
-            .app-container {
-                background: #1a2330;
-            }
-            .brand-bar {
-                background: #0d1520;
-                border-bottom-color: #c4450c;
-            }
-            .brand-center .title-main {
-                color: #f0f4fa;
-            }
-            .brand-right .signature {
-                color: rgba(255, 255, 255, 0.75);
-                border-color: rgba(255, 255, 255, 0.06);
-            }
-            .page {
-                background: #1a2330;
-            }
-        }
-
-        /* ===== 安全区域 ===== */
-        @supports (padding: max(0px)) {
-            .app-container {
-                padding-left: max(0px, env(safe-area-inset-left));
-                padding-right: max(0px, env(safe-area-inset-right));
-            }
-            .brand-bar {
-                padding-left: max(16px, env(safe-area-inset-left));
-                padding-right: max(16px, env(safe-area-inset-right));
-            }
-            .page {
-                padding-left: max(14px, env(safe-area-inset-left));
-                padding-right: max(14px, env(safe-area-inset-right));
+            .page-chat .chat-messages-wrap .msg .bubble {
+                max-width: 100% !important;
             }
         }
     </style>
 </head>
 <body>
 
-    <div class="app-container" id="app">
-
-        <!-- ===== 品牌栏 ===== -->
-        <header class="brand-bar">
-            <div class="brand-left"></div>
-            <div class="brand-center">
-                <span class="title-main">烧伤ePRO智能症状管理平台</span>
-            </div>
-            <div class="brand-right">
-                <span class="signature">
-                    <span class="accent">陆军军医大学</span>
-                    <span class="sep">|</span>
-                    护理系
-                </span>
-            </div>
+    <div id="app">
+        <!-- ===== 顶部栏 ===== -->
+        <header class="app-header">
+            <span class="title">🔥 烧伤ePRO</span>
+            <span class="sub"><span class="accent">陆军军医大学</span> · 护理系</span>
         </header>
 
         <!-- ===== 页面容器 ===== -->
-        <div class="pages-wrapper" id="pagesWrapper">
-            <div class="pages-track" id="pagesTrack">
+        <div class="page-container">
 
-                <!-- ========== 第一页 ========== -->
-                <div class="page page-1" id="page1">
-                    <!-- 患者信息 -->
-                    <div class="input-group no-print">
-                        <div class="field">
-                            <label>患者ID <span class="required">*</span></label>
-                            <input type="text" id="patientId" placeholder="如 P001" />
-                        </div>
-                        <div class="field">
-                            <label>年龄 <span class="required">*</span></label>
-                            <input type="number" id="patientAge" placeholder="岁" min="0" max="150" step="1" />
-                        </div>
-                        <div class="field">
-                            <label>性别 <span class="required">*</span></label>
-                            <select id="patientGender" onchange="onGenderChange()">
-                                <option value="">请选择</option>
-                                <option value="男">男</option>
-                                <option value="女">女</option>
-                            </select>
-                        </div>
-                        <div class="field">
-                            <label>烧伤总面积 <span class="required">*</span></label>
-                            <input type="number" id="totalBurnArea" class="total-area-input" placeholder="%" min="0" max="100" step="0.5" value="0" />
-                            <span>% TBSA</span>
-                        </div>
-                        <div class="required-hint">
-                            <span class="star">*</span> 必填
+            <!-- ===== 页面1：评估 ===== -->
+            <div class="page page-eval active" id="pageEval">
+                <!-- 患者信息 -->
+                <div class="patient-card">
+                    <div class="field">
+                        <label>患者ID <span class="required">*</span></label>
+                        <input type="text" id="patientId" placeholder="如 P001" />
+                    </div>
+                    <div class="field">
+                        <label>年龄 <span class="required">*</span></label>
+                        <input type="number" id="patientAge" placeholder="岁" min="0" max="150" step="1" />
+                    </div>
+                    <div class="field">
+                        <label>性别 <span class="required">*</span></label>
+                        <select id="patientGender" onchange="onGenderChange()">
+                            <option value="">请选择</option>
+                            <option value="男">男</option>
+                            <option value="女">女</option>
+                        </select>
+                    </div>
+                    <div class="field field-full">
+                        <label>烧伤总面积 <span class="required">*</span></label>
+                        <div style="display:flex;align-items:center;gap:6px;">
+                            <input type="number" id="totalBurnArea" placeholder="%" min="0" max="100" step="0.5" value="0" style="flex:1;" />
+                            <span style="font-size:13px;color:var(--text-secondary);">% TBSA</span>
                         </div>
                     </div>
+                </div>
 
-                    <!-- 视图切换 -->
-                    <div class="switch-view no-print">
-                        <button id="btnFront" class="active" onclick="switchView('front')">🧍 正面</button>
-                        <button id="btnBack" onclick="switchView('back')">🔄 背面</button>
-                        <span id="genderBadge" class="gender-badge" style="display:none;"></span>
+                <!-- 视图切换 + 人体图 -->
+                <div class="view-toggle">
+                    <button id="btnFront" class="active" onclick="switchView('front')">🧍 正面</button>
+                    <button id="btnBack" onclick="switchView('back')">🔄 背面</button>
+                    <span id="genderBadge" class="text-muted" style="display:none;margin-left:6px;"></span>
+                </div>
+
+                <div class="body-section">
+                    <div class="body-map-wrap" id="bodyMapContainer">
+                        <!-- 男性正面 -->
+                        <svg id="maleFront" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                            <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="65" y="80" width="70" height="110" rx="8" class="part" data-part="前躯干" data-percent="13" onclick="selectPart(this)" />
+                            <rect x="15" y="90" width="30" height="100" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="155" y="90" width="30" height="100" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="40" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="125" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
+                        </svg>
+                        <!-- 男性背面 -->
+                        <svg id="maleBack" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                            <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="65" y="80" width="70" height="100" rx="8" class="part" data-part="后躯干" data-percent="8" onclick="selectPart(this)" />
+                            <rect x="15" y="90" width="30" height="100" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="155" y="90" width="30" height="100" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="40" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="125" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
+                            <ellipse cx="68" cy="192" rx="28" ry="16" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
+                            <ellipse cx="132" cy="192" rx="28" ry="16" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
+                        </svg>
+                        <!-- 女性正面 -->
+                        <svg id="femaleFront" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                            <ellipse cx="100" cy="35" rx="28" ry="33" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="70" y="80" width="60" height="100" rx="8" class="part" data-part="前躯干" data-percent="11" onclick="selectPart(this)" />
+                            <ellipse cx="85" cy="105" rx="18" ry="14" class="part breast" data-part="左乳房" data-percent="1" onclick="selectPart(this)" />
+                            <ellipse cx="115" cy="105" rx="18" ry="14" class="part breast" data-part="右乳房" data-percent="1" onclick="selectPart(this)" />
+                            <rect x="20" y="90" width="28" height="95" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="152" y="90" width="28" height="95" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="45" y="200" width="32" height="140" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="123" y="200" width="32" height="140" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="92" y="190" width="16" height="16" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
+                        </svg>
+                        <!-- 女性背面 -->
+                        <svg id="femaleBack" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+                            <ellipse cx="100" cy="35" rx="28" ry="33" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="70" y="80" width="60" height="100" rx="8" class="part" data-part="后躯干" data-percent="8" onclick="selectPart(this)" />
+                            <rect x="20" y="90" width="28" height="95" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="152" y="90" width="28" height="95" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                            <rect x="45" y="200" width="32" height="140" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="123" y="200" width="32" height="140" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                            <rect x="92" y="190" width="16" height="16" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
+                            <ellipse cx="75" cy="192" rx="26" ry="20" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
+                            <ellipse cx="125" cy="192" rx="26" ry="20" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
+                        </svg>
                     </div>
 
-                    <!-- 主体 -->
-                    <div class="body-section">
-                        <div class="body-map" id="bodyMapContainer">
-                            <!-- 男性正面 -->
-                            <svg id="maleFront" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="男性人体正面图" style="display:none;">
-                                <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="65" y="80" width="70" height="110" rx="8" class="part" data-part="前躯干" data-percent="13" onclick="selectPart(this)" />
-                                <rect x="15" y="90" width="30" height="100" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="155" y="90" width="30" height="100" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="40" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="125" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
-                            </svg>
-                            <!-- 男性背面 -->
-                            <svg id="maleBack" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="男性人体背面图" style="display:none;">
-                                <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="65" y="80" width="70" height="100" rx="8" class="part" data-part="后躯干" data-percent="8" onclick="selectPart(this)" />
-                                <rect x="15" y="90" width="30" height="100" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="155" y="90" width="30" height="100" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="40" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="125" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
-                                <ellipse cx="68" cy="192" rx="28" ry="16" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
-                                <ellipse cx="132" cy="192" rx="28" ry="16" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
-                            </svg>
-                            <!-- 女性正面 -->
-                            <svg id="femaleFront" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="女性人体正面图" style="display:none;">
-                                <ellipse cx="100" cy="35" rx="28" ry="33" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="70" y="80" width="60" height="100" rx="8" class="part" data-part="前躯干" data-percent="11" onclick="selectPart(this)" />
-                                <ellipse cx="85" cy="105" rx="18" ry="14" class="part breast" data-part="左乳房" data-percent="1" onclick="selectPart(this)" />
-                                <ellipse cx="115" cy="105" rx="18" ry="14" class="part breast" data-part="右乳房" data-percent="1" onclick="selectPart(this)" />
-                                <rect x="20" y="90" width="28" height="95" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="152" y="90" width="28" height="95" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="45" y="200" width="32" height="140" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="123" y="200" width="32" height="140" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="92" y="190" width="16" height="16" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
-                            </svg>
-                            <!-- 女性背面 -->
-                            <svg id="femaleBack" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="女性人体背面图" style="display:none;">
-                                <ellipse cx="100" cy="35" rx="28" ry="33" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="70" y="80" width="60" height="100" rx="8" class="part" data-part="后躯干" data-percent="8" onclick="selectPart(this)" />
-                                <rect x="20" y="90" width="28" height="95" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="152" y="90" width="28" height="95" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
-                                <rect x="45" y="200" width="32" height="140" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="123" y="200" width="32" height="140" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
-                                <rect x="92" y="190" width="16" height="16" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
-                                <ellipse cx="75" cy="192" rx="26" ry="20" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
-                                <ellipse cx="125" cy="192" rx="26" ry="20" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
-                            </svg>
-                        </div>
-
-                        <div class="right-panel">
-                            <div class="selected-info">
-                                <h4>✅ 已选部位 <span>（点击部位选中，✕ 移除）</span></h4>
-                                <ul id="selectedPartsList">
-                                    <li style="color: #9aa9b7; justify-content:center;">请在人体图上点击部位</li>
-                                </ul>
-                                <div class="total-area">
-                                    <span>🔥 烧伤总面积</span>
-                                    <span class="total-display" id="totalPercentDisplay">0.0 %</span>
-                                </div>
-                                <div class="hint">💡 在顶部输入框中填写实际总面积</div>
+                    <div class="right-panel">
+                        <div class="selected-box">
+                            <div class="title-row">
+                                ✅ 已选部位
+                                <span>（点击部位选中，✕ 移除）</span>
                             </div>
-
-                            <div class="symptom-section no-print">
-                                <h4>📋 症状评分 <span>（0=无，4=最严重）</span></h4>
-                                <div class="symptom-grid" id="symptomGrid"></div>
+                            <ul id="selectedPartsList">
+                                <li style="color:var(--text-secondary);justify-content:center;font-size:13px;">点击人体图选择</li>
+                            </ul>
+                            <div class="total-row">
+                                <span>🔥 烧伤总面积</span>
+                                <span class="num" id="totalPercentDisplay">0.0 %</span>
                             </div>
+                            <div class="hint">💡 顶部填实际总面积，部位用于标记</div>
                         </div>
-                    </div>
 
-                    <!-- 发送按钮（第一页结束） -->
-                    <div class="btn-send-wrapper no-print">
-                        <button id="btnSendToChat" onclick="handleSendAndNavigate()">
-                            🤖 将病情发送给小愈
+                        <div class="symptom-section">
+                            <div class="sym-title">
+                                📋 症状评分
+                                <span>（0=无，4=最重）</span>
+                            </div>
+                            <div class="symptom-grid" id="symptomGrid"></div>
+                        </div>
+
+                        <div class="chart-mini">
+                            <canvas id="burnChart" width="400" height="200"></canvas>
+                        </div>
+
+                        <button class="btn-send" onclick="sendBurnInfoToChat()">
+                            🤖 将病情发送给 小愈
                         </button>
                     </div>
                 </div>
-
-                <!-- ========== 第二页 ========== -->
-                <div class="page page-2" id="page2">
-                    <!-- 图表 -->
-                    <div class="chart-box no-print">
-                        <canvas id="burnChart" width="400" height="400"></canvas>
-                    </div>
-
-                    <!-- AI助手聊天 -->
-                    <div class="chat-panel no-print" id="chatPanel">
-                        <div class="chat-header">
-                            <span class="avatar">🤖</span>
-                            <span>💬 小愈 AI 助手</span>
-                        </div>
-                        <div class="chat-messages" id="chatMessages">
-                            <div class="msg assistant"><div class="bubble">你好！我是小愈 😊 请先选择性别，填写患者信息、烧伤总面积，点击人体图标记烧伤部位，再拖动滑块评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。</div></div>
-                        </div>
-                        <div class="chat-input-area">
-                            <input type="text" id="chatInput" placeholder="输入补充问题..." onkeypress="if(event.key==='Enter') sendMessage()" />
-                            <button onclick="sendMessage()">发送</button>
-                        </div>
-                    </div>
-
-                    <!-- 操作按钮 -->
-                    <div class="action-buttons no-print">
-                        <button class="btn-report" onclick="printReport()">🖨️ 生成并打印报告</button>
-                    </div>
-
-                    <!-- 报告区 -->
-                    <div id="reportArea">
-                        <h3>📋 烧伤评估报告</h3>
-                        <p><strong>患者ID：</strong><span id="r_id"></span></p>
-                        <p><strong>年龄：</strong><span id="r_age"></span> 岁 &nbsp;|&nbsp; <strong>性别：</strong><span id="r_gender"></span></p>
-                        <p><strong>烧伤总面积：</strong><span id="r_totalArea"></span> % TBSA</p>
-                        <p><strong>评估时间：</strong><span id="r_time"></span></p>
-                        <h4>烧伤部位</h4>
-                        <ul id="r_parts"></ul>
-                        <h4>症状评分（0-4分）</h4>
-                        <ul id="r_symptoms"></ul>
-                        <p style="color: #8a9aa8; font-size: 13px;">（本报告由系统自动生成，AI 咨询建议请查看聊天记录）</p>
-                        <div class="chart-box report-chart-wrap"><canvas id="reportChart" width="400" height="400"></canvas></div>
-                    </div>
-
-                    <!-- 底部占位 -->
-                    <div style="height:4px;"></div>
-                </div>
-
-                <!-- ========== 第三页 ========== -->
-                <div class="page page-3" id="page3">
-                    <div class="learn-center no-print" id="learnCenter">
-                        <div class="learn-header">
-                            <h3>
-                                📚 烧伤学习中心
-                                <span id="mediaCount">0</span>
-                            </h3>
-                            <div class="learn-actions">
-                                <label for="fileInputImg">
-                                    📷 上传图片
-                                    <input type="file" id="fileInputImg" accept="image/*" multiple onchange="handleFiles(this.files, 'image')" />
-                                </label>
-                                <label for="fileInputVid">
-                                    🎬 上传视频
-                                    <input type="file" id="fileInputVid" accept="video/*" multiple onchange="handleFiles(this.files, 'video')" />
-                                </label>
-                                <span class="upload-hint">（个人资料存于本地）</span>
-                            </div>
-                        </div>
-                        <div class="learn-grid" id="learnGrid"></div>
-                    </div>
-                </div>
-
             </div>
-            <!-- /pages-track -->
+
+            <!-- ===== 页面2：小愈 ===== -->
+            <div class="page page-chat" id="pageChat">
+                <div class="chat-header-bar">
+                    <div class="chat-title">
+                        <span class="avatar">🤖</span>
+                        <span>小愈 AI 助手</span>
+                    </div>
+                    <div class="chat-actions">
+                        <button onclick="generateReport()">📋 报告</button>
+                        <button onclick="clearChat()">🗑️ 清空</button>
+                    </div>
+                </div>
+                <div class="chat-messages-wrap" id="chatMessagesWrap">
+                    <div class="msg assistant">
+                        <div class="avatar-icon">🤖</div>
+                        <div class="bubble">
+                            你好！我是小愈 😊<br>
+                            请先在「评估」页填写患者信息、选择烧伤部位并评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。
+                            <span class="time">刚刚</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="chat-input-bar">
+                    <input type="text" id="chatInput" placeholder="输入补充问题..." onkeypress="if(event.key==='Enter') sendChatMessage()" />
+                    <button onclick="sendChatMessage()">发送</button>
+                </div>
+
+                <!-- 报告区 -->
+                <div class="report-area" id="reportArea">
+                    <h3>📋 烧伤评估报告</h3>
+                    <p><strong>患者ID：</strong><span id="r_id"></span></p>
+                    <p><strong>年龄：</strong><span id="r_age"></span> 岁 &nbsp;|&nbsp; <strong>性别：</strong><span id="r_gender"></span></p>
+                    <p><strong>烧伤总面积：</strong><span id="r_totalArea"></span> % TBSA</p>
+                    <p><strong>评估时间：</strong><span id="r_time"></span></p>
+                    <h4>烧伤部位</h4>
+                    <ul id="r_parts"></ul>
+                    <h4>症状评分（0-4分）</h4>
+                    <ul id="r_symptoms"></ul>
+                    <div class="chart-box"><canvas id="reportChart" width="400" height="200"></canvas></div>
+                    <button onclick="printReport()" style="width:100%;padding:10px;border:none;border-radius:30px;background:var(--primary);color:#fff;font-weight:600;font-size:14px;cursor:pointer;font-family:inherit;touch-action:manipulation;margin-top:8px;">🖨️ 打印报告</button>
+                </div>
+            </div>
+
+            <!-- ===== 页面3：学习中心 ===== -->
+            <div class="page page-learn" id="pageLearn">
+                <div class="learn-header">
+                    <h3>
+                        📚 烧伤学习中心
+                        <span id="mediaCount">0</span>
+                    </h3>
+                    <div class="actions">
+                        <label for="fileInputImg">
+                            📷 图片
+                            <input type="file" id="fileInputImg" accept="image/*" multiple onchange="handleFiles(this.files, 'image')" />
+                        </label>
+                        <label for="fileInputVid">
+                            🎬 视频
+                            <input type="file" id="fileInputVid" accept="video/*" multiple onchange="handleFiles(this.files, 'video')" />
+                        </label>
+                        <span class="upload-hint">（本地存储）</span>
+                    </div>
+                </div>
+                <div class="learn-grid" id="learnGrid"></div>
+            </div>
+
         </div>
-        <!-- /pages-wrapper -->
 
         <!-- ===== 底部导航 ===== -->
-        <nav class="nav-bar no-print" id="navBar">
-            <button class="nav-dot active" data-page="0" onclick="goToPage(0)" aria-label="第一页"></button>
-            <button class="nav-dot" data-page="1" onclick="goToPage(1)" aria-label="第二页"></button>
-            <button class="nav-dot" data-page="2" onclick="goToPage(2)" aria-label="第三页"></button>
-            <span class="nav-label"><span class="page-num" id="pageNumLabel">1</span> / 3</span>
+        <nav class="bottom-nav" id="bottomNav">
+            <button class="nav-item active" data-page="pageEval" onclick="switchPage('pageEval')">
+                <span class="nav-icon">📋</span>
+                <span class="nav-label">评估</span>
+            </button>
+            <button class="nav-item" data-page="pageChat" onclick="switchPage('pageChat')">
+                <span class="nav-icon">💬</span>
+                <span class="nav-label">小愈</span>
+                <span class="badge" id="chatBadge" style="display:none;">●</span>
+            </button>
+            <button class="nav-item" data-page="pageLearn" onclick="switchPage('pageLearn')">
+                <span class="nav-icon">📚</span>
+                <span class="nav-label">学习</span>
+            </button>
         </nav>
-
     </div>
-    <!-- /app-container -->
 
     <!-- ===== 模态框 ===== -->
     <div class="modal-overlay" id="mediaModal" onclick="closeModal(event)">
@@ -2174,91 +1623,26 @@
     </div>
 
     <script>
-        // =================================================================
+        // ================================================================
         // ===== 配置 =====
-        // =================================================================
+        // ================================================================
         const API_URL = 'https://cloud.fastgpt.cn/api/v1/chat/completions';
         const API_KEY = 'fastgpt-uqFyIGGcF5SrfET9BSYLyNooreUIUEnRnWVQCEY0GCXBVBECXfV6ob';
 
-        // =================================================================
-        // ===== 分页控制 =====
-        // =================================================================
-        let currentPage = 0;
-        const totalPages = 3;
-        const track = document.getElementById('pagesTrack');
-        const dots = document.querySelectorAll('.nav-dot');
-        const pageNumLabel = document.getElementById('pageNumLabel');
-
-        function goToPage(index) {
-            if (index < 0 || index >= totalPages) return;
-            currentPage = index;
-            track.style.transform = `translateX(-${index * 33.333}%)`;
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-            });
-            pageNumLabel.textContent = index + 1;
-            // 滚动到顶部
-            const pages = document.querySelectorAll('.page');
-            if (pages[index]) {
-                pages[index].scrollTop = 0;
-            }
-        }
-
-        // 触摸滑动
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let isSwiping = false;
-        const wrapper = document.getElementById('pagesWrapper');
-
-        wrapper.addEventListener('touchstart', function(e) {
-            touchStartX = e.changedTouches[0].screenX;
-            touchStartY = e.changedTouches[0].screenY;
-            isSwiping = false;
-        }, { passive: true });
-
-        wrapper.addEventListener('touchmove', function(e) {
-            const dx = e.changedTouches[0].screenX - touchStartX;
-            const dy = e.changedTouches[0].screenY - touchStartY;
-            if (Math.abs(dx) > 10 && Math.abs(dx) > Math.abs(dy) * 0.6) {
-                isSwiping = true;
-            }
-        }, { passive: true });
-
-        wrapper.addEventListener('touchend', function(e) {
-            if (!isSwiping) return;
-            const dx = e.changedTouches[0].screenX - touchStartX;
-            if (Math.abs(dx) > 40) {
-                if (dx < 0 && currentPage < totalPages - 1) {
-                    goToPage(currentPage + 1);
-                } else if (dx > 0 && currentPage > 0) {
-                    goToPage(currentPage - 1);
-                }
-            }
-            isSwiping = false;
-        }, { passive: true });
-
-        // 键盘快捷键
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'ArrowRight' && currentPage < totalPages - 1) {
-                goToPage(currentPage + 1);
-                e.preventDefault();
-            } else if (e.key === 'ArrowLeft' && currentPage > 0) {
-                goToPage(currentPage - 1);
-                e.preventDefault();
-            }
-        });
-
-        // =================================================================
-        // ===== 原有功能（保持基本不变） =====
-        // =================================================================
-
+        // ================================================================
+        // ===== 状态 =====
+        // ================================================================
         let currentView = 'front';
         let currentGender = '';
         let selectedParts = {};
         let myChart = null;
         let reportChart = null;
+        let db = null;
+        let chatMessageCount = 0;
 
-        // ---------- 症状定义 ----------
+        // ================================================================
+        // ===== 症状定义 =====
+        // ================================================================
         const symptomDefs = [
             { id: 'sym_pain', label: '疼痛' },
             { id: 'sym_itch', label: '瘙痒' },
@@ -2270,43 +1654,38 @@
             { id: 'sym_appetite', label: '食欲不振' }
         ];
 
-        function initSymptoms() {
-            const grid = document.getElementById('symptomGrid');
-            grid.innerHTML = '';
-            symptomDefs.forEach(def => {
-                const div = document.createElement('div');
-                div.className = 'symptom-item';
-                div.innerHTML = `
-                    <div class="symptom-header">
-                        <span>${def.label}</span>
-                        <span class="value" id="${def.id}_val">0</span>
-                    </div>
-                    <input type="range" id="${def.id}" min="0" max="4" step="1" value="0" 
-                           oninput="updateSymptomValue('${def.id}')">
-                    <div class="range-labels">
-                        <span>0</span>
-                        <span>4</span>
-                    </div>
-                `;
-                grid.appendChild(div);
-            });
+        // ================================================================
+        // ===== 页面切换 =====
+        // ================================================================
+        function switchPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
+
+            // 如果切换到聊天页，滚动到底部
+            if (pageId === 'pageChat') {
+                const wrap = document.getElementById('chatMessagesWrap');
+                setTimeout(() => { wrap.scrollTop = wrap.scrollHeight; }, 100);
+                // 隐藏小红点
+                document.getElementById('chatBadge').style.display = 'none';
+            }
+            // 如果切换到学习页，刷新网格
+            if (pageId === 'pageLearn') {
+                renderMediaGrid();
+            }
         }
 
-        function updateSymptomValue(id) {
-            const slider = document.getElementById(id);
-            const val = parseInt(slider.value);
-            document.getElementById(id + '_val').textContent = val;
-        }
-
-        // ---------- 性别切换 ----------
+        // ================================================================
+        // ===== 性别切换 =====
+        // ================================================================
         function onGenderChange() {
             const sel = document.getElementById('patientGender');
             currentGender = sel.value;
             const badge = document.getElementById('genderBadge');
             if (currentGender) {
                 badge.style.display = 'inline-block';
-                badge.textContent = currentGender === '男' ? '♂ 男性评估' : '♀ 女性评估';
-                badge.className = 'gender-badge' + (currentGender === '女' ? ' female' : '');
+                badge.textContent = currentGender === '男' ? '♂ 男性' : '♀ 女性';
             } else {
                 badge.style.display = 'none';
             }
@@ -2314,11 +1693,13 @@
             updateBodyView();
             updateChart();
             if (currentGender) {
-                addMessage('assistant', `👤 已切换至${currentGender}性烧伤评估视图，请重新选择烧伤部位。`);
+                addChatMessage('assistant', `👤 已切换至${currentGender}性烧伤评估视图，请重新选择烧伤部位。`);
             }
         }
 
-        // ---------- 视图切换 ----------
+        // ================================================================
+        // ===== 视图切换 =====
+        // ================================================================
         function switchView(view) {
             currentView = view;
             document.getElementById('btnFront').classList.toggle('active', view === 'front');
@@ -2329,26 +1710,17 @@
         function updateBodyView() {
             const gender = currentGender || '男';
             const view = currentView;
-            const svgs = ['maleFront', 'maleBack', 'femaleFront', 'femaleBack'];
-            svgs.forEach(id => {
-                document.getElementById(id).style.display = 'none';
-            });
+            const ids = ['maleFront', 'maleBack', 'femaleFront', 'femaleBack'];
+            ids.forEach(id => document.getElementById(id).style.display = 'none');
             let targetId = '';
-            if (gender === '男') {
-                targetId = view === 'front' ? 'maleFront' : 'maleBack';
-            } else {
-                targetId = view === 'front' ? 'femaleFront' : 'femaleBack';
-            }
+            if (gender === '男') targetId = view === 'front' ? 'maleFront' : 'maleBack';
+            else targetId = view === 'front' ? 'femaleFront' : 'femaleBack';
             const target = document.getElementById(targetId);
             if (target) {
                 target.style.display = 'block';
                 target.querySelectorAll('.part').forEach(el => {
                     const p = el.getAttribute('data-part');
-                    if (selectedParts.hasOwnProperty(p)) {
-                        el.classList.add('selected');
-                    } else {
-                        el.classList.remove('selected');
-                    }
+                    el.classList.toggle('selected', !!selectedParts[p]);
                 });
             }
             updateSelectedList();
@@ -2362,7 +1734,9 @@
             updateTotalDisplay();
         }
 
-        // ---------- 选择部位 ----------
+        // ================================================================
+        // ===== 部位选择 =====
+        // ================================================================
         function selectPart(element) {
             const partName = element.getAttribute('data-part');
             const defaultPercent = parseFloat(element.getAttribute('data-percent')) || 0;
@@ -2378,12 +1752,6 @@
             } else {
                 selectedParts[partName] = defaultPercent;
                 allParts.forEach(el => el.classList.add('selected'));
-                if (window.innerWidth <= 768) {
-                    const listEl = document.getElementById('selectedPartsList');
-                    setTimeout(() => {
-                        listEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-                    }, 200);
-                }
             }
             updateSelectedList();
             updateTotalDisplay();
@@ -2394,7 +1762,7 @@
             const listEl = document.getElementById('selectedPartsList');
             const keys = Object.keys(selectedParts);
             if (keys.length === 0) {
-                listEl.innerHTML = '<li style="color: #9aa9b7; justify-content:center;">请在人体图上点击部位</li>';
+                listEl.innerHTML = '<li style="color:var(--text-secondary);justify-content:center;font-size:13px;">点击人体图选择</li>';
                 return;
             }
             let html = '';
@@ -2402,7 +1770,7 @@
                 html += `
                     <li>
                         <span class="part-name">${part}</span>
-                        <button class="remove-btn" onclick="removePart('${part}')" title="移除" aria-label="移除 ${part}">✕</button>
+                        <button class="remove-btn" onclick="removePart('${part}')" aria-label="移除">✕</button>
                     </li>
                 `;
             }
@@ -2412,8 +1780,7 @@
         function removePart(part) {
             if (selectedParts[part]) {
                 delete selectedParts[part];
-                const allParts = document.querySelectorAll(`.part[data-part="${part}"]`);
-                allParts.forEach(el => el.classList.remove('selected'));
+                document.querySelectorAll(`.part[data-part="${part}"]`).forEach(el => el.classList.remove('selected'));
                 updateSelectedList();
                 updateTotalDisplay();
                 updateChart();
@@ -2423,24 +1790,64 @@
             }
         }
 
-        // ---------- 总面积显示 ----------
+        // ================================================================
+        // ===== 总面积 =====
+        // ================================================================
         function updateTotalDisplay() {
-            const totalInput = document.getElementById('totalBurnArea');
-            let val = parseFloat(totalInput.value);
+            const input = document.getElementById('totalBurnArea');
+            let val = parseFloat(input.value);
             if (isNaN(val) || val < 0) val = 0;
             if (val > 100) val = 100;
             document.getElementById('totalPercentDisplay').textContent = val.toFixed(1) + ' %';
-            if (totalInput.value !== String(val)) {
-                totalInput.value = val;
-            }
+            if (input.value !== String(val)) input.value = val;
         }
-
         document.getElementById('totalBurnArea').addEventListener('input', function() {
             updateTotalDisplay();
             updateChart();
         });
 
-        // ---------- 图表 ----------
+        // ================================================================
+        // ===== 症状 =====
+        // ================================================================
+        function initSymptoms() {
+            const grid = document.getElementById('symptomGrid');
+            grid.innerHTML = '';
+            symptomDefs.forEach(def => {
+                const div = document.createElement('div');
+                div.className = 'sym-item';
+                div.innerHTML = `
+                    <div class="sym-header">
+                        <span>${def.label}</span>
+                        <span class="val" id="${def.id}_val">0</span>
+                    </div>
+                    <input type="range" id="${def.id}" min="0" max="4" step="1" value="0" 
+                           oninput="updateSymptomValue('${def.id}')">
+                    <div class="range-labels"><span>0</span><span>4</span></div>
+                `;
+                grid.appendChild(div);
+            });
+        }
+
+        function updateSymptomValue(id) {
+            const slider = document.getElementById(id);
+            const val = parseInt(slider.value);
+            document.getElementById(id + '_val').textContent = val;
+        }
+
+        function getSymptomValues() {
+            return symptomDefs.map(def => ({
+                name: def.label,
+                value: parseInt(document.getElementById(def.id).value) || 0
+            }));
+        }
+
+        function getSymptomReport() {
+            return getSymptomValues().map(s => `${s.name} ${s.value}分`).join('，');
+        }
+
+        // ================================================================
+        // ===== 图表 =====
+        // ================================================================
         function updateChart() {
             const ctx = document.getElementById('burnChart').getContext('2d');
             const partNames = Object.keys(selectedParts);
@@ -2452,11 +1859,7 @@
                 myChart = new Chart(ctx, {
                     type: 'pie',
                     data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e4e9ef'] }] },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: true,
-                        plugins: { legend: { display: false } }
-                    }
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
                 });
                 return;
             }
@@ -2464,10 +1867,10 @@
             const weights = partNames.map(p => selectedParts[p]);
             const sumWeights = weights.reduce((a, b) => a + b, 0);
             const data = weights.map(w => (w / sumWeights) * totalArea);
-
             const colors = ['#c4450c', '#d45a2a', '#e67e22', '#f39c12', '#c0392b', '#e74c3c', '#8e44ad', '#2980b9', '#1abc9c',
                 '#27ae60', '#2ecc71', '#3498db'
             ];
+
             myChart = new Chart(ctx, {
                 type: 'pie',
                 data: {
@@ -2486,7 +1889,7 @@
                         legend: {
                             position: 'bottom',
                             labels: {
-                                padding: 12,
+                                padding: 10,
                                 font: { size: 11, family: '-apple-system, sans-serif' },
                                 color: '#2c3e50',
                                 boxWidth: 12,
@@ -2495,58 +1898,74 @@
                         },
                         title: {
                             display: true,
-                            text: '烧伤部位分布（基于总面积）',
-                            font: { size: 14, weight: '600', family: '-apple-system, sans-serif' },
+                            text: '烧伤部位分布',
+                            font: { size: 13, weight: '600' },
                             color: '#1a2635',
-                            padding: { bottom: 8 }
+                            padding: { bottom: 6 }
                         },
-                        tooltip: {
-                            callbacks: {
-                                label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%`
-                            }
-                        }
+                        tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%` } }
                     }
                 }
             });
+            // 暗色模式适配
+            if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                myChart.options.plugins.legend.labels.color = '#c8d4e0';
+                myChart.options.plugins.title.color = '#e8edf3';
+                myChart.update();
+            }
         }
 
-        // ---------- 症状获取 ----------
-        function getSymptomValues() {
-            return symptomDefs.map(def => ({
-                name: def.label,
-                value: parseInt(document.getElementById(def.id).value) || 0
-            }));
-        }
-
-        function getSymptomReport() {
-            return getSymptomValues().map(s => `${s.name} ${s.value}分`).join('，');
-        }
-
-        // ---------- 聊天 ----------
-        function addMessage(role, text) {
-            if (text === undefined || text === null) text = '（空消息）';
+        // ================================================================
+        // ===== 聊天 =====
+        // ================================================================
+        function addChatMessage(role, text) {
+            if (!text) text = '（空消息）';
             text = String(text);
-            const container = document.getElementById('chatMessages');
+            const wrap = document.getElementById('chatMessagesWrap');
             const div = document.createElement('div');
             div.className = `msg ${role}`;
-            div.innerHTML = `<div class="bubble">${text.replace(/\n/g, '<br>')}</div>`;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-            if (window.innerWidth <= 768) {
-                setTimeout(() => {
-                    container.scrollTop = container.scrollHeight;
-                }, 50);
+
+            const timeStr = new Date().toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+            let avatarHtml = '';
+            if (role === 'assistant') {
+                avatarHtml = `<div class="avatar-icon">🤖</div>`;
+            } else {
+                avatarHtml = `<div class="avatar-icon">👤</div>`;
+            }
+
+            div.innerHTML = `
+                ${role === 'assistant' ? avatarHtml : ''}
+                <div class="bubble">
+                    ${text.replace(/\n/g, '<br>')}
+                    <span class="time">${timeStr}</span>
+                </div>
+                ${role === 'user' ? avatarHtml : ''}
+            `;
+            wrap.appendChild(div);
+            wrap.scrollTop = wrap.scrollHeight;
+            chatMessageCount++;
+
+            // 如果聊天页未激活，显示小红点
+            const chatPage = document.getElementById('pageChat');
+            if (!chatPage.classList.contains('active')) {
+                document.getElementById('chatBadge').style.display = 'inline-block';
             }
         }
 
         async function callFastGPT(userMessage) {
-            addMessage('user', userMessage);
+            addChatMessage('user', userMessage);
+            const wrap = document.getElementById('chatMessagesWrap');
             const thinkingDiv = document.createElement('div');
             thinkingDiv.className = 'msg assistant';
-            thinkingDiv.innerHTML = '<div class="bubble" style="font-style:italic;">⏳ 小愈正在思考...</div>';
-            const container = document.getElementById('chatMessages');
-            container.appendChild(thinkingDiv);
-            container.scrollTop = container.scrollHeight;
+            thinkingDiv.innerHTML = `
+                <div class="avatar-icon">🤖</div>
+                <div class="bubble" style="font-style:italic;color:var(--text-secondary);">
+                    ⏳ 小愈正在思考...
+                    <span class="time">${new Date().toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'})}</span>
+                </div>
+            `;
+            wrap.appendChild(thinkingDiv);
+            wrap.scrollTop = wrap.scrollHeight;
 
             try {
                 const response = await fetch(API_URL, {
@@ -2580,8 +1999,8 @@
                     reply = '❌ 未知回复格式：' + JSON.stringify(data);
                 }
 
-                if (reply) addMessage('assistant', reply);
-                else addMessage('assistant', '❌ 未能解析任何有效回复。');
+                if (reply) addChatMessage('assistant', reply);
+                else addChatMessage('assistant', '❌ 未能解析任何有效回复。');
 
             } catch (error) {
                 thinkingDiv.remove();
@@ -2589,79 +2008,11 @@
                 if (error.message.includes('Failed to fetch') || error.message.includes('NetworkError')) {
                     errorMsg += '\n💡 可能是跨域问题，请尝试：\n• 使用浏览器插件（Allow CORS）\n• 部署到同域服务器\n• 使用代理服务';
                 }
-                addMessage('assistant', errorMsg);
+                addChatMessage('assistant', errorMsg);
             }
         }
 
-        // ---------- 验证 ----------
-        function validateAllFields() {
-            let valid = true;
-            const fields = [
-                { id: 'patientId', name: '患者ID' },
-                { id: 'patientAge', name: '年龄' },
-                { id: 'patientGender', name: '性别' },
-                { id: 'totalBurnArea', name: '烧伤总面积' }
-            ];
-            for (let f of fields) {
-                const el = document.getElementById(f.id);
-                const val = el.value.trim();
-                if (!val) {
-                    el.classList.add('field-error');
-                    valid = false;
-                } else {
-                    el.classList.remove('field-error');
-                }
-            }
-            if (document.getElementById('patientGender').value === '') {
-                document.getElementById('patientGender').classList.add('field-error');
-                valid = false;
-            } else {
-                document.getElementById('patientGender').classList.remove('field-error');
-            }
-
-            const totalArea = parseFloat(document.getElementById('totalBurnArea').value);
-            if (isNaN(totalArea) || totalArea < 0 || totalArea > 100) {
-                document.getElementById('totalBurnArea').classList.add('field-error');
-                alert('⚠️ 烧伤总面积须为 0-100 之间的数值。');
-                valid = false;
-            }
-
-            if (Object.keys(selectedParts).length === 0) {
-                alert('⚠️ 请至少选择一个烧伤部位。');
-                valid = false;
-            }
-
-            return valid;
-        }
-
-        // ---------- 发送病情 + 跳转第二页 ----------
-        function handleSendAndNavigate() {
-            if (!validateAllFields()) return;
-
-            const patientId = document.getElementById('patientId').value.trim();
-            const age = document.getElementById('patientAge').value.trim();
-            const gender = document.getElementById('patientGender').value;
-            const totalArea = parseFloat(document.getElementById('totalBurnArea').value).toFixed(1);
-            const partsDesc = Object.keys(selectedParts).join('、');
-            const symptomReport = getSymptomReport();
-
-            const message =
-                `患者ID：${patientId}，年龄：${age}岁，性别：${gender}，烧伤总面积：${totalArea}% TBSA，烧伤部位：${partsDesc}，症状评分：${symptomReport}。`;
-
-            // 先发送消息到AI
-            callFastGPT(message);
-
-            // 跳转到第二页
-            goToPage(1);
-
-            // 小振动反馈
-            if ('vibrate' in navigator) {
-                navigator.vibrate && navigator.vibrate(12);
-            }
-        }
-
-        // ---------- 聊天发送 ----------
-        function sendMessage() {
+        function sendChatMessage() {
             const input = document.getElementById('chatInput');
             const text = input.value.trim();
             if (!text) return;
@@ -2674,21 +2025,101 @@
                 prefix = `【患者${pid ? 'ID：'+pid : ''}${age ? '，年龄：'+age+'岁' : ''}${gender ? '，性别：'+gender : ''}】`;
             }
             callFastGPT(prefix + text);
-            if (window.innerWidth <= 768) {
-                input.blur();
-            }
+            if (window.innerWidth <= 768) input.blur();
         }
 
-        // ---------- 打印报告 ----------
-        function printReport() {
+        function clearChat() {
+            if (!confirm('确定清空所有聊天记录吗？')) return;
+            const wrap = document.getElementById('chatMessagesWrap');
+            wrap.innerHTML = `
+                <div class="msg assistant">
+                    <div class="avatar-icon">🤖</div>
+                    <div class="bubble">
+                        聊天已清空。😊 有需要随时找我。
+                        <span class="time">${new Date().toLocaleTimeString('zh-CN', {hour:'2-digit',minute:'2-digit'})}</span>
+                    </div>
+                </div>
+            `;
+            chatMessageCount = 0;
+            document.getElementById('chatBadge').style.display = 'none';
+        }
+
+        // ================================================================
+        // ===== 发送病情 =====
+        // ================================================================
+        function validateAllFields() {
+            let valid = true;
+            const fields = [
+                { id: 'patientId', name: '患者ID' },
+                { id: 'patientAge', name: '年龄' },
+                { id: 'patientGender', name: '性别' },
+                { id: 'totalBurnArea', name: '烧伤总面积' }
+            ];
+            for (let f of fields) {
+                const el = document.getElementById(f.id);
+                const val = el.value.trim();
+                if (!val) { el.classList.add('field-error');
+                    valid = false; } else { el.classList.remove('field-error'); }
+            }
+            if (document.getElementById('patientGender').value === '') {
+                document.getElementById('patientGender').classList.add('field-error');
+                valid = false;
+            } else {
+                document.getElementById('patientGender').classList.remove('field-error');
+            }
+            const totalArea = parseFloat(document.getElementById('totalBurnArea').value);
+            if (isNaN(totalArea) || totalArea < 0 || totalArea > 100) {
+                document.getElementById('totalBurnArea').classList.add('field-error');
+                alert('⚠️ 烧伤总面积须为 0-100 之间的数值。');
+                valid = false;
+            }
+            if (Object.keys(selectedParts).length === 0) {
+                alert('⚠️ 请至少选择一个烧伤部位。');
+                valid = false;
+            }
+            return valid;
+        }
+
+        function sendBurnInfoToChat() {
             if (!validateAllFields()) return;
 
             const patientId = document.getElementById('patientId').value.trim();
             const age = document.getElementById('patientAge').value.trim();
             const gender = document.getElementById('patientGender').value;
             const totalArea = parseFloat(document.getElementById('totalBurnArea').value).toFixed(1);
+            const partsDesc = Object.keys(selectedParts).join('、');
+            const symptomReport = getSymptomReport();
 
-            document.getElementById('r_id').textContent = patientId;
+            const message =
+                `患者ID：${patientId}，年龄：${age}岁，性别：${gender}，烧伤总面积：${totalArea}% TBSA，烧伤部位：${partsDesc}，症状评分：${symptomReport}。`;
+
+            // 切换到聊天页
+            switchPage('pageChat');
+            // 延迟发送消息
+            setTimeout(() => {
+                callFastGPT(message);
+            }, 400);
+        }
+
+        // ================================================================
+        // ===== 报告 =====
+        // ================================================================
+        function generateReport() {
+            const pid = document.getElementById('patientId').value.trim();
+            const age = document.getElementById('patientAge').value.trim();
+            const gender = document.getElementById('patientGender').value;
+            const totalArea = parseFloat(document.getElementById('totalBurnArea').value).toFixed(1);
+
+            if (!pid || !age || !gender || !totalArea || totalArea === '0.0') {
+                alert('⚠️ 请先在「评估」页完整填写患者信息并选择烧伤部位。');
+                return;
+            }
+            if (Object.keys(selectedParts).length === 0) {
+                alert('⚠️ 请至少选择一个烧伤部位。');
+                return;
+            }
+
+            document.getElementById('r_id').textContent = pid;
             document.getElementById('r_age').textContent = age;
             document.getElementById('r_gender').textContent = gender;
             document.getElementById('r_totalArea').textContent = totalArea;
@@ -2709,29 +2140,70 @@
             for (let s of symObjs) symHtml += `<li>${s.name}：${s.value} 分</li>`;
             document.getElementById('r_symptoms').innerHTML = symHtml;
 
+            // 报告图表
             const reportCanvas = document.getElementById('reportChart');
-            if (myChart) {
-                if (reportChart) reportChart.destroy();
-                reportChart = new Chart(reportCanvas, {
+            const ctx = reportCanvas.getContext('2d');
+            if (reportChart) reportChart.destroy();
+
+            if (keys.length === 0 || parseFloat(totalArea) === 0) {
+                reportChart = new Chart(ctx, {
                     type: 'pie',
-                    data: JSON.parse(JSON.stringify(myChart.data)),
-                    options: JSON.parse(JSON.stringify(myChart.options))
+                    data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e4e9ef'] }] },
+                    options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
                 });
+            } else {
+                const weights = keys.map(p => selectedParts[p]);
+                const sumWeights = weights.reduce((a, b) => a + b, 0);
+                const data = weights.map(w => (w / sumWeights) * parseFloat(totalArea));
+                const colors = ['#c4450c', '#d45a2a', '#e67e22', '#f39c12', '#c0392b', '#e74c3c', '#8e44ad', '#2980b9', '#1abc9c',
+                    '#27ae60', '#2ecc71', '#3498db'
+                ];
+                reportChart = new Chart(ctx, {
+                    type: 'pie',
+                    data: {
+                        labels: keys,
+                        datasets: [{
+                            data: data,
+                            backgroundColor: colors.slice(0, keys.length),
+                            borderColor: '#ffffff',
+                            borderWidth: 2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: true,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: { padding: 10, font: { size: 11 }, boxWidth: 12, usePointStyle: true }
+                            },
+                            title: { display: true, text: '烧伤部位分布', font: { size: 13, weight: '600' } },
+                            tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%` } }
+                        }
+                    }
+                });
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    reportChart.options.plugins.legend.labels.color = '#c8d4e0';
+                    reportChart.options.plugins.title.color = '#e8edf3';
+                    reportChart.update();
+                }
             }
 
-            // 显示报告区
-            document.getElementById('reportArea').style.display = 'block';
-
-            // 延迟打印确保渲染完成
+            document.getElementById('reportArea').classList.add('show');
+            // 滚动到报告区
+            const area = document.getElementById('reportArea');
             setTimeout(() => {
-                window.print();
-            }, 400);
+                area.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
         }
 
-        // =================================================================
-        // ===== 学习中心 =====
-        // =================================================================
+        function printReport() {
+            window.print();
+        }
 
+        // ================================================================
+        // ===== 学习中心 =====
+        // ================================================================
         const SHARED_MEDIA = [
             { name: '怎么判断烧烫伤的不同程度？', url: 'https://zhangxiaoodi.github.io/assets/怎么判断烧烫伤的不同程度？.jpg',
             type: 'image' },
@@ -2742,7 +2214,7 @@
             { name: '烧伤疼痛', url: 'https://zhangxiaoodi.github.io/assets/烧伤疼痛.jpg', type: 'image' },
             { name: '烧伤疼痛2', url: 'https://zhangxiaoodi.github.io/assets/烧伤疼痛jpg.jpg', type: 'image' },
             { name: '烧烫伤起水疱怎么办（2）', url: 'https://zhangxiaoodi.github.io/assets/烧烫伤起水疱怎么办（2）.jpg',
-                type: 'image' },
+            type: 'image' },
             { name: '烧烫伤起水疱怎么办', url: 'https://zhangxiaoodi.github.io/assets/烧烫伤起水疱怎么办.jpg', type: 'image' },
             { name: '烧烫伤起水疱怎么办？', url: 'https://zhangxiaoodi.github.io/assets/烧烫伤起水疱怎么办？.jpg', type: 'image' },
             { name: '瘙痒手册', url: 'https://zhangxiaoodi.github.io/assets/瘙痒手册.png', type: 'image' },
@@ -2753,7 +2225,6 @@
 
         const DB_NAME = 'BurnLearnDB';
         const STORE_NAME = 'media';
-        let db = null;
 
         function openDB() {
             return new Promise((resolve, reject) => {
@@ -2763,17 +2234,12 @@
                     if (!db.objectStoreNames.contains(STORE_NAME)) {
                         const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
                         store.createIndex('type', 'type', { unique: false });
-                        store.createIndex('name', 'name', { unique: false });
                         store.createIndex('uploadedAt', 'uploadedAt', { unique: false });
                     }
                 };
-                request.onsuccess = (ev) => {
-                    db = ev.target.result;
-                    resolve(db);
-                };
-                request.onerror = (ev) => {
-                    reject(ev.target.error);
-                };
+                request.onsuccess = (ev) => { db = ev.target.result;
+                    resolve(db); };
+                request.onerror = (ev) => reject(ev.target.error);
             });
         }
 
@@ -2796,9 +2262,7 @@
                         const req = store.add(record);
                         req.onsuccess = () => resolve(req.result);
                         req.onerror = () => reject(req.error);
-                    } catch (err) {
-                        reject(err);
-                    }
+                    } catch (err) { reject(err); }
                 };
                 reader.onerror = () => reject(reader.error);
                 reader.readAsArrayBuffer(file);
@@ -2838,7 +2302,7 @@
                         <div class="learn-empty">
                             <span class="icon">🖼️</span>
                             还没有学习资料，点击上方按钮上传图片或视频<br>
-                            <span style="font-size:12px;color:#b0bec5;">上传的内容将保存在本地浏览器中</span>
+                            <span style="font-size:11px;color:var(--text-secondary);">上传的内容保存在本地浏览器中</span>
                         </div>
                     `;
                     return;
@@ -2867,27 +2331,22 @@
                         <div class="media-item" data-id="${item.id || 'shared'}" data-type="${item.type}" data-url="${url}" onclick="openMediaModal(this)">
                             ${isImage ? `<img src="${url}" alt="${item.name}" loading="lazy">` : ''}
                             ${isVideo ? `<video src="${url}" muted preload="metadata" loading="lazy"></video>` : ''}
-                            <span class="media-badge">${isImage ? '🖼️' : (isVideo ? '🎬' : '📄')} ${isImage ? '图片' : (isVideo ? '视频' : '文档')}</span>
+                            <span class="badge">${isImage ? '🖼️' : (isVideo ? '🎬' : '📄')}</span>
                             <span class="filename">${item.name}</span>
-                            <div class="media-overlay">
-                                <span>${item.name}</span>
-                                ${delBtn}
-                            </div>
+                            ${delBtn}
                         </div>
                     `;
                 }
                 grid.innerHTML = html;
             }).catch(err => {
                 console.error('渲染媒体网格失败:', err);
-                grid.innerHTML = `<div class="learn-empty" style="color:#c0392b;">⚠️ 加载失败，请刷新页面重试</div>`;
+                grid.innerHTML = `<div class="learn-empty" style="color:#c0392b;">⚠️ 加载失败，请刷新重试</div>`;
             });
         }
 
         async function handleFiles(files, type) {
             if (!files || files.length === 0) return;
-            if (!db) {
-                await openDB();
-            }
+            if (!db) await openDB();
 
             let successCount = 0;
             let failCount = 0;
@@ -2895,11 +2354,10 @@
             for (let file of files) {
                 const maxSize = type === 'video' ? 100 * 1024 * 1024 : 20 * 1024 * 1024;
                 if (file.size > maxSize) {
-                    alert(`⚠️ ${file.name} 文件过大（${(file.size/1024/1024).toFixed(1)}MB），${type === 'video' ? '视频' : '图片'}最大 ${maxSize/1024/1024}MB`);
+                    alert(`⚠️ ${file.name} 过大（${(file.size/1024/1024).toFixed(1)}MB），${type === 'video' ? '视频' : '图片'}最大 ${maxSize/1024/1024}MB`);
                     failCount++;
                     continue;
                 }
-
                 try {
                     await saveMedia(file, type);
                     successCount++;
@@ -2913,7 +2371,11 @@
                 renderMediaGrid();
                 let msg = `✅ 成功上传 ${successCount} 个${type === 'image' ? '图片' : '视频'}`;
                 if (failCount > 0) msg += `，${failCount} 个失败`;
-                addMessage('assistant', `📚 学习中心：${msg}`);
+                addChatMessage('assistant', `📚 学习中心：${msg}`);
+                // 如果学习页未激活，显示小红点
+                if (!document.getElementById('pageLearn').classList.contains('active')) {
+                    document.getElementById('chatBadge').style.display = 'inline-block';
+                }
             } else {
                 alert(`⚠️ 上传失败，请检查文件格式和大小`);
             }
@@ -2923,11 +2385,11 @@
         }
 
         async function deleteMediaItem(id) {
-            if (!confirm('确定要删除这个媒体文件吗？')) return;
+            if (!confirm('确定删除这个媒体文件吗？')) return;
             try {
                 await deleteMedia(id);
                 renderMediaGrid();
-                addMessage('assistant', `🗑️ 已删除一个学习资料`);
+                addChatMessage('assistant', `🗑️ 已删除一个学习资料`);
             } catch (err) {
                 console.error('删除失败:', err);
                 alert('⚠️ 删除失败，请重试');
@@ -2953,7 +2415,7 @@
                     `<div style="color:#fff;padding:40px;text-align:center;font-size:18px;">📄 ${name}<br><a href="${url}" target="_blank" style="color:#c4450c;text-decoration:underline;">点击下载/查看</a></div>`;
             }
             content.innerHTML = html;
-            info.textContent = `${name}`;
+            info.textContent = name;
 
             modal.classList.add('active');
             document.body.style.overflow = 'hidden';
@@ -2977,48 +2439,40 @@
             modal.classList.remove('active');
             document.body.style.overflow = '';
             const video = content.querySelector('video');
-            if (video) {
-                video.pause();
+            if (video) { video.pause();
                 video.src = '';
-                video.load();
-            }
+                video.load(); }
             content.innerHTML = '';
         }
 
         function setupDragDrop() {
-            const area = document.getElementById('learnCenter');
+            const area = document.getElementById('pageLearn');
             if (!area) return;
-
             area.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 area.style.borderColor = '#c4450c';
-                area.style.boxShadow = '0 0 0 3px rgba(196,69,12,0.15)';
+                area.style.boxShadow = '0 0 0 3px rgba(196,69,12,0.12)';
             });
-
             area.addEventListener('dragleave', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 area.style.borderColor = '';
                 area.style.boxShadow = '';
             });
-
             area.addEventListener('drop', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
                 area.style.borderColor = '';
                 area.style.boxShadow = '';
-
                 const files = e.dataTransfer.files;
                 if (!files || files.length === 0) return;
-
-                const images = [];
-                const videos = [];
+                const images = [],
+                    videos = [];
                 for (let f of files) {
                     if (f.type.startsWith('image/')) images.push(f);
                     else if (f.type.startsWith('video/')) videos.push(f);
                 }
-
                 if (images.length > 0) {
                     const input = document.getElementById('fileInputImg');
                     const dt = new DataTransfer();
@@ -3027,7 +2481,6 @@
                     handleFiles(input.files, 'image');
                     input.value = '';
                 }
-
                 if (videos.length > 0) {
                     const input = document.getElementById('fileInputVid');
                     const dt = new DataTransfer();
@@ -3036,7 +2489,6 @@
                     handleFiles(input.files, 'video');
                     input.value = '';
                 }
-
                 if (images.length === 0 && videos.length === 0) {
                     alert('⚠️ 请拖入图片或视频文件');
                 }
@@ -3048,33 +2500,36 @@
                 await openDB();
                 renderMediaGrid();
                 setupDragDrop();
-                addMessage('assistant', '📚 烧伤学习中心已加载！点击图片可放大查看，你也可以上传自己的学习资料（保存在本地浏览器）。');
+                addChatMessage('assistant', '📚 烧伤学习中心已加载！点击图片可放大查看，你也可以上传自己的学习资料（保存在本地浏览器）。');
             } catch (err) {
                 console.error('学习中心初始化失败:', err);
                 document.getElementById('learnGrid').innerHTML =
-                    `<div class="learn-empty" style="color:#c0392b;">⚠️ 本地存储不可用，请检查浏览器设置或使用现代浏览器</div>`;
+                    `<div class="learn-empty" style="color:#c0392b;">⚠️ 本地存储不可用，请检查浏览器设置</div>`;
             }
         }
 
-        // 暴露给全局
-        window.handleFiles = handleFiles;
-        window.deleteMediaItem = deleteMediaItem;
-        window.openMediaModal = openMediaModal;
-        window.closeModal = closeModal;
+        // ================================================================
+        // ===== 全局暴露 =====
+        // ================================================================
         window.selectPart = selectPart;
         window.removePart = removePart;
         window.switchView = switchView;
         window.onGenderChange = onGenderChange;
-        window.updateSymptomValue = updateSymptomValue;
-        window.sendMessage = sendMessage;
+        window.sendBurnInfoToChat = sendBurnInfoToChat;
+        window.sendChatMessage = sendChatMessage;
+        window.clearChat = clearChat;
+        window.generateReport = generateReport;
         window.printReport = printReport;
-        window.handleSendAndNavigate = handleSendAndNavigate;
-        window.goToPage = goToPage;
+        window.handleFiles = handleFiles;
+        window.deleteMediaItem = deleteMediaItem;
+        window.openMediaModal = openMediaModal;
+        window.closeModal = closeModal;
+        window.switchPage = switchPage;
+        window.updateSymptomValue = updateSymptomValue;
 
-        // =================================================================
+        // ================================================================
         // ===== 初始化 =====
-        // =================================================================
-
+        // ================================================================
         window.addEventListener('load', () => {
             initSymptoms();
 
@@ -3082,8 +2537,7 @@
             currentGender = '男';
             document.getElementById('patientGender').value = '男';
             document.getElementById('genderBadge').style.display = 'inline-block';
-            document.getElementById('genderBadge').textContent = '♂ 男性评估';
-            document.getElementById('genderBadge').className = 'gender-badge';
+            document.getElementById('genderBadge').textContent = '♂ 男性';
 
             updateTotalDisplay();
             updateBodyView();
@@ -3095,63 +2549,69 @@
             });
             document.getElementById('totalBurnArea').addEventListener('change', updateChart);
 
-            const chatPanel = document.getElementById('chatPanel');
-            if (chatPanel) {
-                chatPanel.addEventListener('touchmove', function(e) {
-                    e.stopPropagation();
-                }, { passive: true });
-            }
-
+            // 移动端触摸优化
             if (window.innerWidth <= 768) {
-                document.querySelectorAll('.symptom-item input[type="range"]').forEach(slider => {
+                document.querySelectorAll('.sym-item input[type="range"]').forEach(slider => {
                     slider.addEventListener('touchstart', function() {
                         this.style.accentColor = '#c4450c';
                     }, { passive: true });
                 });
             }
 
-            addMessage('assistant', '👤 当前为男性烧伤评估视图，如需切换请修改性别。');
+            // 双击人体图清除（移动端）
+            document.getElementById('bodyMapContainer').addEventListener('dblclick', function(e) {
+                if (window.innerWidth <= 768) {
+                    const parts = document.querySelectorAll('.part.selected');
+                    if (parts.length > 0) {
+                        parts.forEach(el => el.classList.remove('selected'));
+                        selectedParts = {};
+                        updateSelectedList();
+                        updateTotalDisplay();
+                        updateChart();
+                        if ('vibrate' in navigator) navigator.vibrate && navigator.vibrate(15);
+                    }
+                }
+            });
 
-            // 默认跳转第一页
-            goToPage(0);
+            // 点击外部收起键盘
+            document.addEventListener('touchstart', function(e) {
+                const tag = e.target.tagName;
+                if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+                    const active = document.activeElement;
+                    if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+                        active.blur();
+                    }
+                }
+            }, { passive: true });
+
+            addChatMessage('assistant', '👤 当前为男性烧伤评估视图，如需切换请修改性别。');
         });
 
+        // 窗口大小变化时重绘图表
         let resizeTimer;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
             resizeTimer = setTimeout(() => {
-                if (myChart) {
-                    myChart.resize();
-                }
+                if (myChart) myChart.resize();
+                if (reportChart) reportChart.resize();
             }, 300);
         });
 
-        document.getElementById('bodyMapContainer').addEventListener('dblclick', function(e) {
-            if (window.innerWidth <= 768) {
-                const parts = document.querySelectorAll('.part.selected');
-                if (parts.length > 0) {
-                    parts.forEach(el => el.classList.remove('selected'));
-                    selectedParts = {};
-                    updateSelectedList();
-                    updateTotalDisplay();
-                    updateChart();
-                    if ('vibrate' in navigator) {
-                        navigator.vibrate && navigator.vibrate(15);
-                    }
-                }
+        // 暗色模式切换时更新图表颜色
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
+            if (myChart) {
+                const isDark = this.matches;
+                myChart.options.plugins.legend.labels.color = isDark ? '#c8d4e0' : '#2c3e50';
+                myChart.options.plugins.title.color = isDark ? '#e8edf3' : '#1a2635';
+                myChart.update();
+            }
+            if (reportChart) {
+                const isDark = this.matches;
+                reportChart.options.plugins.legend.labels.color = isDark ? '#c8d4e0' : '#2c3e50';
+                reportChart.options.plugins.title.color = isDark ? '#e8edf3' : '#1a2635';
+                reportChart.update();
             }
         });
-
-        document.addEventListener('touchstart', function(e) {
-            const tag = e.target.tagName;
-            if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
-                const active = document.activeElement;
-                if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
-                    active.blur();
-                }
-            }
-        }, { passive: true });
     </script>
-
 </body>
 </html>

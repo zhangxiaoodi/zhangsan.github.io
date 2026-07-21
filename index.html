@@ -14,7 +14,6 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
             background: #f2f4f8;
@@ -27,7 +26,6 @@
             align-items: flex-start;
             justify-content: center;
         }
-
         .container {
             max-width: 1320px;
             width: 100%;
@@ -51,17 +49,14 @@
             gap: 6px 12px;
             min-height: 64px;
         }
-
         .brand-left {
             flex: 0 0 40px;
         }
-
         .brand-center {
             flex: 1;
             text-align: center;
             min-width: 140px;
         }
-
         .brand-center .title-main {
             font-size: 20px;
             font-weight: 600;
@@ -70,11 +65,9 @@
             text-shadow: 0 1px 3px rgba(0, 0, 0, 0.10);
             display: inline-block;
         }
-
         .brand-right {
             flex-shrink: 0;
         }
-
         .brand-right .signature {
             font-size: 13px;
             font-weight: 500;
@@ -88,12 +81,10 @@
             backdrop-filter: blur(2px);
             display: inline-block;
         }
-
         .brand-right .signature .accent {
             color: #d4a843;
             font-weight: 600;
         }
-
         .brand-right .signature .sep {
             color: rgba(255, 255, 255, 0.20);
             margin: 0 4px;
@@ -103,7 +94,6 @@
         .content-wrap {
             padding: 20px 20px 28px;
         }
-
         .legacy-title {
             display: none;
         }
@@ -120,7 +110,6 @@
             border: 1px solid #e9edf4;
             align-items: center;
         }
-
         .input-group .field {
             display: flex;
             align-items: center;
@@ -129,19 +118,16 @@
             flex: 1 1 auto;
             min-width: 120px;
         }
-
         .input-group .field label {
             font-size: 13px;
             font-weight: 500;
             color: #2c3e50;
             white-space: nowrap;
         }
-
         .input-group .field label .required {
             color: #c0392b;
             margin-left: 2px;
         }
-
         .input-group .field input,
         .input-group .field select {
             padding: 8px 12px;
@@ -156,19 +142,16 @@
             -webkit-appearance: none;
             appearance: none;
         }
-
         .input-group .field input:focus,
         .input-group .field select:focus {
             border-color: #c4450c;
             outline: none;
             box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.10);
         }
-
         .input-group .field input[type="number"] {
             width: 80px;
             min-width: 60px;
         }
-
         .input-group .field select {
             min-width: 80px;
             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236a7a8a'/%3E%3C/svg%3E");
@@ -176,12 +159,10 @@
             background-position: right 12px center;
             padding-right: 32px;
         }
-
         .input-group .field .total-area-input {
             width: 72px;
             min-width: 56px;
         }
-
         .input-group .required-hint {
             font-size: 12px;
             color: #9aa9b7;
@@ -190,7 +171,6 @@
             align-items: center;
             gap: 4px;
         }
-
         .input-group .required-hint .star {
             color: #c0392b;
         }
@@ -202,7 +182,6 @@
             gap: 6px;
             justify-content: center;
         }
-
         .switch-view button {
             padding: 8px 18px;
             border: none;
@@ -218,20 +197,33 @@
             touch-action: manipulation;
             min-height: 40px;
         }
-
         .switch-view button:hover {
             background: #e4e9ef;
             transform: translateY(-1px);
         }
-
         .switch-view button:active {
             transform: scale(0.96);
         }
-
         .switch-view button.active {
             background: #c4450c;
             color: #ffffff;
             box-shadow: 0 4px 14px rgba(196, 69, 12, 0.20);
+        }
+
+        /* ===== 性别标签 ===== */
+        .gender-badge {
+            display: inline-block;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 14px;
+            border-radius: 20px;
+            margin-left: 6px;
+            background: rgba(196, 69, 12, 0.12);
+            color: #c4450c;
+        }
+        .gender-badge.female {
+            background: rgba(196, 69, 12, 0.10);
+            color: #c4450c;
         }
 
         /* ===== 主体区域 ===== */
@@ -242,7 +234,7 @@
             margin-bottom: 20px;
         }
 
-        /* 人体图 - 移动端优先 */
+        /* 人体图容器 */
         .body-map {
             position: relative;
             width: 100%;
@@ -257,18 +249,15 @@
             transition: box-shadow 0.3s;
             touch-action: manipulation;
         }
-
         .body-map:hover {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
-
         .body-map svg {
             width: 100%;
             height: auto;
             display: block;
             touch-action: manipulation;
         }
-
         .body-map .part {
             transition: fill 0.25s, stroke 0.25s, transform 0.15s, filter 0.3s;
             stroke: #6a7a8a;
@@ -277,18 +266,15 @@
             cursor: pointer;
             touch-action: manipulation;
         }
-
         .body-map .part:hover {
             fill: #cdd6e0;
             stroke: #c4450c;
             stroke-width: 2.5;
             filter: drop-shadow(0 2px 6px rgba(196, 69, 12, 0.15));
         }
-
         .body-map .part:active {
             transform: scale(0.97);
         }
-
         .body-map .part.selected {
             fill: #d45a2a !important;
             stroke: #a3340a;
@@ -296,7 +282,6 @@
             filter: drop-shadow(0 3px 10px rgba(196, 69, 12, 0.30));
             animation: partPulse 0.4s ease;
         }
-
         @keyframes partPulse {
             0% {
                 transform: scale(1);
@@ -307,6 +292,26 @@
             100% {
                 transform: scale(1);
             }
+        }
+        /* 臀部特殊样式 */
+        .body-map .part.buttock {
+            fill: #d5dce6;
+        }
+        .body-map .part.buttock:hover {
+            fill: #c0c8d4;
+        }
+        .body-map .part.buttock.selected {
+            fill: #d45a2a !important;
+        }
+        /* 乳房特殊样式 */
+        .body-map .part.breast {
+            fill: #dce0e8;
+        }
+        .body-map .part.breast:hover {
+            fill: #c8ced8;
+        }
+        .body-map .part.breast.selected {
+            fill: #d45a2a !important;
         }
 
         /* ===== 右侧面板 ===== */
@@ -326,11 +331,9 @@
             border: 1px solid #e9edf4;
             transition: box-shadow 0.3s;
         }
-
         .selected-info:hover {
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
         }
-
         .selected-info h4 {
             font-size: 15px;
             font-weight: 600;
@@ -341,13 +344,11 @@
             gap: 6px;
             flex-wrap: wrap;
         }
-
         .selected-info h4 span {
             font-weight: 400;
             font-size: 12px;
             color: #8a9aa8;
         }
-
         .selected-info ul {
             list-style: none;
             padding: 0;
@@ -355,7 +356,6 @@
             overflow-y: auto;
             margin-bottom: 4px;
         }
-
         .selected-info ul li {
             padding: 6px 0;
             border-bottom: 1px solid #eef2f6;
@@ -365,17 +365,14 @@
             font-size: 14px;
             gap: 10px;
         }
-
         .selected-info ul li:last-child {
             border-bottom: none;
         }
-
         .selected-info ul li .part-name {
             font-weight: 500;
             flex: 1;
             color: #1a2635;
         }
-
         .selected-info ul li .remove-btn {
             color: #b03a2e;
             cursor: pointer;
@@ -395,17 +392,14 @@
             align-items: center;
             justify-content: center;
         }
-
         .selected-info ul li .remove-btn:hover {
             opacity: 1;
             transform: scale(1.2);
             background: rgba(176, 58, 46, 0.06);
         }
-
         .selected-info ul li .remove-btn:active {
             transform: scale(0.9);
         }
-
         .total-area {
             font-size: 18px;
             font-weight: 600;
@@ -419,12 +413,10 @@
             flex-wrap: wrap;
             gap: 4px;
         }
-
         .total-area .total-display {
             color: #c4450c;
             font-size: 20px;
         }
-
         .selected-info .hint {
             font-size: 12px;
             color: #9aa9b7;
@@ -440,11 +432,9 @@
             padding: 16px 18px 18px;
             transition: box-shadow 0.3s;
         }
-
         .symptom-section:hover {
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.02);
         }
-
         .symptom-section h4 {
             font-size: 15px;
             font-weight: 600;
@@ -455,19 +445,16 @@
             gap: 6px;
             flex-wrap: wrap;
         }
-
         .symptom-section h4 span {
             font-weight: 400;
             font-size: 12px;
             color: #8a9aa8;
         }
-
         .symptom-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 10px 14px;
         }
-
         .symptom-item {
             display: flex;
             flex-direction: column;
@@ -479,12 +466,10 @@
             transition: box-shadow 0.25s, border-color 0.25s;
             touch-action: manipulation;
         }
-
         .symptom-item:hover {
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
             border-color: #d5dce6;
         }
-
         .symptom-item .symptom-header {
             display: flex;
             justify-content: space-between;
@@ -493,7 +478,6 @@
             color: #2c3e50;
             font-size: 14px;
         }
-
         .symptom-item .symptom-header .value {
             color: #c4450c;
             font-size: 18px;
@@ -501,7 +485,6 @@
             min-width: 28px;
             text-align: center;
         }
-
         .symptom-item input[type="range"] {
             width: 100%;
             height: 6px;
@@ -514,7 +497,6 @@
             transition: background 0.2s;
             touch-action: manipulation;
         }
-
         .symptom-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
@@ -528,16 +510,13 @@
             transition: 0.15s;
             touch-action: manipulation;
         }
-
         .symptom-item input[type="range"]::-webkit-slider-thumb:hover {
             transform: scale(1.08);
             box-shadow: 0 2px 10px rgba(196, 69, 12, 0.25);
         }
-
         .symptom-item input[type="range"]::-webkit-slider-thumb:active {
             transform: scale(0.92);
         }
-
         .symptom-item input[type="range"]::-moz-range-thumb {
             width: 22px;
             height: 22px;
@@ -548,7 +527,6 @@
             box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
             touch-action: manipulation;
         }
-
         .symptom-item .range-labels {
             display: flex;
             justify-content: space-between;
@@ -564,7 +542,6 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-
         .action-buttons button {
             padding: 12px 24px;
             border: none;
@@ -584,38 +561,31 @@
             min-height: 48px;
             touch-action: manipulation;
         }
-
         .action-buttons button:active {
             transform: scale(0.96);
         }
-
         .btn-ai {
             background: linear-gradient(135deg, #c4450c, #d45a2a);
             color: #ffffff;
             box-shadow: 0 4px 18px rgba(196, 69, 12, 0.20);
         }
-
         .btn-ai:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 28px rgba(196, 69, 12, 0.30);
         }
-
         .btn-ai:active {
             transform: translateY(0px) scale(0.96);
         }
-
         .btn-report {
             background: #1a2a3e;
             color: #ffffff;
             box-shadow: 0 4px 18px rgba(26, 42, 62, 0.15);
         }
-
         .btn-report:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 28px rgba(26, 42, 62, 0.20);
             background: #24374e;
         }
-
         .btn-report:active {
             transform: translateY(0px) scale(0.96);
         }
@@ -631,11 +601,9 @@
             border: 1px solid #e9edf4;
             transition: box-shadow 0.3s;
         }
-
         .chart-box:hover {
             box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
         }
-
         .chart-box canvas {
             width: 100% !important;
             height: auto !important;
@@ -658,11 +626,9 @@
             transition: box-shadow 0.3s;
             touch-action: pan-y;
         }
-
         .chat-panel:hover {
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
         }
-
         .chat-panel::after {
             content: '';
             display: block;
@@ -671,7 +637,6 @@
             cursor: ns-resize;
             flex-shrink: 0;
         }
-
         .chat-header {
             background: linear-gradient(135deg, #0f1a2b, #1a2a3e);
             color: #ffffff;
@@ -684,7 +649,6 @@
             flex-shrink: 0;
             border-radius: 18px 18px 0 0;
         }
-
         .chat-header .avatar {
             width: 34px;
             height: 34px;
@@ -697,7 +661,6 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             flex-shrink: 0;
         }
-
         .chat-messages {
             flex: 1;
             overflow-y: auto;
@@ -706,21 +669,17 @@
             border-bottom: 1px solid #eef2f6;
             -webkit-overflow-scrolling: touch;
         }
-
         .chat-messages .msg {
             margin-bottom: 12px;
             display: flex;
             flex-direction: column;
         }
-
         .msg.user {
             align-items: flex-end;
         }
-
         .msg.assistant {
             align-items: flex-start;
         }
-
         .msg .bubble {
             max-width: 82%;
             padding: 10px 16px;
@@ -730,19 +689,16 @@
             word-wrap: break-word;
             box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
         }
-
         .msg.user .bubble {
             background: #c4450c;
             color: #ffffff;
             border-bottom-right-radius: 4px;
         }
-
         .msg.assistant .bubble {
             background: #eef2f6;
             color: #1a2635;
             border-bottom-left-radius: 4px;
         }
-
         .chat-input-area {
             display: flex;
             padding: 10px 14px;
@@ -752,7 +708,6 @@
             flex-shrink: 0;
             border-radius: 0 0 18px 18px;
         }
-
         .chat-input-area input {
             flex: 1;
             padding: 10px 16px;
@@ -767,13 +722,11 @@
             -webkit-appearance: none;
             appearance: none;
         }
-
         .chat-input-area input:focus {
             border-color: #c4450c;
             outline: none;
             box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.08);
         }
-
         .chat-input-area button {
             background: #c4450c;
             color: #ffffff;
@@ -791,20 +744,16 @@
             touch-action: manipulation;
             flex-shrink: 0;
         }
-
         .chat-input-area button:hover {
             background: #a3340a;
             transform: translateY(-1px);
             box-shadow: 0 4px 14px rgba(196, 69, 12, 0.15);
         }
-
         .chat-input-area button:active {
             transform: scale(0.95);
         }
 
-        /* ================================================================ */
-        /* ===== 🆕 烧伤学习中心 ===== */
-        /* ================================================================ */
+        /* ===== 烧伤学习中心 ===== */
         .learn-center {
             margin-top: 24px;
             border-radius: 18px;
@@ -814,11 +763,9 @@
             box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
             transition: box-shadow 0.3s;
         }
-
         .learn-center:hover {
             box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
         }
-
         .learn-header {
             background: linear-gradient(135deg, #0f1a2b, #1a2a3e);
             color: #ffffff;
@@ -829,7 +776,6 @@
             flex-wrap: wrap;
             gap: 8px 12px;
         }
-
         .learn-header h3 {
             font-size: 17px;
             font-weight: 600;
@@ -838,7 +784,6 @@
             gap: 8px;
             margin: 0;
         }
-
         .learn-header h3 span {
             background: rgba(255, 255, 255, 0.12);
             padding: 2px 12px;
@@ -846,14 +791,12 @@
             font-size: 13px;
             font-weight: 500;
         }
-
         .learn-header .learn-actions {
             display: flex;
             gap: 8px;
             align-items: center;
             flex-wrap: wrap;
         }
-
         .learn-header .learn-actions label {
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.10);
@@ -867,21 +810,17 @@
             align-items: center;
             gap: 4px;
         }
-
         .learn-header .learn-actions label:hover {
             background: rgba(255, 255, 255, 0.15);
         }
-
         .learn-header .learn-actions label input {
             display: none;
         }
-
         .learn-header .learn-actions .upload-hint {
             font-size: 11px;
             color: rgba(255, 255, 255, 0.40);
             margin-left: 4px;
         }
-
         .learn-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -890,7 +829,6 @@
             background: #fafbfc;
             min-height: 120px;
         }
-
         .learn-grid .media-item {
             position: relative;
             background: #ffffff;
@@ -907,16 +845,13 @@
             justify-content: center;
             touch-action: manipulation;
         }
-
         .learn-grid .media-item:hover {
             transform: translateY(-4px);
             box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
         }
-
         .learn-grid .media-item:active {
             transform: scale(0.96);
         }
-
         .learn-grid .media-item img,
         .learn-grid .media-item video {
             width: 100%;
@@ -925,7 +860,6 @@
             display: block;
             background: #f0f2f5;
         }
-
         .learn-grid .media-item .media-badge {
             position: absolute;
             top: 8px;
@@ -939,7 +873,6 @@
             letter-spacing: 0.3px;
             pointer-events: none;
         }
-
         .learn-grid .media-item .filename {
             position: absolute;
             bottom: 0;
@@ -956,7 +889,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         .learn-grid .media-item .media-overlay {
             position: absolute;
             inset: 0;
@@ -968,11 +900,9 @@
             transition: opacity 0.3s;
             pointer-events: none;
         }
-
         .learn-grid .media-item:hover .media-overlay {
             opacity: 1;
         }
-
         .learn-grid .media-item .media-overlay span {
             color: #fff;
             font-size: 14px;
@@ -981,7 +911,6 @@
             padding: 4px 12px;
             text-align: center;
         }
-
         .learn-grid .media-item .del-btn {
             position: absolute;
             top: 8px;
@@ -1003,22 +932,18 @@
             pointer-events: none;
             touch-action: manipulation;
         }
-
         .learn-grid .media-item:hover .del-btn,
         .learn-grid .media-item:focus-within .del-btn {
             opacity: 1;
             pointer-events: auto;
         }
-
         .learn-grid .media-item .del-btn:hover {
             background: #c0392b;
             transform: scale(1.1);
         }
-
         .learn-grid .media-item .del-btn:active {
             transform: scale(0.9);
         }
-
         .learn-grid .learn-empty {
             grid-column: 1 / -1;
             text-align: center;
@@ -1026,14 +951,13 @@
             color: #8a9aa8;
             font-size: 15px;
         }
-
         .learn-grid .learn-empty .icon {
             font-size: 48px;
             display: block;
             margin-bottom: 12px;
         }
 
-        /* ===== 模态框（图片/视频放大查看） ===== */
+        /* ===== 模态框 ===== */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -1048,12 +972,10 @@
             transition: opacity 0.35s ease;
             padding: 20px;
         }
-
         .modal-overlay.active {
             opacity: 1;
             pointer-events: auto;
         }
-
         .modal-overlay .modal-content {
             max-width: 90vw;
             max-height: 90vh;
@@ -1067,11 +989,9 @@
             transform: scale(0.92);
             transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-
         .modal-overlay.active .modal-content {
             transform: scale(1);
         }
-
         .modal-overlay .modal-content img,
         .modal-overlay .modal-content video {
             max-width: 100%;
@@ -1080,7 +1000,6 @@
             margin: 0 auto;
             background: #0a0a0a;
         }
-
         .modal-overlay .modal-content .modal-info {
             padding: 12px 20px;
             background: rgba(0, 0, 0, 0.60);
@@ -1091,7 +1010,6 @@
             letter-spacing: 0.3px;
             flex-shrink: 0;
         }
-
         .modal-overlay .modal-close {
             position: absolute;
             top: 12px;
@@ -1112,12 +1030,10 @@
             z-index: 10;
             touch-action: manipulation;
         }
-
         .modal-overlay .modal-close:hover {
             background: rgba(192, 57, 43, 0.70);
             transform: rotate(90deg);
         }
-
         .modal-overlay .modal-close:active {
             transform: scale(0.9);
         }
@@ -1129,7 +1045,6 @@
             padding-top: 24px;
             border-top: 2px solid #eef2f6;
         }
-
         #reportArea h3 {
             font-size: 22px;
             font-weight: 600;
@@ -1137,13 +1052,11 @@
             color: #1a2635;
             letter-spacing: 0.3px;
         }
-
         #reportArea p {
             margin-bottom: 4px;
             font-size: 14px;
             color: #2c3e50;
         }
-
         #reportArea h4 {
             margin-top: 16px;
             margin-bottom: 6px;
@@ -1151,18 +1064,15 @@
             font-size: 16px;
             color: #1a2635;
         }
-
         #reportArea ul {
             padding-left: 18px;
             margin-bottom: 8px;
         }
-
         #reportArea ul li {
             margin-bottom: 3px;
             font-size: 14px;
             color: #2c3e50;
         }
-
         #reportArea .chart-box {
             max-width: 340px;
             margin: 12px auto;
@@ -1179,32 +1089,27 @@
             flex-wrap: wrap;
             gap: 10px 16px;
         }
-
         .footer .footer-left {
             display: flex;
             align-items: center;
             gap: 12px;
             flex-wrap: wrap;
         }
-
         .footer .footer-left .footer-text {
             font-size: 12px;
             color: #5a6a7a;
             letter-spacing: 0.3px;
         }
-
         .footer .footer-left .footer-text .highlight {
             color: #1a2a3e;
             font-weight: 600;
         }
-
         .footer .footer-right {
             font-size: 11px;
             color: #9aa9b7;
             letter-spacing: 0.3px;
             text-align: right;
         }
-
         .footer .footer-right .brand-name {
             color: #1a2a3e;
             font-weight: 500;
@@ -1215,14 +1120,15 @@
             border-color: #c0392b !important;
             box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12) !important;
         }
-
         .text-muted {
             color: #8a9aa8;
             font-size: 13px;
         }
-
         .fw-600 {
             font-weight: 600;
+        }
+        .no-print {
+            /* 保留 */;
         }
 
         /* ============================================================ */
@@ -1233,37 +1139,30 @@
             body {
                 padding: 10px 8px;
             }
-
             .container {
                 border-radius: 20px;
             }
-
             .brand-bar {
                 padding: 12px 14px 10px;
                 gap: 4px 8px;
                 min-height: 56px;
             }
-
             .brand-left {
                 flex: 0 0 0;
                 display: none;
             }
-
             .brand-center .title-main {
                 font-size: 16px;
                 letter-spacing: 0.3px;
             }
-
             .brand-right .signature {
                 font-size: 11px;
                 padding: 3px 10px;
                 letter-spacing: 0.5px;
             }
-
             .content-wrap {
                 padding: 14px 12px 20px;
             }
-
             .input-group {
                 padding: 12px 14px;
                 gap: 8px 12px;
@@ -1271,12 +1170,10 @@
                 flex-direction: column;
                 align-items: stretch;
             }
-
             .input-group .field {
                 min-width: 0;
                 flex: 1 1 auto;
             }
-
             .input-group .field input,
             .input-group .field select {
                 font-size: 14px;
@@ -1284,24 +1181,20 @@
                 min-width: 60px;
                 flex: 1;
             }
-
             .input-group .field input[type="number"] {
                 width: 64px;
                 min-width: 50px;
                 flex: 0 1 auto;
             }
-
             .input-group .field .total-area-input {
                 width: 60px;
                 min-width: 48px;
             }
-
             .input-group .required-hint {
                 margin-left: 0;
                 justify-content: flex-end;
                 font-size: 11px;
             }
-
             .switch-view button {
                 font-size: 12px;
                 padding: 6px 14px;
@@ -1309,116 +1202,92 @@
                 flex: 1;
                 text-align: center;
             }
-
             .body-section {
                 gap: 16px;
                 flex-direction: column;
             }
-
             .body-map {
                 max-width: 100%;
                 width: 100%;
                 border-radius: 16px;
             }
-
             .body-map .part {
                 stroke-width: 2;
             }
-
             .body-map .part.selected {
                 stroke-width: 3.5;
             }
-
             .right-panel {
                 min-width: 0;
                 gap: 14px;
             }
-
             .selected-info {
                 padding: 14px 14px 16px;
                 border-radius: 14px;
             }
-
             .selected-info h4 {
                 font-size: 14px;
             }
-
             .selected-info h4 span {
                 font-size: 11px;
             }
-
             .selected-info ul li {
                 font-size: 13px;
                 padding: 5px 0;
             }
-
             .selected-info ul li .remove-btn {
                 font-size: 18px;
                 min-width: 32px;
                 min-height: 32px;
             }
-
             .total-area {
                 font-size: 16px;
                 margin-top: 8px;
                 padding-top: 8px;
             }
-
             .total-area .total-display {
                 font-size: 18px;
             }
-
             .symptom-section {
                 padding: 14px 14px 16px;
                 border-radius: 14px;
             }
-
             .symptom-section h4 {
                 font-size: 14px;
             }
-
             .symptom-section h4 span {
                 font-size: 11px;
             }
-
             .symptom-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 8px;
             }
-
             .symptom-item {
                 padding: 8px 10px 10px;
                 border-radius: 10px;
             }
-
             .symptom-item .symptom-header {
                 font-size: 13px;
             }
-
             .symptom-item .symptom-header .value {
                 font-size: 16px;
                 min-width: 24px;
             }
-
             .symptom-item input[type="range"] {
                 height: 8px;
             }
-
             .symptom-item input[type="range"]::-webkit-slider-thumb {
                 width: 26px;
                 height: 26px;
             }
-
             .symptom-item input[type="range"]::-moz-range-thumb {
                 width: 26px;
                 height: 26px;
             }
-
             .action-buttons {
                 gap: 10px;
                 flex-direction: column;
             }
-
             .action-buttons button {
                 width: 100%;
                 min-height: 50px;
@@ -1428,124 +1297,101 @@
                 min-width: 0;
                 border-radius: 30px;
             }
-
             .chart-box {
                 padding: 12px 12px 6px;
                 border-radius: 14px;
                 max-width: 100%;
                 margin: 10px auto 16px;
             }
-
             .chart-box canvas {
                 max-height: 260px;
             }
-
             .chat-panel {
                 height: 360px;
                 min-height: 260px;
                 border-radius: 16px;
                 margin-top: 14px;
             }
-
             .chat-header {
                 padding: 10px 14px;
                 font-size: 14px;
                 border-radius: 16px 16px 0 0;
             }
-
             .chat-header .avatar {
                 width: 30px;
                 height: 30px;
                 font-size: 16px;
             }
-
             .chat-messages {
                 padding: 12px 14px;
             }
-
             .chat-messages .msg {
                 margin-bottom: 10px;
             }
-
             .msg .bubble {
                 max-width: 88%;
                 padding: 9px 14px;
                 font-size: 13px;
             }
-
             .chat-input-area {
                 padding: 8px 12px;
                 gap: 8px;
                 border-radius: 0 0 16px 16px;
             }
-
             .chat-input-area input {
                 padding: 8px 14px;
                 font-size: 14px;
                 min-height: 40px;
             }
-
             .chat-input-area button {
                 padding: 8px 16px;
                 font-size: 13px;
                 min-height: 40px;
                 min-width: 60px;
             }
-
-            /* 学习中心移动端 */
             .learn-header {
                 padding: 14px 16px;
                 flex-direction: column;
                 align-items: stretch;
                 gap: 8px;
             }
-
             .learn-header h3 {
                 font-size: 15px;
             }
-
             .learn-header .learn-actions {
                 justify-content: flex-start;
             }
-
             .learn-header .learn-actions label {
                 font-size: 11px;
                 padding: 4px 12px;
             }
-
             .learn-grid {
                 grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
                 gap: 10px;
                 padding: 14px;
             }
-
             .learn-grid .media-item {
                 border-radius: 10px;
             }
-
             .learn-grid .media-item .filename {
                 font-size: 10px;
                 padding: 6px 10px;
             }
-
             .learn-grid .media-item .media-badge {
                 font-size: 9px;
                 padding: 1px 8px;
                 top: 4px;
                 right: 4px;
             }
-
             .modal-overlay .modal-content {
                 max-width: 98vw;
                 max-height: 92vh;
                 border-radius: 14px;
             }
-
             .modal-overlay .modal-content img,
             .modal-overlay .modal-content video {
                 max-height: 70vh;
             }
-
             .modal-overlay .modal-close {
                 width: 34px;
                 height: 34px;
@@ -1553,32 +1399,25 @@
                 top: 8px;
                 right: 10px;
             }
-
             #reportArea {
                 margin-top: 18px;
                 padding-top: 18px;
             }
-
             #reportArea h3 {
                 font-size: 19px;
             }
-
             #reportArea p {
                 font-size: 13px;
             }
-
             #reportArea h4 {
                 font-size: 15px;
             }
-
             #reportArea ul li {
                 font-size: 13px;
             }
-
             #reportArea .chart-box {
                 max-width: 100%;
             }
-
             .footer {
                 margin-top: 20px;
                 padding-top: 14px;
@@ -1586,15 +1425,12 @@
                 text-align: center;
                 gap: 6px;
             }
-
             .footer .footer-left {
                 justify-content: center;
             }
-
             .footer .footer-left .footer-text {
                 font-size: 11px;
             }
-
             .footer .footer-right {
                 font-size: 10px;
                 text-align: center;
@@ -1605,66 +1441,53 @@
             body {
                 padding: 14px 12px;
             }
-
             .brand-bar {
                 padding: 14px 20px 12px;
             }
-
             .brand-center .title-main {
                 font-size: 18px;
             }
-
             .brand-right .signature {
                 font-size: 12px;
                 padding: 4px 12px;
             }
-
             .content-wrap {
                 padding: 16px 18px 24px;
             }
-
             .input-group {
                 padding: 14px 18px;
                 gap: 10px 16px;
             }
-
             .body-section {
                 gap: 20px;
                 flex-direction: column;
                 align-items: center;
             }
-
             .body-map {
                 max-width: 280px;
                 width: 100%;
             }
-
             .right-panel {
                 width: 100%;
                 min-width: 0;
             }
-
             .symptom-grid {
                 grid-template-columns: 1fr 1fr;
                 gap: 10px 16px;
             }
-
             .action-buttons button {
                 min-height: 46px;
                 padding: 11px 22px;
                 flex: 1 1 auto;
                 min-width: 120px;
             }
-
             .chat-panel {
                 height: 400px;
                 min-height: 280px;
             }
-
             .chart-box canvas {
                 max-height: 300px;
             }
-
             .learn-grid {
                 grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
                 gap: 12px;
@@ -1675,20 +1498,16 @@
             .body-map {
                 max-width: 260px;
             }
-
             .symptom-grid {
                 grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
             }
-
             .action-buttons button {
                 min-height: 44px;
                 padding: 10px 24px;
             }
-
             .chat-panel {
                 height: 440px;
             }
-
             .learn-grid {
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             }
@@ -1700,25 +1519,20 @@
                 width: 260px;
                 flex-shrink: 0;
             }
-
             .body-section {
                 flex-wrap: nowrap;
                 align-items: stretch;
             }
-
             .right-panel {
                 min-width: 320px;
             }
-
             .symptom-grid {
                 grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
             }
-
             .chat-panel {
                 height: 480px;
                 min-height: 340px;
             }
-
             .learn-grid {
                 grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             }
@@ -1731,7 +1545,6 @@
                 padding: 0;
                 display: block;
             }
-
             .container {
                 box-shadow: none;
                 margin: 0;
@@ -1739,36 +1552,29 @@
                 padding: 0;
                 max-width: 100%;
             }
-
             .content-wrap {
                 padding: 16px 24px;
             }
-
             .no-print {
                 display: none !important;
             }
-
             #reportArea {
                 display: block !important;
             }
-
             .brand-bar {
                 background: #1a2a3e !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
                 padding: 12px 20px;
             }
-
             .brand-center .title-main {
                 font-size: 18px !important;
             }
-
             .brand-right .signature {
                 background: rgba(255, 255, 255, 0.05) !important;
                 -webkit-print-color-adjust: exact !important;
                 print-color-adjust: exact !important;
             }
-
             .chart-box {
                 max-width: 340px;
                 margin: 12px auto;
@@ -1776,17 +1582,14 @@
                 padding: 0;
                 background: transparent;
             }
-
             .chart-box canvas {
                 max-height: 280px;
             }
-
             .footer {
                 border-top: 1px solid #ccc;
                 margin-top: 16px;
                 padding-top: 12px;
             }
-
             .chat-panel {
                 resize: none !important;
                 height: auto !important;
@@ -1795,40 +1598,32 @@
                 border: none !important;
                 box-shadow: none !important;
             }
-
             .chat-panel::after {
                 display: none !important;
             }
-
             .chat-messages {
                 max-height: none !important;
                 overflow: visible !important;
                 padding: 8px 12px !important;
             }
-
             .msg .bubble {
                 max-width: 100% !important;
             }
-
             .body-map {
                 max-width: 200px !important;
                 border: 1px solid #ddd !important;
             }
-
             .body-map .part {
                 stroke-width: 0.8 !important;
             }
-
             .selected-info,
             .symptom-section {
                 border: 1px solid #ddd !important;
                 background: #fafafa !important;
             }
-
             .symptom-item {
                 border: 1px solid #eee !important;
             }
-
             #reportArea .chart-box {
                 max-width: 280px;
             }
@@ -1839,361 +1634,293 @@
             body {
                 background: #12181f;
             }
-
             .container {
                 background: #1a2330;
                 box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.3);
             }
-
             .brand-bar {
                 background: #0d1520;
                 border-bottom-color: #c4450c;
             }
-
             .brand-center .title-main {
                 color: #f0f4fa;
             }
-
             .brand-right .signature {
                 color: rgba(255, 255, 255, 0.75);
                 border-color: rgba(255, 255, 255, 0.06);
             }
-
             .input-group {
                 background: #1e2a3a;
                 border-color: #2a3a4a;
             }
-
             .input-group .field label {
                 color: #c8d4e0;
             }
-
             .input-group .field input,
             .input-group .field select {
                 background: #15202b;
                 border-color: #2a3a4a;
                 color: #e8edf3;
             }
-
             .input-group .field input:focus,
             .input-group .field select:focus {
                 border-color: #c4450c;
                 box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.15);
             }
-
             .input-group .required-hint {
                 color: #7a8a9a;
             }
-
             .switch-view button {
                 background: #1e2a3a;
                 color: #8a9aa8;
             }
-
             .switch-view button:hover {
                 background: #2a3a4a;
             }
-
             .switch-view button.active {
                 background: #c4450c;
                 color: #ffffff;
             }
-
             .body-map {
                 background: #15202b;
                 border-color: #2a3a4a;
             }
-
             .body-map .part {
                 fill: #2a3a4a;
                 stroke: #4a5a6a;
             }
-
             .body-map .part:hover {
                 fill: #3a4a5a;
                 stroke: #c4450c;
             }
-
             .body-map .part.selected {
                 fill: #c4450c !important;
                 stroke: #a3340a;
             }
-
+            .body-map .part.buttock {
+                fill: #2a3a4a;
+            }
+            .body-map .part.buttock:hover {
+                fill: #3a4a5a;
+            }
+            .body-map .part.breast {
+                fill: #2a3a4a;
+            }
+            .body-map .part.breast:hover {
+                fill: #3a4a5a;
+            }
             .selected-info {
                 background: #1e2a3a;
                 border-color: #2a3a4a;
             }
-
             .selected-info h4 {
                 color: #e8edf3;
             }
-
             .selected-info h4 span {
                 color: #7a8a9a;
             }
-
             .selected-info ul li {
                 border-bottom-color: #2a3a4a;
                 color: #c8d4e0;
             }
-
             .selected-info ul li .part-name {
                 color: #e8edf3;
             }
-
             .selected-info ul li .remove-btn {
                 color: #e06050;
             }
-
             .total-area {
                 border-top-color: #2a3a4a;
                 color: #e8edf3;
             }
-
             .total-area .total-display {
                 color: #d45a2a;
             }
-
             .selected-info .hint {
                 color: #7a8a9a;
             }
-
             .symptom-section {
                 background: #1e2a3a;
                 border-color: #2a3a4a;
             }
-
             .symptom-section h4 {
                 color: #e8edf3;
             }
-
             .symptom-section h4 span {
                 color: #7a8a9a;
             }
-
             .symptom-item {
                 background: #15202b;
                 border-color: #2a3a4a;
             }
-
             .symptom-item .symptom-header {
                 color: #c8d4e0;
             }
-
             .symptom-item .symptom-header .value {
                 color: #d45a2a;
             }
-
             .symptom-item input[type="range"] {
                 background: #2a3a4a;
             }
-
             .symptom-item input[type="range"]::-webkit-slider-thumb {
                 background: #c4450c;
                 border-color: #1a2330;
             }
-
             .symptom-item input[type="range"]::-moz-range-thumb {
                 background: #c4450c;
                 border-color: #1a2330;
             }
-
             .symptom-item .range-labels {
                 color: #6a7a8a;
             }
-
             .btn-ai {
                 background: linear-gradient(135deg, #c4450c, #d45a2a);
             }
-
             .btn-report {
                 background: #2a3a4a;
             }
-
             .btn-report:hover {
                 background: #3a4a5a;
             }
-
             .chart-box {
                 background: #15202b;
                 border-color: #2a3a4a;
             }
-
             .chat-panel {
                 background: #1a2330;
                 border-color: #2a3a4a;
             }
-
             .chat-header {
                 background: linear-gradient(135deg, #0d1520, #1a2a3e);
             }
-
             .chat-messages {
                 background: #15202b;
                 border-bottom-color: #2a3a4a;
             }
-
             .msg.assistant .bubble {
                 background: #1e2a3a;
                 color: #c8d4e0;
             }
-
             .msg.user .bubble {
                 background: #c4450c;
                 color: #ffffff;
             }
-
             .chat-input-area {
                 background: #1a2330;
             }
-
             .chat-input-area input {
                 background: #15202b;
                 border-color: #2a3a4a;
                 color: #e8edf3;
             }
-
             .chat-input-area input:focus {
                 border-color: #c4450c;
                 box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.12);
             }
-
             .chat-input-area button {
                 background: #c4450c;
                 color: #ffffff;
             }
-
             .chat-input-area button:hover {
                 background: #a3340a;
             }
-
-            /* 学习中心暗色 */
             .learn-center {
                 background: #1a2330;
                 border-color: #2a3a4a;
             }
-
             .learn-header {
                 background: linear-gradient(135deg, #0d1520, #1a2a3e);
             }
-
             .learn-header h3 {
                 color: #f0f4fa;
             }
-
             .learn-header h3 span {
                 background: rgba(255, 255, 255, 0.10);
             }
-
             .learn-header .learn-actions label {
                 border-color: rgba(255, 255, 255, 0.08);
             }
-
             .learn-grid {
                 background: #15202b;
             }
-
             .learn-grid .media-item {
                 background: #1a2330;
                 border-color: #2a3a4a;
             }
-
             .learn-grid .media-item:hover {
                 box-shadow: 0 8px 28px rgba(0, 0, 0, 0.30);
             }
-
             .learn-grid .media-item img,
             .learn-grid .media-item video {
                 background: #0d1520;
             }
-
             .learn-grid .media-item .filename {
                 background: linear-gradient(transparent, rgba(0, 0, 0, 0.80));
             }
-
             .learn-grid .media-item .media-badge {
                 background: rgba(0, 0, 0, 0.70);
             }
-
             .learn-grid .learn-empty {
                 color: #7a8a9a;
             }
-
             .modal-overlay {
                 background: rgba(0, 0, 0, 0.85);
             }
-
             .modal-overlay .modal-content {
                 background: #0d1520;
             }
-
             .modal-overlay .modal-content .modal-info {
                 background: rgba(0, 0, 0, 0.70);
                 color: #e8edf3;
             }
-
             #reportArea {
                 border-top-color: #2a3a4a;
             }
-
             #reportArea h3 {
                 color: #e8edf3;
             }
-
             #reportArea p {
                 color: #c8d4e0;
             }
-
             #reportArea h4 {
                 color: #e8edf3;
             }
-
             #reportArea ul li {
                 color: #c8d4e0;
             }
-
             #reportArea .chart-box {
                 background: #15202b;
                 border-color: #2a3a4a;
             }
-
             .footer {
                 border-top-color: #2a3a4a;
             }
-
             .footer .footer-left .footer-text {
                 color: #7a8a9a;
             }
-
             .footer .footer-left .footer-text .highlight {
                 color: #c8d4e0;
             }
-
             .footer .footer-right {
                 color: #6a7a8a;
             }
-
             .footer .footer-right .brand-name {
                 color: #c8d4e0;
             }
-
             .text-muted {
                 color: #7a8a9a;
             }
         }
 
-        /* ===== 安全区域适配 ===== */
         @supports (padding: max(0px)) {
             .container {
                 padding-left: max(16px, env(safe-area-inset-left));
                 padding-right: max(16px, env(safe-area-inset-right));
             }
-
             .brand-bar {
                 padding-left: max(24px, env(safe-area-inset-left));
                 padding-right: max(24px, env(safe-area-inset-right));
             }
-
             .content-wrap {
                 padding-left: max(20px, env(safe-area-inset-left));
                 padding-right: max(20px, env(safe-area-inset-right));
@@ -2236,7 +1963,7 @@
                 </div>
                 <div class="field">
                     <label>性别 <span class="required">*</span></label>
-                    <select id="patientGender">
+                    <select id="patientGender" onchange="onGenderChange()">
                         <option value="">请选择</option>
                         <option value="男">男</option>
                         <option value="女">女</option>
@@ -2256,28 +1983,60 @@
             <div class="switch-view no-print">
                 <button id="btnFront" class="active" onclick="switchView('front')">🧍 正面</button>
                 <button id="btnBack" onclick="switchView('back')">🔄 背面</button>
+                <span id="genderBadge" class="gender-badge" style="display:none;"></span>
             </div>
 
             <!-- ===== 主体 ===== -->
             <div class="body-section">
                 <div class="body-map" id="bodyMapContainer">
-                    <svg id="frontBody" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="人体正面图，点击部位选择烧伤区域">
+                    <!-- 男性正面 -->
+                    <svg id="maleFront" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="男性人体正面图" style="display:none;">
                         <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
-                        <rect x="70" y="80" width="60" height="110" rx="8" class="part" data-part="前躯干" data-percent="13" onclick="selectPart(this)" />
-                        <rect x="20" y="90" width="28" height="100" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
-                        <rect x="152" y="90" width="28" height="100" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
-                        <rect x="45" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
-                        <rect x="120" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="65" y="80" width="70" height="110" rx="8" class="part" data-part="前躯干" data-percent="13" onclick="selectPart(this)" />
+                        <rect x="15" y="90" width="30" height="100" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="155" y="90" width="30" height="100" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="40" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="125" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
                         <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
                     </svg>
-                    <svg id="backBody" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" style="display: none;" role="img" aria-label="人体背面图，点击部位选择烧伤区域">
+                    <!-- 男性背面（含臀部） -->
+                    <svg id="maleBack" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="男性人体背面图" style="display:none;">
                         <ellipse cx="100" cy="35" rx="30" ry="35" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
-                        <rect x="70" y="80" width="60" height="110" rx="8" class="part" data-part="后躯干" data-percent="13" onclick="selectPart(this)" />
-                        <rect x="20" y="90" width="28" height="100" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
-                        <rect x="152" y="90" width="28" height="100" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
-                        <rect x="45" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
-                        <rect x="120" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="65" y="80" width="70" height="100" rx="8" class="part" data-part="后躯干" data-percent="8" onclick="selectPart(this)" />
+                        <rect x="15" y="90" width="30" height="100" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="155" y="90" width="30" height="100" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="40" y="210" width="35" height="130" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="125" y="210" width="35" height="130" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
                         <rect x="90" y="190" width="20" height="20" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
+                        <!-- 臀部：左右各一，用椭圆表示 -->
+                        <ellipse cx="68" cy="192" rx="28" ry="16" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
+                        <ellipse cx="132" cy="192" rx="28" ry="16" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
+                    </svg>
+                    <!-- 女性正面（含乳房） -->
+                    <svg id="femaleFront" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="女性人体正面图" style="display:none;">
+                        <ellipse cx="100" cy="35" rx="28" ry="33" class="part" data-part="头颈" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="70" y="80" width="60" height="100" rx="8" class="part" data-part="前躯干" data-percent="11" onclick="selectPart(this)" />
+                        <!-- 乳房 -->
+                        <ellipse cx="85" cy="105" rx="18" ry="14" class="part breast" data-part="左乳房" data-percent="1" onclick="selectPart(this)" />
+                        <ellipse cx="115" cy="105" rx="18" ry="14" class="part breast" data-part="右乳房" data-percent="1" onclick="selectPart(this)" />
+                        <rect x="20" y="90" width="28" height="95" rx="10" class="part" data-part="左上肢" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="152" y="90" width="28" height="95" rx="10" class="part" data-part="右上肢" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="45" y="200" width="32" height="140" rx="12" class="part" data-part="左下肢" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="123" y="200" width="32" height="140" rx="12" class="part" data-part="右下肢" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="92" y="190" width="16" height="16" rx="3" class="part" data-part="会阴" data-percent="1" onclick="selectPart(this)" />
+                    </svg>
+                    <!-- 女性背面（含臀部） -->
+                    <svg id="femaleBack" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="女性人体背面图" style="display:none;">
+                        <ellipse cx="100" cy="35" rx="28" ry="33" class="part" data-part="头颈(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="70" y="80" width="60" height="100" rx="8" class="part" data-part="后躯干" data-percent="8" onclick="selectPart(this)" />
+                        <rect x="20" y="90" width="28" height="95" rx="10" class="part" data-part="左上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="152" y="90" width="28" height="95" rx="10" class="part" data-part="右上肢(后)" data-percent="9" onclick="selectPart(this)" />
+                        <rect x="45" y="200" width="32" height="140" rx="12" class="part" data-part="左下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="123" y="200" width="32" height="140" rx="12" class="part" data-part="右下肢(后)" data-percent="20.5" onclick="selectPart(this)" />
+                        <rect x="92" y="190" width="16" height="16" rx="3" class="part" data-part="会阴(后)" data-percent="1" onclick="selectPart(this)" />
+                        <!-- 臀部：女性更突出 -->
+                        <ellipse cx="75" cy="192" rx="26" ry="20" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
+                        <ellipse cx="125" cy="192" rx="26" ry="20" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
                     </svg>
                 </div>
 
@@ -2319,7 +2078,7 @@
                     <span>💬 小愈 AI 助手</span>
                 </div>
                 <div class="chat-messages" id="chatMessages">
-                    <div class="msg assistant"><div class="bubble">你好！我是小愈 😊 请先填写患者信息、烧伤总面积，点击人体图标记烧伤部位，再拖动滑块评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。</div></div>
+                    <div class="msg assistant"><div class="bubble">你好！我是小愈 😊 请先选择性别，填写患者信息、烧伤总面积，点击人体图标记烧伤部位，再拖动滑块评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。</div></div>
                 </div>
                 <div class="chat-input-area">
                     <input type="text" id="chatInput" placeholder="输入补充问题..." onkeypress="if(event.key==='Enter') sendMessage()" />
@@ -2327,9 +2086,7 @@
                 </div>
             </div>
 
-            <!-- ============================================================= -->
-            <!-- ===== 🆕 烧伤学习中心 ===== -->
-            <!-- ============================================================= -->
+            <!-- ===== 烧伤学习中心 ===== -->
             <div class="learn-center no-print" id="learnCenter">
                 <div class="learn-header">
                     <h3>
@@ -2348,9 +2105,7 @@
                         <span class="upload-hint">（个人资料存于本地）</span>
                     </div>
                 </div>
-                <div class="learn-grid" id="learnGrid">
-                    <!-- 由 JavaScript 动态渲染 -->
-                </div>
+                <div class="learn-grid" id="learnGrid"></div>
             </div>
 
             <!-- ===== 报告区 ===== -->
@@ -2385,7 +2140,7 @@
     </div>
     <!-- /container -->
 
-    <!-- ===== 模态框（图片/视频放大） ===== -->
+    <!-- ===== 模态框 ===== -->
     <div class="modal-overlay" id="mediaModal" onclick="closeModal(event)">
         <div class="modal-content" onclick="event.stopPropagation()">
             <button class="modal-close" onclick="closeModal()">✕</button>
@@ -2401,6 +2156,7 @@
         // ==============================
 
         let currentView = 'front';
+        let currentGender = ''; // '' | '男' | '女'
         let selectedParts = {};
         let myChart = null;
         let reportChart = null;
@@ -2445,30 +2201,97 @@
             document.getElementById(id + '_val').textContent = val;
         }
 
+        // ---------- 性别切换 ----------
+        function onGenderChange() {
+            const sel = document.getElementById('patientGender');
+            currentGender = sel.value;
+            const badge = document.getElementById('genderBadge');
+            if (currentGender) {
+                badge.style.display = 'inline-block';
+                badge.textContent = currentGender === '男' ? '♂ 男性评估' : '♀ 女性评估';
+                badge.className = 'gender-badge' + (currentGender === '女' ? ' female' : '');
+            } else {
+                badge.style.display = 'none';
+            }
+            // 清空已选部位（因为部位定义变了）
+            clearAllSelections();
+            // 切换人体图
+            updateBodyView();
+            // 更新图表
+            updateChart();
+            // 聊天提示
+            if (currentGender) {
+                addMessage('assistant', `👤 已切换至${currentGender}性烧伤评估视图，请重新选择烧伤部位。`);
+            }
+        }
+
         // ---------- 视图切换 ----------
         function switchView(view) {
             currentView = view;
-            document.getElementById('frontBody').style.display = view === 'front' ? 'block' : 'none';
-            document.getElementById('backBody').style.display = view === 'back' ? 'block' : 'none';
             document.getElementById('btnFront').classList.toggle('active', view === 'front');
             document.getElementById('btnBack').classList.toggle('active', view === 'back');
+            updateBodyView();
+        }
+
+        // ---------- 更新人体图显示 ----------
+        function updateBodyView() {
+            const gender = currentGender || '男'; // 默认男性
+            const view = currentView;
+            // 所有SVG先隐藏
+            const svgs = ['maleFront', 'maleBack', 'femaleFront', 'femaleBack'];
+            svgs.forEach(id => {
+                document.getElementById(id).style.display = 'none';
+            });
+            // 确定要显示的SVG
+            let targetId = '';
+            if (gender === '男') {
+                targetId = view === 'front' ? 'maleFront' : 'maleBack';
+            } else {
+                targetId = view === 'front' ? 'femaleFront' : 'femaleBack';
+            }
+            const target = document.getElementById(targetId);
+            if (target) {
+                target.style.display = 'block';
+                // 恢复选中状态
+                target.querySelectorAll('.part').forEach(el => {
+                    const p = el.getAttribute('data-part');
+                    if (selectedParts.hasOwnProperty(p)) {
+                        el.classList.add('selected');
+                    } else {
+                        el.classList.remove('selected');
+                    }
+                });
+            }
+            // 更新列表
+            updateSelectedList();
+            updateTotalDisplay();
+        }
+
+        // ---------- 清除所有选择 ----------
+        function clearAllSelections() {
+            selectedParts = {};
+            document.querySelectorAll('.part').forEach(el => el.classList.remove('selected'));
+            updateSelectedList();
+            updateTotalDisplay();
         }
 
         // ---------- 选择部位 ----------
         function selectPart(element) {
             const partName = element.getAttribute('data-part');
-            const defaultPercent = parseFloat(element.getAttribute('data-percent'));
+            const defaultPercent = parseFloat(element.getAttribute('data-percent')) || 0;
 
             if ('vibrate' in navigator && window.innerWidth <= 768) {
                 navigator.vibrate && navigator.vibrate(10);
             }
 
+            // 同一部位可能在多个SVG中存在，需要同步
+            const allParts = document.querySelectorAll(`.part[data-part="${partName}"]`);
             if (selectedParts.hasOwnProperty(partName)) {
                 delete selectedParts[partName];
-                element.classList.remove('selected');
+                allParts.forEach(el => el.classList.remove('selected'));
             } else {
                 selectedParts[partName] = defaultPercent;
-                element.classList.add('selected');
+                allParts.forEach(el => el.classList.add('selected'));
                 if (window.innerWidth <= 768) {
                     const listEl = document.getElementById('selectedPartsList');
                     setTimeout(() => {
@@ -2503,8 +2326,8 @@
         function removePart(part) {
             if (selectedParts[part]) {
                 delete selectedParts[part];
-                const svgParts = document.querySelectorAll(`.part[data-part="${part}"]`);
-                svgParts.forEach(el => el.classList.remove('selected'));
+                const allParts = document.querySelectorAll(`.part[data-part="${part}"]`);
+                allParts.forEach(el => el.classList.remove('selected'));
                 updateSelectedList();
                 updateTotalDisplay();
                 updateChart();
@@ -2557,7 +2380,7 @@
             const data = weights.map(w => (w / sumWeights) * totalArea);
 
             const colors = ['#c4450c', '#d45a2a', '#e67e22', '#f39c12', '#c0392b', '#e74c3c', '#8e44ad', '#2980b9', '#1abc9c',
-                '#27ae60'
+                '#27ae60', '#2ecc71', '#3498db'
             ];
             myChart = new Chart(ctx, {
                 type: 'pie',
@@ -2804,10 +2627,9 @@
         }
 
         // ================================================================
-        // ===== 🆕 学习中心 - 共享媒体（所有用户可见） =====
+        // ===== 学习中心 - 共享媒体 =====
         // ================================================================
 
-        // ---------- 共享媒体列表（从 GitHub assets 加载） ----------
         const SHARED_MEDIA = [
             { name: '怎么判断烧烫伤的不同程度？', url: 'https://zhangxiaoodi.github.io/assets/怎么判断烧烫伤的不同程度？.jpg', type: 'image' },
             { name: '手术紧张手册', url: 'https://zhangxiaoodi.github.io/assets/手术紧张手册.png', type: 'image' },
@@ -2824,7 +2646,6 @@
             { name: '食欲不振', url: 'https://zhangxiaoodi.github.io/assets/食欲不振.png', type: 'image' },
         ];
 
-        // ---------- IndexedDB 管理个人上传 ----------
         const DB_NAME = 'BurnLearnDB';
         const STORE_NAME = 'media';
         let db = null;
@@ -2899,7 +2720,6 @@
             });
         }
 
-        // ---------- 渲染媒体网格（共享 + 个人） ----------
         function renderMediaGrid() {
             const grid = document.getElementById('learnGrid');
             const countSpan = document.getElementById('mediaCount');
@@ -2958,7 +2778,6 @@
             });
         }
 
-        // ---------- 处理上传 ----------
         async function handleFiles(files, type) {
             if (!files || files.length === 0) return;
             if (!db) {
@@ -2998,7 +2817,6 @@
             document.getElementById('fileInputVid').value = '';
         }
 
-        // ---------- 删除个人媒体 ----------
         async function deleteMediaItem(id) {
             if (!confirm('确定要删除这个媒体文件吗？')) return;
             try {
@@ -3011,7 +2829,6 @@
             }
         }
 
-        // ---------- 打开模态框 ----------
         function openMediaModal(element) {
             const url = element.dataset.url;
             const type = element.dataset.type;
@@ -3062,7 +2879,6 @@
             content.innerHTML = '';
         }
 
-        // ---------- 拖拽上传 ----------
         function setupDragDrop() {
             const area = document.getElementById('learnCenter');
             if (!area) return;
@@ -3121,7 +2937,6 @@
             });
         }
 
-        // ---------- 学习中心初始化 ----------
         async function initLearnCenter() {
             try {
                 await openDB();
@@ -3135,7 +2950,6 @@
             }
         }
 
-        // 暴露函数到全局
         window.handleFiles = handleFiles;
         window.deleteMediaItem = deleteMediaItem;
         window.openMediaModal = openMediaModal;
@@ -3147,7 +2961,16 @@
 
         window.addEventListener('load', () => {
             initSymptoms();
+
+            // 默认显示男性正面
+            currentGender = '男';
+            document.getElementById('patientGender').value = '男';
+            document.getElementById('genderBadge').style.display = 'inline-block';
+            document.getElementById('genderBadge').textContent = '♂ 男性评估';
+            document.getElementById('genderBadge').className = 'gender-badge';
+
             updateTotalDisplay();
+            updateBodyView();
             updateChart();
             initLearnCenter();
 
@@ -3170,9 +2993,10 @@
                     }, { passive: true });
                 });
             }
+
+            addMessage('assistant', '👤 当前为男性烧伤评估视图，如需切换请修改性别。');
         });
 
-        // ---------- 窗口变化时重置图表 ----------
         let resizeTimer;
         window.addEventListener('resize', function() {
             clearTimeout(resizeTimer);
@@ -3183,7 +3007,6 @@
             }, 300);
         });
 
-        // 双击人体图清除所有选中（移动端）
         document.getElementById('bodyMapContainer').addEventListener('dblclick', function(e) {
             if (window.innerWidth <= 768) {
                 const parts = document.querySelectorAll('.part.selected');
@@ -3200,7 +3023,6 @@
             }
         });
 
-        // 点击外部收起键盘
         document.addEventListener('touchstart', function(e) {
             const tag = e.target.tagName;
             if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {

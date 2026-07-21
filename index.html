@@ -276,7 +276,6 @@
             fill: #e2e8ef;
             cursor: pointer;
             touch-action: manipulation;
-            /* 扩大点击区域 */;
         }
 
         .body-map .part:hover {
@@ -803,6 +802,326 @@
             transform: scale(0.95);
         }
 
+        /* ================================================================ */
+        /* ===== 🆕 烧伤知识库（学习中心） ===== */
+        /* ================================================================ */
+        .learn-center {
+            margin-top: 24px;
+            border-radius: 18px;
+            border: 1px solid #e9edf4;
+            background: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.02);
+            transition: box-shadow 0.3s;
+        }
+
+        .learn-center:hover {
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        }
+
+        .learn-header {
+            background: linear-gradient(135deg, #0f1a2b, #1a2a3e);
+            color: #ffffff;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+        }
+
+        .learn-header h3 {
+            font-size: 17px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+        }
+
+        .learn-header h3 span {
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .learn-header .learn-actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .learn-header .learn-actions label {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.25s;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .learn-header .learn-actions label:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .learn-header .learn-actions label input {
+            display: none;
+        }
+
+        .learn-header .learn-actions .upload-hint {
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.40);
+            margin-left: 4px;
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 16px;
+            padding: 20px;
+            background: #fafbfc;
+            min-height: 120px;
+        }
+
+        .learn-grid .media-item {
+            position: relative;
+            background: #ffffff;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            border: 1px solid #eef2f6;
+            cursor: pointer;
+            transition: transform 0.25s, box-shadow 0.25s;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            touch-action: manipulation;
+        }
+
+        .learn-grid .media-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+        }
+
+        .learn-grid .media-item:active {
+            transform: scale(0.96);
+        }
+
+        .learn-grid .media-item img,
+        .learn-grid .media-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            background: #f0f2f5;
+        }
+
+        .learn-grid .media-item .media-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(0, 0, 0, 0.60);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            font-size: 11px;
+            padding: 2px 10px;
+            border-radius: 20px;
+            letter-spacing: 0.3px;
+            pointer-events: none;
+        }
+
+        .learn-grid .media-item .filename {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px 12px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.70));
+            color: #fff;
+            font-size: 12px;
+            font-weight: 500;
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.30);
+            pointer-events: none;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .learn-grid .media-item .media-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.20);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        .learn-grid .media-item:hover .media-overlay {
+            opacity: 1;
+        }
+
+        .learn-grid .media-item .media-overlay span {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.40);
+            padding: 4px 12px;
+            text-align: center;
+        }
+
+        .learn-grid .media-item .del-btn {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(192, 57, 43, 0.85);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+            opacity: 0;
+            pointer-events: none;
+            touch-action: manipulation;
+        }
+
+        .learn-grid .media-item:hover .del-btn,
+        .learn-grid .media-item:focus-within .del-btn {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .learn-grid .media-item .del-btn:hover {
+            background: #c0392b;
+            transform: scale(1.1);
+        }
+
+        .learn-grid .media-item .del-btn:active {
+            transform: scale(0.9);
+        }
+
+        .learn-grid .learn-empty {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 40px 20px;
+            color: #8a9aa8;
+            font-size: 15px;
+        }
+
+        .learn-grid .learn-empty .icon {
+            font-size: 48px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        /* ===== 模态框（图片/视频放大查看） ===== */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.80);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-overlay .modal-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            background: #1a1a1a;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.40);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            transform: scale(0.92);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-overlay .modal-content img,
+        .modal-overlay .modal-content video {
+            max-width: 100%;
+            max-height: 78vh;
+            display: block;
+            margin: 0 auto;
+            background: #0a0a0a;
+        }
+
+        .modal-overlay .modal-content .modal-info {
+            padding: 12px 20px;
+            background: rgba(0, 0, 0, 0.60);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            letter-spacing: 0.3px;
+            flex-shrink: 0;
+        }
+
+        .modal-overlay .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            background: rgba(0, 0, 0, 0.50);
+            backdrop-filter: blur(4px);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 24px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.25s;
+            z-index: 10;
+            touch-action: manipulation;
+        }
+
+        .modal-overlay .modal-close:hover {
+            background: rgba(192, 57, 43, 0.70);
+            transform: rotate(90deg);
+        }
+
+        .modal-overlay .modal-close:active {
+            transform: scale(0.9);
+        }
+
         /* ===== 报告区 ===== */
         #reportArea {
             display: none;
@@ -907,10 +1226,9 @@
         }
 
         /* ============================================================ */
-        /* ===== 移动端深度优化（核心） ===== */
+        /* ===== 移动端深度优化 ===== */
         /* ============================================================ */
 
-        /* --- 小屏手机 (≤480px) --- */
         @media (max-width: 480px) {
             body {
                 padding: 10px 8px;
@@ -1005,7 +1323,6 @@
 
             .body-map .part {
                 stroke-width: 2;
-                /* 移动端加粗边框便于点击 */;
             }
 
             .body-map .part.selected {
@@ -1175,6 +1492,68 @@
                 min-width: 60px;
             }
 
+            /* 学习中心移动端 */
+            .learn-header {
+                padding: 14px 16px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .learn-header h3 {
+                font-size: 15px;
+            }
+
+            .learn-header .learn-actions {
+                justify-content: flex-start;
+            }
+
+            .learn-header .learn-actions label {
+                font-size: 11px;
+                padding: 4px 12px;
+            }
+
+            .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+                padding: 14px;
+            }
+
+            .learn-grid .media-item {
+                border-radius: 10px;
+            }
+
+            .learn-grid .media-item .filename {
+                font-size: 10px;
+                padding: 6px 10px;
+            }
+
+            .learn-grid .media-item .media-badge {
+                font-size: 9px;
+                padding: 1px 8px;
+                top: 4px;
+                right: 4px;
+            }
+
+            .modal-overlay .modal-content {
+                max-width: 98vw;
+                max-height: 92vh;
+                border-radius: 14px;
+            }
+
+            .modal-overlay .modal-content img,
+            .modal-overlay .modal-content video {
+                max-height: 70vh;
+            }
+
+            .modal-overlay .modal-close {
+                width: 34px;
+                height: 34px;
+                font-size: 20px;
+                top: 8px;
+                right: 10px;
+            }
+
             #reportArea {
                 margin-top: 18px;
                 padding-top: 18px;
@@ -1222,7 +1601,6 @@
             }
         }
 
-        /* --- 中屏手机/小平板 (481px - 768px) --- */
         @media (min-width: 481px) and (max-width: 768px) {
             body {
                 padding: 14px 12px;
@@ -1286,9 +1664,13 @@
             .chart-box canvas {
                 max-height: 300px;
             }
+
+            .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px;
+            }
         }
 
-        /* --- 大屏手机/小屏平板 (769px - 1024px) --- */
         @media (min-width: 769px) and (max-width: 1024px) {
             .body-map {
                 max-width: 260px;
@@ -1306,9 +1688,12 @@
             .chat-panel {
                 height: 440px;
             }
+
+            .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            }
         }
 
-        /* --- 大屏桌面 (≥1025px) 保持原有舒适布局 --- */
         @media (min-width: 1025px) {
             .body-map {
                 max-width: 300px;
@@ -1333,11 +1718,13 @@
                 height: 480px;
                 min-height: 340px;
             }
+
+            .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
         }
 
-        /* ============================================================ */
         /* ===== 打印样式 ===== */
-        /* ============================================================ */
         @media print {
             body {
                 background: white;
@@ -1447,9 +1834,7 @@
             }
         }
 
-        /* ============================================================ */
-        /* ===== 暗色模式支持（可选） ===== */
-        /* ============================================================ */
+        /* ===== 暗色模式 ===== */
         @media (prefers-color-scheme: dark) {
             body {
                 background: #12181f;
@@ -1682,6 +2067,71 @@
                 background: #a3340a;
             }
 
+            /* 学习中心暗色 */
+            .learn-center {
+                background: #1a2330;
+                border-color: #2a3a4a;
+            }
+
+            .learn-header {
+                background: linear-gradient(135deg, #0d1520, #1a2a3e);
+            }
+
+            .learn-header h3 {
+                color: #f0f4fa;
+            }
+
+            .learn-header h3 span {
+                background: rgba(255, 255, 255, 0.10);
+            }
+
+            .learn-header .learn-actions label {
+                border-color: rgba(255, 255, 255, 0.08);
+            }
+
+            .learn-grid {
+                background: #15202b;
+            }
+
+            .learn-grid .media-item {
+                background: #1a2330;
+                border-color: #2a3a4a;
+            }
+
+            .learn-grid .media-item:hover {
+                box-shadow: 0 8px 28px rgba(0, 0, 0, 0.30);
+            }
+
+            .learn-grid .media-item img,
+            .learn-grid .media-item video {
+                background: #0d1520;
+            }
+
+            .learn-grid .media-item .filename {
+                background: linear-gradient(transparent, rgba(0, 0, 0, 0.80));
+            }
+
+            .learn-grid .media-item .media-badge {
+                background: rgba(0, 0, 0, 0.70);
+            }
+
+            .learn-grid .learn-empty {
+                color: #7a8a9a;
+            }
+
+            .modal-overlay {
+                background: rgba(0, 0, 0, 0.85);
+            }
+
+            .modal-overlay .modal-content {
+                background: #0d1520;
+            }
+
+            .modal-overlay .modal-content .modal-info {
+                background: rgba(0, 0, 0, 0.70);
+                color: #e8edf3;
+            }
+
             #reportArea {
                 border-top-color: #2a3a4a;
             }
@@ -1732,7 +2182,7 @@
             }
         }
 
-        /* ===== 安全区域适配 (刘海屏) ===== */
+        /* ===== 安全区域适配 ===== */
         @supports (padding: max(0px)) {
             .container {
                 padding-left: max(16px, env(safe-area-inset-left));
@@ -1877,6 +2327,32 @@
                 </div>
             </div>
 
+            <!-- ============================================================= -->
+            <!-- ===== 🆕 烧伤知识库（学习中心） ===== -->
+            <!-- ============================================================= -->
+            <div class="learn-center no-print" id="learnCenter">
+                <div class="learn-header">
+                    <h3>
+                        📚 烧伤知识库
+                        <span id="mediaCount">0</span>
+                    </h3>
+                    <div class="learn-actions">
+                        <label for="fileInputImg">
+                            📷 上传图片
+                            <input type="file" id="fileInputImg" accept="image/*" multiple onchange="handleFiles(this.files, 'image')" />
+                        </label>
+                        <label for="fileInputVid">
+                            🎬 上传视频
+                            <input type="file" id="fileInputVid" accept="video/*" multiple onchange="handleFiles(this.files, 'video')" />
+                        </label>
+                        <span class="upload-hint">（个人资料存于本地）</span>
+                    </div>
+                </div>
+                <div class="learn-grid" id="learnGrid">
+                    <!-- 由 JavaScript 动态渲染 -->
+                </div>
+            </div>
+
             <!-- ===== 报告区 ===== -->
             <div id="reportArea">
                 <h3>📋 烧伤评估报告</h3>
@@ -1908,6 +2384,15 @@
         <!-- /content-wrap -->
     </div>
     <!-- /container -->
+
+    <!-- ===== 模态框（图片/视频放大） ===== -->
+    <div class="modal-overlay" id="mediaModal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div id="modalContent"></div>
+            <div class="modal-info" id="modalInfo"></div>
+        </div>
+    </div>
 
     <script>
         // ========== 配置区域 ==========
@@ -1969,12 +2454,11 @@
             document.getElementById('btnBack').classList.toggle('active', view === 'back');
         }
 
-        // ---------- 选择部位（移动端触摸优化） ----------
+        // ---------- 选择部位 ----------
         function selectPart(element) {
             const partName = element.getAttribute('data-part');
             const defaultPercent = parseFloat(element.getAttribute('data-percent'));
 
-            // 轻微触感反馈（移动端）
             if ('vibrate' in navigator && window.innerWidth <= 768) {
                 navigator.vibrate && navigator.vibrate(10);
             }
@@ -1985,7 +2469,6 @@
             } else {
                 selectedParts[partName] = defaultPercent;
                 element.classList.add('selected');
-                // 选中时滚动到列表（移动端）
                 if (window.innerWidth <= 768) {
                     const listEl = document.getElementById('selectedPartsList');
                     setTimeout(() => {
@@ -2025,7 +2508,6 @@
                 updateSelectedList();
                 updateTotalDisplay();
                 updateChart();
-                // 触感反馈
                 if ('vibrate' in navigator && window.innerWidth <= 768) {
                     navigator.vibrate && navigator.vibrate(8);
                 }
@@ -2141,7 +2623,6 @@
             div.innerHTML = `<div class="bubble">${text.replace(/\n/g, '<br>')}</div>`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
-            // 移动端滚动优化
             if (window.innerWidth <= 768) {
                 setTimeout(() => {
                     container.scrollTop = container.scrollHeight;
@@ -2275,7 +2756,6 @@
                 prefix = `【患者${pid ? 'ID：'+pid : ''}${age ? '，年龄：'+age+'岁' : ''}${gender ? '，性别：'+gender : ''}】`;
             }
             callFastGPT(prefix + text);
-            // 移动端自动收起键盘
             if (window.innerWidth <= 768) {
                 input.blur();
             }
@@ -2323,55 +2803,366 @@
             window.print();
         }
 
-        // ---------- 移动端额外优化：双击人体图清除所有选中 ----------
-        document.getElementById('bodyMapContainer').addEventListener('dblclick', function(e) {
-            if (window.innerWidth <= 768) {
-                // 双击清除所有选中（移动端很少双击，但保留）
-                const parts = document.querySelectorAll('.part.selected');
-                if (parts.length > 0) {
-                    parts.forEach(el => el.classList.remove('selected'));
-                    selectedParts = {};
-                    updateSelectedList();
-                    updateTotalDisplay();
-                    updateChart();
-                    if ('vibrate' in navigator) {
-                        navigator.vibrate && navigator.vibrate(15);
+        // ================================================================
+        // ===== 🆕 学习中心 - 共享媒体（所有用户可见） =====
+        // ================================================================
+
+        // ---------- 共享媒体列表（从 GitHub assets 加载） ----------
+        const SHARED_MEDIA = [
+            { name: '怎么判断烧烫伤的不同程度？', url: 'https://zhangxiaoodi.github.io/assets/怎么判断烧烫伤的不同程度？.jpg', type: 'image' },
+            { name: '手术紧张手册', url: 'https://zhangxiaoodi.github.io/assets/手术紧张手册.png', type: 'image' },
+            { name: '手烧伤后康复，让双手"活"过来', url: 'https://zhangxiaoodi.github.io/assets/手烧伤后康复，让双手“活”过来.jpg', type: 'image' },
+            { name: '烧伤患者恐惧', url: 'https://zhangxiaoodi.github.io/assets/烧伤患者恐惧.png', type: 'image' },
+            { name: '烧伤疼痛', url: 'https://zhangxiaoodi.github.io/assets/烧伤疼痛.jpg', type: 'image' },
+            { name: '烧伤疼痛2', url: 'https://zhangxiaoodi.github.io/assets/烧伤疼痛jpg.jpg', type: 'image' },
+            { name: '烧烫伤起水疱怎么办（2）', url: 'https://zhangxiaoodi.github.io/assets/烧烫伤起水疱怎么办（2）.jpg', type: 'image' },
+            { name: '烧烫伤起水疱怎么办', url: 'https://zhangxiaoodi.github.io/assets/烧烫伤起水疱怎么办.jpg', type: 'image' },
+            { name: '烧烫伤起水疱怎么办？', url: 'https://zhangxiaoodi.github.io/assets/烧烫伤起水疱怎么办？.jpg', type: 'image' },
+            { name: '瘙痒手册', url: 'https://zhangxiaoodi.github.io/assets/瘙痒手册.png', type: 'image' },
+            { name: '社会回归焦虑', url: 'https://zhangxiaoodi.github.io/assets/社会回归焦虑.png', type: 'image' },
+            { name: '身体意象焦虑', url: 'https://zhangxiaoodi.github.io/assets/身体意象焦虑.png', type: 'image' },
+            { name: '食欲不振', url: 'https://zhangxiaoodi.github.io/assets/食欲不振.png', type: 'image' },
+        ];
+
+        // ---------- IndexedDB 管理个人上传 ----------
+        const DB_NAME = 'BurnLearnDB';
+        const STORE_NAME = 'media';
+        let db = null;
+
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onupgradeneeded = (ev) => {
+                    const db = ev.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const store = db.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        store.createIndex('type', 'type', { unique: false });
+                        store.createIndex('name', 'name', { unique: false });
+                        store.createIndex('uploadedAt', 'uploadedAt', { unique: false });
                     }
+                };
+                request.onsuccess = (ev) => {
+                    db = ev.target.result;
+                    resolve(db);
+                };
+                request.onerror = (ev) => {
+                    reject(ev.target.error);
+                };
+            });
+        }
+
+        function saveMedia(file, type) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = async (ev) => {
+                    const data = ev.target.result;
+                    const record = {
+                        name: file.name,
+                        type: type,
+                        mimeType: file.type,
+                        size: file.size,
+                        data: data,
+                        uploadedAt: Date.now()
+                    };
+                    try {
+                        const tx = db.transaction(STORE_NAME, 'readwrite');
+                        const store = tx.objectStore(STORE_NAME);
+                        const req = store.add(record);
+                        req.onsuccess = () => resolve(req.result);
+                        req.onerror = () => reject(req.error);
+                    } catch (err) {
+                        reject(err);
+                    }
+                };
+                reader.onerror = () => reject(reader.error);
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        function getAllPersonalMedia() {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readonly');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.getAll();
+                req.onsuccess = () => resolve(req.result);
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        function deleteMedia(id) {
+            return new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE_NAME, 'readwrite');
+                const store = tx.objectStore(STORE_NAME);
+                const req = store.delete(id);
+                req.onsuccess = () => resolve();
+                req.onerror = () => reject(req.error);
+            });
+        }
+
+        // ---------- 渲染媒体网格（共享 + 个人） ----------
+        function renderMediaGrid() {
+            const grid = document.getElementById('learnGrid');
+            const countSpan = document.getElementById('mediaCount');
+
+            getAllPersonalMedia().then(personalItems => {
+                const combined = [...SHARED_MEDIA, ...personalItems];
+                countSpan.textContent = combined.length;
+
+                if (combined.length === 0) {
+                    grid.innerHTML = `
+                        <div class="learn-empty">
+                            <span class="icon">🖼️</span>
+                            还没有学习资料，点击上方按钮上传图片或视频<br>
+                            <span style="font-size:13px;color:#b0bec5;">上传的内容将保存在本地浏览器中</span>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let html = '';
+                for (let item of combined) {
+                    const isShared = !item.hasOwnProperty('id');
+                    const isImage = item.type === 'image';
+                    const isVideo = item.type === 'video';
+                    let url;
+                    let isPersonal = false;
+                    if (isShared) {
+                        url = item.url;
+                    } else {
+                        isPersonal = true;
+                        const blob = new Blob([item.data], { type: item.mimeType });
+                        url = URL.createObjectURL(blob);
+                    }
+
+                    const delBtn = isPersonal ?
+                        `<button class="del-btn" onclick="event.stopPropagation(); deleteMediaItem(${item.id})" title="删除">✕</button>` :
+                        '';
+
+                    html += `
+                        <div class="media-item" data-id="${item.id || 'shared'}" data-type="${item.type}" data-url="${url}" onclick="openMediaModal(this)">
+                            ${isImage ? `<img src="${url}" alt="${item.name}" loading="lazy">` : ''}
+                            ${isVideo ? `<video src="${url}" muted preload="metadata" loading="lazy"></video>` : ''}
+                            <span class="media-badge">${isImage ? '🖼️' : (isVideo ? '🎬' : '📄')} ${isImage ? '图片' : (isVideo ? '视频' : '文档')}</span>
+                            <span class="filename">${item.name}</span>
+                            <div class="media-overlay">
+                                <span>${item.name}</span>
+                                ${delBtn}
+                            </div>
+                        </div>
+                    `;
+                }
+                grid.innerHTML = html;
+            }).catch(err => {
+                console.error('渲染媒体网格失败:', err);
+                grid.innerHTML = `<div class="learn-empty" style="color:#c0392b;">⚠️ 加载失败，请刷新页面重试</div>`;
+            });
+        }
+
+        // ---------- 处理上传 ----------
+        async function handleFiles(files, type) {
+            if (!files || files.length === 0) return;
+            if (!db) {
+                await openDB();
+            }
+
+            let successCount = 0;
+            let failCount = 0;
+
+            for (let file of files) {
+                const maxSize = type === 'video' ? 100 * 1024 * 1024 : 20 * 1024 * 1024;
+                if (file.size > maxSize) {
+                    alert(`⚠️ ${file.name} 文件过大（${(file.size/1024/1024).toFixed(1)}MB），${type === 'video' ? '视频' : '图片'}最大 ${maxSize/1024/1024}MB`);
+                    failCount++;
+                    continue;
+                }
+
+                try {
+                    await saveMedia(file, type);
+                    successCount++;
+                } catch (err) {
+                    console.error('保存失败:', err, file.name);
+                    failCount++;
                 }
             }
-        });
 
-        // ---------- 移动端：点击外部区域收起键盘 ----------
-        document.addEventListener('touchstart', function(e) {
-            const tag = e.target.tagName;
-            if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
-                const active = document.activeElement;
-                if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
-                    active.blur();
-                }
+            if (successCount > 0) {
+                renderMediaGrid();
+                let msg = `✅ 成功上传 ${successCount} 个${type === 'image' ? '图片' : '视频'}`;
+                if (failCount > 0) msg += `，${failCount} 个失败`;
+                addMessage('assistant', `📚 学习中心：${msg}`);
+            } else {
+                alert(`⚠️ 上传失败，请检查文件格式和大小`);
             }
-        }, { passive: true });
 
-        // ---------- 初始化 ----------
+            document.getElementById('fileInputImg').value = '';
+            document.getElementById('fileInputVid').value = '';
+        }
+
+        // ---------- 删除个人媒体 ----------
+        async function deleteMediaItem(id) {
+            if (!confirm('确定要删除这个媒体文件吗？')) return;
+            try {
+                await deleteMedia(id);
+                renderMediaGrid();
+                addMessage('assistant', `🗑️ 已删除一个学习资料`);
+            } catch (err) {
+                console.error('删除失败:', err);
+                alert('⚠️ 删除失败，请重试');
+            }
+        }
+
+        // ---------- 打开模态框 ----------
+        function openMediaModal(element) {
+            const url = element.dataset.url;
+            const type = element.dataset.type;
+            const name = element.querySelector('.filename')?.textContent || '媒体';
+
+            const modal = document.getElementById('mediaModal');
+            const content = document.getElementById('modalContent');
+            const info = document.getElementById('modalInfo');
+
+            let html = '';
+            if (type === 'image') {
+                html = `<img src="${url}" alt="${name}" />`;
+            } else if (type === 'video') {
+                html = `<video src="${url}" controls autoplay playsinline></video>`;
+            } else {
+                html = `<div style="color:#fff;padding:40px;text-align:center;font-size:18px;">📄 ${name}<br><a href="${url}" target="_blank" style="color:#c4450c;text-decoration:underline;">点击下载/查看</a></div>`;
+            }
+            content.innerHTML = html;
+            info.textContent = `${name}`;
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+
+            modal.onclick = function(e) {
+                if (e.target === modal) closeModal();
+            };
+
+            document.addEventListener('keydown', function escHandler(e) {
+                if (e.key === 'Escape') {
+                    closeModal();
+                    document.removeEventListener('keydown', escHandler);
+                }
+            });
+        }
+
+        function closeModal(e) {
+            if (e && e.target && e.target.closest && e.target.closest('.modal-content')) return;
+            const modal = document.getElementById('mediaModal');
+            const content = document.getElementById('modalContent');
+            modal.classList.remove('active');
+            document.body.style.overflow = '';
+            const video = content.querySelector('video');
+            if (video) {
+                video.pause();
+                video.src = '';
+                video.load();
+            }
+            content.innerHTML = '';
+        }
+
+        // ---------- 拖拽上传 ----------
+        function setupDragDrop() {
+            const area = document.getElementById('learnCenter');
+            if (!area) return;
+
+            area.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.style.borderColor = '#c4450c';
+                area.style.boxShadow = '0 0 0 3px rgba(196,69,12,0.15)';
+            });
+
+            area.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.style.borderColor = '';
+                area.style.boxShadow = '';
+            });
+
+            area.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                area.style.borderColor = '';
+                area.style.boxShadow = '';
+
+                const files = e.dataTransfer.files;
+                if (!files || files.length === 0) return;
+
+                const images = [];
+                const videos = [];
+                for (let f of files) {
+                    if (f.type.startsWith('image/')) images.push(f);
+                    else if (f.type.startsWith('video/')) videos.push(f);
+                }
+
+                if (images.length > 0) {
+                    const input = document.getElementById('fileInputImg');
+                    const dt = new DataTransfer();
+                    for (let f of images) dt.items.add(f);
+                    input.files = dt.files;
+                    handleFiles(input.files, 'image');
+                    input.value = '';
+                }
+
+                if (videos.length > 0) {
+                    const input = document.getElementById('fileInputVid');
+                    const dt = new DataTransfer();
+                    for (let f of videos) dt.items.add(f);
+                    input.files = dt.files;
+                    handleFiles(input.files, 'video');
+                    input.value = '';
+                }
+
+                if (images.length === 0 && videos.length === 0) {
+                    alert('⚠️ 请拖入图片或视频文件');
+                }
+            });
+        }
+
+        // ---------- 学习中心初始化 ----------
+        async function initLearnCenter() {
+            try {
+                await openDB();
+                renderMediaGrid();
+                setupDragDrop();
+                addMessage('assistant', '📚 烧伤知识库已加载！点击图片可放大查看，你也可以上传自己的学习资料（保存在本地浏览器）。');
+            } catch (err) {
+                console.error('学习中心初始化失败:', err);
+                document.getElementById('learnGrid').innerHTML =
+                    `<div class="learn-empty" style="color:#c0392b;">⚠️ 本地存储不可用，请检查浏览器设置或使用现代浏览器</div>`;
+            }
+        }
+
+        // 暴露函数到全局
+        window.handleFiles = handleFiles;
+        window.deleteMediaItem = deleteMediaItem;
+        window.openMediaModal = openMediaModal;
+        window.closeModal = closeModal;
+
+        // ================================================================
+        // ===== 初始化 =====
+        // ================================================================
+
         window.addEventListener('load', () => {
             initSymptoms();
             updateTotalDisplay();
             updateChart();
+            initLearnCenter();
+
             document.querySelectorAll('input, select').forEach(el => {
                 el.addEventListener('focus', () => el.classList.remove('field-error'));
             });
             document.getElementById('totalBurnArea').addEventListener('change', updateChart);
 
-            // 移动端：滑动手势优化 - 防止页面滚动时误触
             const chatPanel = document.getElementById('chatPanel');
             if (chatPanel) {
                 chatPanel.addEventListener('touchmove', function(e) {
-                    // 允许内部滚动
                     e.stopPropagation();
                 }, { passive: true });
             }
 
-            // 移动端：滑块触感优化
             if (window.innerWidth <= 768) {
                 document.querySelectorAll('.symptom-item input[type="range"]').forEach(slider => {
                     slider.addEventListener('touchstart', function() {
@@ -2391,6 +3182,34 @@
                 }
             }, 300);
         });
+
+        // 双击人体图清除所有选中（移动端）
+        document.getElementById('bodyMapContainer').addEventListener('dblclick', function(e) {
+            if (window.innerWidth <= 768) {
+                const parts = document.querySelectorAll('.part.selected');
+                if (parts.length > 0) {
+                    parts.forEach(el => el.classList.remove('selected'));
+                    selectedParts = {};
+                    updateSelectedList();
+                    updateTotalDisplay();
+                    updateChart();
+                    if ('vibrate' in navigator) {
+                        navigator.vibrate && navigator.vibrate(15);
+                    }
+                }
+            }
+        });
+
+        // 点击外部收起键盘
+        document.addEventListener('touchstart', function(e) {
+            const tag = e.target.tagName;
+            if (tag !== 'INPUT' && tag !== 'TEXTAREA' && tag !== 'SELECT') {
+                const active = document.activeElement;
+                if (active && (active.tagName === 'INPUT' || active.tagName === 'TEXTAREA')) {
+                    active.blur();
+                }
+            }
+        }, { passive: true });
     </script>
 </body>
 </html>

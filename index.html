@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <title>烧伤ePRO智能症状管理</title>
+    <title>烧伤ePRO智能症状管理平台</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js">
     </script>
     <style>
@@ -15,15 +15,17 @@
             -webkit-tap-highlight-color: transparent;
         }
         :root {
-            --primary: #c4450c;
-            --primary-dark: #a3340a;
-            --primary-light: #d45a2a;
-            --bg: #f2f4f8;
+            --primary: #0d9488;
+            --primary-dark: #0f766e;
+            --primary-light: #2dd4bf;
+            --primary-bg: #ecfdf9;
+            --accent: #f59e0b;
+            --bg: #f1f5f7;
             --card-bg: #ffffff;
-            --text: #1a2635;
-            --text-secondary: #4a5a6a;
-            --border: #e9edf4;
-            --shadow: 0 2px 16px rgba(0, 0, 0, 0.04);
+            --text: #102330;
+            --text-secondary: #55707d;
+            --border: #e2ecef;
+            --shadow: 0 2px 16px rgba(13, 148, 136, 0.06);
             --radius: 20px;
             --nav-height: 68px;
             --header-height: 52px;
@@ -50,41 +52,43 @@
             background: var(--card-bg);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 0 60px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 0 60px rgba(13, 148, 136, 0.08);
         }
 
         /* ===== 头部 ===== */
         .app-header {
             flex-shrink: 0;
-            background: #0f1a2b;
+            background: linear-gradient(120deg, #0b3a40 0%, #0f5a52 70%, #118273 100%);
             padding: 10px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            gap: 8px;
             min-height: var(--header-height);
-            border-bottom: 2px solid var(--primary);
+            border-bottom: none;
             z-index: 10;
         }
         .app-header .title {
             color: #fff;
-            font-size: 16px;
-            font-weight: 600;
+            font-size: 14px;
+            font-weight: 700;
             letter-spacing: 0.3px;
             white-space: nowrap;
         }
         .app-header .sub {
-            color: rgba(255, 255, 255, 0.6);
+            color: rgba(255, 255, 255, 0.72);
             font-size: 11px;
             font-weight: 400;
             letter-spacing: 0.5px;
-            background: rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
             padding: 2px 12px;
             border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             white-space: nowrap;
+            flex-shrink: 0;
         }
         .app-header .sub .accent {
-            color: #d4a843;
+            color: #7ce6d3;
             font-weight: 600;
         }
         .app-header .header-back {
@@ -106,21 +110,21 @@
             background: var(--bg);
         }
         .page {
-    position: absolute;
-    inset: 0;
-    overflow-y: auto;
-    overflow-x: hidden;
-    padding: 12px 14px 16px;
-    background: var(--bg);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;          /* 去掉 transform 过渡，只保留透明度，更快 */
-    transform: none;                        /* 去掉位移动画，或者保留但缩短时间 */
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
-    will-change: opacity;                   /* 开启硬件加速 */
-    overscroll-behavior: contain;           /* 防止滚动链 */
-}
+            position: absolute;
+            inset: 0;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 12px 14px 16px;
+            background: var(--bg);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+            transform: none;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
+            will-change: opacity;
+            overscroll-behavior: contain;
+        }
         .page.active {
             opacity: 1;
             pointer-events: auto;
@@ -131,7 +135,7 @@
             background: transparent;
         }
         .page::-webkit-scrollbar-thumb {
-            background: rgba(0, 0, 0, 0.12);
+            background: rgba(13, 148, 136, 0.25);
             border-radius: 8px;
         }
 
@@ -139,7 +143,7 @@
         .bottom-nav {
             flex-shrink: 0;
             height: var(--nav-height);
-            background: #ffffff;
+            background: rgba(255, 255, 255, 0.96);
             border-top: 1px solid var(--border);
             display: flex;
             align-items: stretch;
@@ -147,7 +151,6 @@
             padding-bottom: var(--safe-bottom);
             z-index: 20;
             backdrop-filter: blur(8px);
-            background: rgba(255, 255, 255, 0.96);
         }
         .nav-item {
             flex: 1;
@@ -158,7 +161,7 @@
             gap: 2px;
             border: none;
             background: none;
-            color: #8a9aa8;
+            color: #8aa0aa;
             font-size: 10px;
             font-weight: 500;
             cursor: pointer;
@@ -204,7 +207,7 @@
             top: 2px;
             right: 50%;
             transform: translateX(calc(50% + 18px));
-            background: #e74c3c;
+            background: #ef6c5c;
             color: #fff;
             font-size: 9px;
             padding: 0 6px;
@@ -215,28 +218,29 @@
             font-weight: 600;
         }
 
-        /* ===== 暗色模式导航 ===== */
+        /* ===== 暗色模式 ===== */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #12181f;
-                --card-bg: #1a2330;
-                --text: #e8edf3;
-                --text-secondary: #8a9aa8;
-                --border: #2a3a4a;
-                --shadow: 0 2px 16px rgba(0, 0, 0, 0.3);
+                --bg: #0f1a1e;
+                --card-bg: #16262c;
+                --text: #e6f1f2;
+                --text-secondary: #8aa5ac;
+                --border: #25414a;
+                --primary-bg: #12352f;
+                --shadow: 0 2px 16px rgba(0, 0, 0, 0.35);
             }
             .bottom-nav {
-                background: rgba(26, 35, 48, 0.96);
+                background: rgba(22, 38, 44, 0.96);
                 border-top-color: var(--border);
             }
             .nav-item {
-                color: #6a7a8a;
+                color: #5f7c85;
             }
             .nav-item.active {
-                color: #d45a2a;
+                color: var(--primary-light);
             }
             .app-header {
-                background: #0d1520;
+                background: linear-gradient(120deg, #0a2e33 0%, #0d4a44 70%, #10695e 100%);
             }
         }
 
@@ -244,11 +248,33 @@
         /* ===== 页面1：评估 ===== */
         /* ============================================================ */
 
-        .page-eval .patient-card {
-            background: #f8faff;
+        .section-card {
+            background: var(--card-bg);
             border-radius: 14px;
             padding: 12px 14px;
             border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+        }
+        .section-title {
+            font-size: 13px;
+            font-weight: 700;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        .section-title .title-tip {
+            font-weight: 400;
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+
+        .page-eval .patient-card {
+            background: var(--card-bg);
+            border-radius: 14px;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow);
             margin-bottom: 12px;
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -257,7 +283,7 @@
         .page-eval .patient-card .field {
             display: flex;
             flex-direction: column;
-            gap: 2px;
+            gap: 3px;
         }
         .page-eval .patient-card .field label {
             font-size: 11px;
@@ -265,16 +291,16 @@
             color: var(--text-secondary);
         }
         .page-eval .patient-card .field label .required {
-            color: #c0392b;
+            color: #e05b4f;
         }
         .page-eval .patient-card .field input,
         .page-eval .patient-card .field select {
-            padding: 6px 10px;
-            border: 1px solid #d5dce6;
-            border-radius: 8px;
+            padding: 7px 10px;
+            border: 1px solid #d3e2e4;
+            border-radius: 9px;
             font-size: 13px;
-            background: #fff;
-            transition: border 0.2s;
+            background: #f8fcfb;
+            transition: border 0.2s, box-shadow 0.2s;
             font-family: inherit;
             color: var(--text);
             width: 100%;
@@ -285,13 +311,14 @@
         .page-eval .patient-card .field select:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.08);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.12);
+            background: #fff;
         }
         .page-eval .patient-card .field input[type="number"] {
             width: 100%;
         }
         .page-eval .patient-card .field select {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%236a7a8a'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%2355707d'/%3E%3C/svg%3E");
             background-repeat: no-repeat;
             background-position: right 10px center;
             padding-right: 28px;
@@ -299,22 +326,53 @@
         .page-eval .patient-card .field-full {
             grid-column: 1 / -1;
         }
+        /* 精致的单位后缀 */
+        .input-with-unit {
+            display: flex;
+            align-items: stretch;
+            gap: 6px;
+        }
+        .input-with-unit input {
+            flex: 1;
+            min-width: 0;
+        }
+        .unit-chip {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 10px;
+            border-radius: 9px;
+            background: var(--primary-bg);
+            border: 1px solid rgba(13, 148, 136, 0.22);
+            color: var(--primary-dark);
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            white-space: nowrap;
+        }
+        .field-note {
+            font-size: 10px;
+            color: #90a8b0;
+            line-height: 1.3;
+        }
 
+        /* ===== 人体图行：左侧小图 + 右侧已选部位 ===== */
         .page-eval .body-section {
             display: flex;
-            gap: 14px;
-            flex-wrap: wrap;
+            gap: 12px;
+            align-items: stretch;
             margin-bottom: 12px;
         }
         .page-eval .body-map-wrap {
             flex: 0 0 auto;
-            width: 100%;
-            max-width: 220px;
-            margin: 0 auto;
-            background: #f8fafc;
+            width: 132px;
+            max-width: 132px;
+            margin: 0;
+            background: var(--card-bg);
             border-radius: 14px;
             border: 1px solid var(--border);
+            box-shadow: var(--shadow);
             overflow: hidden;
+            align-self: flex-start;
             touch-action: manipulation;
         }
         .page-eval .body-map-wrap svg {
@@ -322,16 +380,23 @@
             height: auto;
             display: block;
         }
+        .page-eval .body-map-wrap .map-tip {
+            font-size: 9px;
+            color: #90a8b0;
+            text-align: center;
+            padding: 4px 4px 6px;
+            border-top: 1px dashed var(--border);
+        }
         .page-eval .body-map-wrap .part {
             transition: fill 0.2s, stroke 0.2s, filter 0.3s;
-            stroke: #6a7a8a;
+            stroke: #7e97a0;
             stroke-width: 1.5;
-            fill: #e2e8ef;
+            fill: #dfe9ec;
             cursor: pointer;
             touch-action: manipulation;
         }
         .page-eval .body-map-wrap .part:hover {
-            fill: #cdd6e0;
+            fill: #c6d8dc;
             stroke: var(--primary);
             stroke-width: 2.5;
         }
@@ -339,45 +404,33 @@
             fill: var(--primary) !important;
             stroke: var(--primary-dark);
             stroke-width: 3;
-            filter: drop-shadow(0 2px 10px rgba(196, 69, 12, 0.25));
+            filter: drop-shadow(0 2px 10px rgba(13, 148, 136, 0.35));
             animation: pulse 0.3s ease;
         }
         @keyframes pulse {
-            0% {
-                transform: scale(1);
-            }
-            50% {
-                transform: scale(1.04);
-            }
-            100% {
-                transform: scale(1);
-            }
+            0% { transform: scale(1); }
+            50% { transform: scale(1.04); }
+            100% { transform: scale(1); }
         }
-        .page-eval .body-map-wrap .part.buttock {
-            fill: #d5dce6;
-        }
-        .page-eval .body-map-wrap .part.buttock.selected {
-            fill: var(--primary) !important;
-        }
-        .page-eval .body-map-wrap .part.breast {
-            fill: #dce0e8;
-        }
-        .page-eval .body-map-wrap .part.breast.selected {
-            fill: var(--primary) !important;
-        }
+        .page-eval .body-map-wrap .part.buttock { fill: #d3e1e4; }
+        .page-eval .body-map-wrap .part.buttock.selected { fill: var(--primary) !important; }
+        .page-eval .body-map-wrap .part.breast { fill: #d8e5e8; }
+        .page-eval .body-map-wrap .part.breast.selected { fill: var(--primary) !important; }
 
         .page-eval .right-panel {
             flex: 1;
-            min-width: 160px;
+            min-width: 0;
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
         .page-eval .selected-box {
-            background: #f8faff;
+            background: var(--card-bg);
             border-radius: 14px;
             padding: 12px 14px;
             border: 1px solid var(--border);
+            box-shadow: var(--shadow);
+            flex: 1;
         }
         .page-eval .selected-box .title-row {
             display: flex;
@@ -394,30 +447,49 @@
         }
         .page-eval .selected-box ul {
             list-style: none;
-            max-height: 100px;
+            max-height: 220px;
             overflow-y: auto;
             margin-bottom: 4px;
         }
         .page-eval .selected-box ul li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 4px 0;
+            padding: 6px 0;
             font-size: 13px;
-            border-bottom: 1px solid #eef2f6;
+            border-bottom: 1px solid #eef4f4;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
         .page-eval .selected-box ul li:last-child {
             border-bottom: none;
         }
+        .page-eval .selected-box ul li .li-main {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
+        .page-eval .selected-box ul li .part-name {
+            font-weight: 500;
+        }
+        .page-eval .selected-box ul li .part-percent {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        .page-eval .selected-box ul li .li-sub {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 6px;
+        }
         .page-eval .selected-box ul li .remove-btn {
-            color: #b03a2e;
+            color: #c2483c;
             cursor: pointer;
             font-size: 18px;
             line-height: 1;
             padding: 0 4px;
             background: none;
             border: none;
-            opacity: 0.4;
+            opacity: 0.45;
             transition: 0.2s;
             touch-action: manipulation;
             min-width: 32px;
@@ -429,6 +501,43 @@
         .page-eval .selected-box ul li .remove-btn:hover {
             opacity: 1;
         }
+        /* 烧伤深度选择 */
+        .depth-picker {
+            display: inline-flex;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+        .depth-picker .depth-chip {
+            border: 1px solid #d3e2e4;
+            background: #f6faf9;
+            color: var(--text-secondary);
+            font-size: 10px;
+            padding: 2px 8px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: inherit;
+            transition: 0.15s;
+            min-height: 22px;
+            touch-action: manipulation;
+        }
+        .depth-picker .depth-chip.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+            font-weight: 600;
+        }
+        .depth-tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 1px 8px;
+            border-radius: 10px;
+            font-weight: 600;
+        }
+        .depth-tag.d1 { background: #fff7e8; color: #b4730a; }
+        .depth-tag.d2 { background: #ffecec; color: #cc4b3d; }
+        .depth-tag.d3 { background: #f3e8ff; color: #7c3aed; }
+        .depth-tag.d4 { background: #e8f0fe; color: #2455b8; }
+
         .page-eval .selected-box .total-row {
             display: flex;
             justify-content: space-between;
@@ -444,6 +553,7 @@
             font-size: 11px;
             color: var(--text-secondary);
             margin-top: 4px;
+            line-height: 1.5;
         }
 
         .page-eval .view-toggle {
@@ -455,7 +565,7 @@
         .page-eval .view-toggle button {
             padding: 4px 14px;
             border: none;
-            background: #f0f3f8;
+            background: #e8f0f0;
             color: var(--text-secondary);
             border-radius: 20px;
             font-size: 12px;
@@ -469,99 +579,96 @@
         .page-eval .view-toggle button.active {
             background: var(--primary);
             color: #fff;
-            box-shadow: 0 2px 12px rgba(196, 69, 12, 0.2);
+            box-shadow: 0 2px 12px rgba(13, 148, 136, 0.28);
         }
 
+        /* ===== 症状评分：占满整行、空间更大 ===== */
         .page-eval .symptom-section {
-            background: #f8faff;
+            background: var(--card-bg);
             border-radius: 14px;
-            padding: 12px 14px;
+            padding: 14px 16px 16px;
             border: 1px solid var(--border);
-            margin-top: 4px;
-        }
-        .page-eval .symptom-section .sym-title {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .page-eval .symptom-section .sym-title span {
-            font-weight: 400;
-            font-size: 11px;
-            color: var(--text-secondary);
+            box-shadow: var(--shadow);
+            margin-bottom: 12px;
         }
         .page-eval .symptom-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 6px 0;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
         }
         .page-eval .symptom-grid .sym-item {
-            background: #fff;
-            border-radius: 10px;
-            padding: 6px 10px 8px;
-            border: 1px solid #eef2f6;
+            background: #f7fbfa;
+            border-radius: 12px;
+            padding: 10px 12px 12px;
+            border: 1px solid #e4efed;
         }
         .page-eval .symptom-grid .sym-item .sym-header {
             display: flex;
             justify-content: space-between;
+            align-items: center;
             font-size: 12px;
-            font-weight: 500;
+            font-weight: 600;
+            margin-bottom: 6px;
         }
         .page-eval .symptom-grid .sym-item .sym-header .val {
-            color: var(--primary);
-            font-weight: 600;
-            font-size: 15px;
-            min-width: 20px;
+            color: var(--primary-dark);
+            font-weight: 700;
+            font-size: 17px;
+            min-width: 26px;
             text-align: center;
+            background: var(--primary-bg);
+            border-radius: 8px;
+            line-height: 24px;
         }
         .page-eval .symptom-grid .sym-item input[type="range"] {
             width: 100%;
-            height: 4px;
+            height: 6px;
             -webkit-appearance: none;
             appearance: none;
-            background: #dce2e9;
+            background: linear-gradient(90deg, var(--primary-light), var(--primary));
+            opacity: 0.85;
             border-radius: 4px;
             outline: none;
-            margin: 4px 0 0;
+            margin: 2px 0 0;
             touch-action: manipulation;
         }
         .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             appearance: none;
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            border: 2px solid #fff;
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+            border: 2.5px solid #fff;
+            box-shadow: 0 1px 6px rgba(13, 148, 136, 0.35);
             touch-action: manipulation;
         }
         .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             border-radius: 50%;
             background: var(--primary);
             cursor: pointer;
-            border: 2px solid #fff;
+            border: 2.5px solid #fff;
             touch-action: manipulation;
         }
         .page-eval .symptom-grid .sym-item .range-labels {
             display: flex;
             justify-content: space-between;
-            font-size: 8px;
-            color: #b0bec5;
-            padding: 0 2px;
+            font-size: 9px;
+            color: #8fa8ae;
+            padding: 3px 2px 0;
+            letter-spacing: 0.3px;
         }
 
         .page-eval .chart-mini {
-            background: #f8faff;
+            background: var(--card-bg);
             border-radius: 14px;
             padding: 10px 12px;
             border: 1px solid var(--border);
-            margin: 8px 0 4px;
+            box-shadow: var(--shadow);
+            margin: 0 0 4px;
         }
         .page-eval .chart-mini canvas {
             width: 100% !important;
@@ -576,14 +683,14 @@
             border-radius: 30px;
             font-size: 15px;
             font-weight: 600;
-            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             cursor: pointer;
             transition: 0.3s;
-            box-shadow: 0 4px 18px rgba(196, 69, 12, 0.2);
+            box-shadow: 0 4px 18px rgba(13, 148, 136, 0.3);
             font-family: inherit;
             touch-action: manipulation;
-            margin-top: 6px;
+            margin-top: 10px;
             min-height: 50px;
         }
         .page-eval .btn-send:active {
@@ -600,19 +707,18 @@
 
         .page-chat {
             padding: 0 !important;
-            background: #f0f2f5;
+            background: #eef3f4;
             display: flex;
             flex-direction: column;
         }
         .page-chat .chat-header-bar {
             flex-shrink: 0;
-            background: #0f1a2b;
+            background: linear-gradient(120deg, #0b3a40, #0f5a52);
             padding: 10px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             min-height: 48px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             color: #fff;
         }
         .page-chat .chat-header-bar .chat-title {
@@ -625,7 +731,7 @@
         .page-chat .chat-header-bar .chat-title .avatar {
             width: 30px;
             height: 30px;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -637,8 +743,8 @@
             gap: 6px;
         }
         .page-chat .chat-header-bar .chat-actions button {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #fff;
             padding: 4px 12px;
             border-radius: 20px;
@@ -650,7 +756,7 @@
             min-height: 30px;
         }
         .page-chat .chat-header-bar .chat-actions button:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.16);
         }
         .page-chat .chat-header-bar .chat-actions button:active {
             transform: scale(0.94);
@@ -660,7 +766,7 @@
             flex: 1;
             overflow-y: auto;
             padding: 12px 14px 8px;
-            background: #ededed;
+            background: #eef3f4;
             -webkit-overflow-scrolling: touch;
         }
         .page-chat .chat-messages-wrap .msg {
@@ -669,14 +775,8 @@
             animation: msgIn 0.25s ease;
         }
         @keyframes msgIn {
-            0% {
-                opacity: 0;
-                transform: translateY(6px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            0% { opacity: 0; transform: translateY(6px); }
+            100% { opacity: 1; transform: translateY(0); }
         }
         .page-chat .chat-messages-wrap .msg.user {
             justify-content: flex-end;
@@ -691,11 +791,11 @@
             font-size: 14px;
             line-height: 1.6;
             word-wrap: break-word;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            box-shadow: 0 1px 4px rgba(16, 35, 48, 0.05);
             position: relative;
         }
         .page-chat .chat-messages-wrap .msg.user .bubble {
-            background: var(--primary);
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
             color: #fff;
             border-bottom-right-radius: 4px;
         }
@@ -706,13 +806,13 @@
         }
         .page-chat .chat-messages-wrap .msg .bubble .time {
             font-size: 10px;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.55);
             margin-top: 4px;
             text-align: right;
             display: block;
         }
         .page-chat .chat-messages-wrap .msg.assistant .bubble .time {
-            color: #9aa9b7;
+            color: #9ab4ba;
         }
         .page-chat .chat-messages-wrap .msg .avatar-icon {
             width: 32px;
@@ -724,7 +824,7 @@
             font-size: 16px;
             flex-shrink: 0;
             margin-right: 8px;
-            background: rgba(0, 0, 0, 0.04);
+            background: rgba(13, 148, 136, 0.08);
         }
         .page-chat .chat-messages-wrap .msg.user .avatar-icon {
             margin-right: 0;
@@ -737,7 +837,7 @@
             flex-shrink: 0;
             padding: 8px 12px 12px;
             background: #fff;
-            border-top: 1px solid #e0e0e0;
+            border-top: 1px solid var(--border);
             display: flex;
             gap: 8px;
             align-items: center;
@@ -746,11 +846,11 @@
         .page-chat .chat-input-bar input {
             flex: 1;
             padding: 10px 16px;
-            border: 1px solid #dce2e9;
+            border: 1px solid #d3e2e4;
             border-radius: 24px;
             font-size: 14px;
             font-family: inherit;
-            background: #f5f6f8;
+            background: #f6faf9;
             transition: border 0.2s;
             min-height: 42px;
             color: var(--text);
@@ -760,7 +860,7 @@
         .page-chat .chat-input-bar input:focus {
             border-color: var(--primary);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(196, 69, 12, 0.06);
+            box-shadow: 0 0 0 3px rgba(13, 148, 136, 0.1);
         }
         .page-chat .chat-input-bar button {
             background: var(--primary);
@@ -827,7 +927,7 @@
         .page-chat .report-area .chart-box {
             max-width: 260px;
             margin: 8px auto;
-            background: #fafbfc;
+            background: #f8fcfb;
             border-radius: 12px;
             padding: 8px;
         }
@@ -841,9 +941,74 @@
         /* ===== 页面3：学习中心 ===== */
         /* ============================================================ */
 
-        .page-learn {
-            padding-bottom: calc(var(--nav-height) + 16px + var(--safe-bottom));
+        .page-learn .edu-section {
+            margin-bottom: 14px;
         }
+        .page-learn .edu-section .edu-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .page-learn .edu-section .edu-title .edu-sub {
+            font-size: 10px;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+        .page-learn .edu-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .page-learn .edu-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 10px 12px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            touch-action: manipulation;
+        }
+        .page-learn .edu-card:active {
+            transform: scale(0.97);
+        }
+        .page-learn .edu-card .edu-tag {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            padding: 1px 8px;
+            border-radius: 10px;
+            margin-bottom: 5px;
+        }
+        .page-learn .edu-card .edu-tag.pre { background: #fff3e0; color: #b4730a; }
+        .page-learn .edu-card .edu-tag.post { background: #e0f2fe; color: #0369a1; }
+        .page-learn .edu-card .edu-tag.rehab { background: #ecfdf5; color: #047857; }
+        .page-learn .edu-card .edu-name {
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        .page-learn .edu-card .edu-brief {
+            font-size: 10px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .page-learn .edu-card .edu-arrow {
+            text-align: right;
+            color: var(--primary);
+            font-size: 11px;
+        }
+        .page-learn .edu-card.expanded .edu-brief {
+            -webkit-line-clamp: unset;
+        }
+
         .page-learn .learn-header {
             display: flex;
             flex-wrap: wrap;
@@ -851,7 +1016,7 @@
             justify-content: space-between;
             gap: 8px;
             margin-bottom: 12px;
-            background: #0f1a2b;
+            background: linear-gradient(120deg, #0b3a40, #0f5a52);
             padding: 12px 16px;
             border-radius: 14px;
             color: #fff;
@@ -864,7 +1029,7 @@
             gap: 8px;
         }
         .page-learn .learn-header h3 span {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
             padding: 0 10px;
             border-radius: 20px;
             font-size: 12px;
@@ -876,8 +1041,8 @@
             flex-wrap: wrap;
         }
         .page-learn .learn-header .actions label {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             color: #fff;
             padding: 4px 12px;
             border-radius: 20px;
@@ -891,14 +1056,14 @@
             min-height: 30px;
         }
         .page-learn .learn-header .actions label:hover {
-            background: rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.16);
         }
         .page-learn .learn-header .actions label input {
             display: none;
         }
         .page-learn .learn-header .upload-hint {
             font-size: 10px;
-            color: rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .page-learn .learn-grid {
@@ -923,7 +1088,7 @@
         }
         .page-learn .learn-grid .media-item:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            box-shadow: 0 8px 24px rgba(13, 148, 136, 0.1);
         }
         .page-learn .learn-grid .media-item:active {
             transform: scale(0.96);
@@ -940,7 +1105,7 @@
             position: absolute;
             top: 4px;
             right: 4px;
-            background: rgba(0, 0, 0, 0.5);
+            background: rgba(11, 58, 64, 0.6);
             backdrop-filter: blur(4px);
             color: #fff;
             font-size: 9px;
@@ -955,11 +1120,11 @@
             left: 0;
             right: 0;
             padding: 6px 10px;
-            background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+            background: linear-gradient(transparent, rgba(11, 35, 40, 0.72));
             color: #fff;
             font-size: 10px;
             font-weight: 500;
-            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
             pointer-events: none;
             white-space: nowrap;
             overflow: hidden;
@@ -1008,7 +1173,7 @@
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.8);
+            background: rgba(6, 24, 28, 0.82);
             backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
@@ -1026,7 +1191,7 @@
         .modal-overlay .modal-content {
             max-width: 92vw;
             max-height: 88vh;
-            background: #1a1a1a;
+            background: #132b30;
             border-radius: 16px;
             overflow: hidden;
             position: relative;
@@ -1042,7 +1207,7 @@
             max-height: 76vh;
             display: block;
             margin: 0 auto;
-            background: #0a0a0a;
+            background: #0a1a1e;
         }
         .modal-overlay .modal-content .modal-info {
             padding: 8px 16px;
@@ -1088,12 +1253,13 @@
                 border-radius: 24px;
                 margin-top: 12px;
                 margin-bottom: 12px;
-                box-shadow: 0 20px 80px rgba(0, 0, 0, 0.08);
+                box-shadow: 0 20px 80px rgba(13, 148, 136, 0.12);
                 height: 92vh;
                 height: 92dvh;
             }
             .page-eval .body-map-wrap {
-                max-width: 200px;
+                width: 150px;
+                max-width: 150px;
             }
             .page-eval .symptom-grid {
                 grid-template-columns: 1fr 1fr 1fr;
@@ -1118,12 +1284,9 @@
                 height: 90vh;
                 height: 90dvh;
             }
-            .page-eval .body-section {
-                flex-wrap: nowrap;
-            }
             .page-eval .body-map-wrap {
-                max-width: 220px;
-                flex-shrink: 0;
+                width: 160px;
+                max-width: 160px;
             }
             .page-eval .symptom-grid {
                 grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -1131,247 +1294,177 @@
             .page-learn .learn-grid {
                 grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
             }
+            .page-learn .edu-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
         }
 
         @media (max-width: 480px) {
-    .app-header .title {
-        font-size: 14px;
-    }
-    .app-header .sub {
-        font-size: 10px;
-        padding: 1px 10px;
-    }
-    .page-eval .patient-card {
-        padding: 10px 12px;
-        gap: 6px 10px;
-    }
-    .page-eval .patient-card .field label {
-        font-size: 10px;
-    }
-    .page-eval .patient-card .field input,
-    .page-eval .patient-card .field select {
-        font-size: 12px;
-        padding: 5px 8px;
-    }
-    .page-eval .body-map-wrap {
-        max-width: 180px;
-    }
-
-    /* ===== 症状评分：单列 + 滑块撑满 ===== */
-    .page-eval .symptom-grid {
-        grid-template-columns: 1fr;
-        gap: 6px 0;
-    }
-    .page-eval .symptom-grid .sym-item {
-        padding: 8px 12px;               /* 增加内部空间，更好触摸 */
-    }
-    .page-eval .symptom-grid .sym-item .sym-header {
-        font-size: 11px;
-    }
-    .page-eval .symptom-grid .sym-item .sym-header .val {
-        font-size: 13px;
-    }
-
-    /* 滑块本身：宽度 100%，轨道加高，触摸区域加大 */
-    .page-eval .symptom-grid .sym-item input[type="range"] {
-        width: 100% !important;
-        display: block;
-        height: 8px;                     /* 轨道加高，更容易滑动 */
-        padding: 6px 0;                 /* 上下增加触摸面积 */
-        box-sizing: border-box;
-        -webkit-appearance: none;
-        appearance: none;
-        background: #dce2e9;
-        border-radius: 4px;
-        outline: none;
-        margin: 4px 0 0;
-        touch-action: manipulation;
-    }
-
-    /* 滑块拇指（圆形按钮）放大，便于手指操作 */
-    .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
-        -webkit-appearance: none;
-        appearance: none;
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: var(--primary);
-        cursor: pointer;
-        border: 2px solid #fff;
-        box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
-        touch-action: manipulation;
-    }
-    .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: var(--primary);
-        cursor: pointer;
-        border: 2px solid #fff;
-        touch-action: manipulation;
-    }
-
-    /* 聊天区域 */
-    .page-chat .chat-messages-wrap .msg .bubble {
-        font-size: 13px;
-        padding: 8px 12px;
-        max-width: 86%;
-    }
-    .page-chat .chat-input-bar input {
-        font-size: 13px;
-        padding: 8px 14px;
-        min-height: 38px;
-    }
-    .page-chat .chat-input-bar button {
-        font-size: 13px;
-        padding: 0 16px;
-        min-height: 38px;
-        min-width: 56px;
-    }
-
-    /* 学习中心 */
-    .page-learn .learn-grid {
-        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-        gap: 8px;
-    }
-    .page-learn .learn-header {
-        padding: 10px 12px;
-        flex-direction: column;
-        align-items: stretch;
-    }
-    .page-learn .learn-header .actions {
-        justify-content: flex-start;
-    }
-
-    /* 底部导航 */
-    .bottom-nav .nav-item .nav-label {
-        font-size: 9px;
-    }
-    .bottom-nav .nav-item .nav-icon {
-        font-size: 20px;
-    }
-
-    /* 全局变量 */
-    :root {
-        --nav-height: 60px;
-        --header-height: 46px;
-    }
-}
+            .app-header .title {
+                font-size: 12.5px;
+            }
+            .app-header .sub {
+                font-size: 10px;
+                padding: 1px 10px;
+            }
+            .page-eval .patient-card {
+                padding: 10px 12px;
+                gap: 6px 10px;
+            }
+            .page-eval .patient-card .field label {
+                font-size: 10px;
+            }
+            .page-eval .patient-card .field input,
+            .page-eval .patient-card .field select {
+                font-size: 12px;
+                padding: 5px 8px;
+            }
+            .page-eval .body-map-wrap {
+                width: 124px;
+                max-width: 124px;
+            }
+            .page-eval .symptom-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+            }
+            .page-eval .symptom-grid .sym-item {
+                padding: 9px 11px 11px;
+            }
+            .page-chat .chat-messages-wrap .msg .bubble {
+                font-size: 13px;
+                padding: 8px 12px;
+                max-width: 86%;
+            }
+            .page-chat .chat-input-bar input {
+                font-size: 13px;
+                padding: 8px 14px;
+                min-height: 38px;
+            }
+            .page-chat .chat-input-bar button {
+                font-size: 13px;
+                padding: 0 16px;
+                min-height: 38px;
+                min-width: 56px;
+            }
+            .page-learn .learn-grid {
+                grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+                gap: 8px;
+            }
+            .page-learn .learn-header {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .page-learn .learn-header .actions {
+                justify-content: flex-start;
+            }
+            .bottom-nav .nav-item .nav-label {
+                font-size: 9px;
+            }
+            .bottom-nav .nav-item .nav-icon {
+                font-size: 20px;
+            }
+            :root {
+                --nav-height: 60px;
+                --header-height: 46px;
+            }
+        }
 
         /* ===== 暗色模式页面 ===== */
         @media (prefers-color-scheme: dark) {
-            .page-eval .patient-card {
-                background: #1e2a3a;
+            .page-eval .patient-card,
+            .page-eval .selected-box,
+            .page-eval .symptom-section,
+            .page-eval .chart-mini {
+                background: #16262c;
                 border-color: var(--border);
             }
             .page-eval .patient-card .field input,
             .page-eval .patient-card .field select {
-                background: #15202b;
-                border-color: #2a3a4a;
-                color: #e8edf3;
+                background: #10211f;
+                border-color: #2a4a48;
+                color: #e6f1f2;
             }
             .page-eval .body-map-wrap {
-                background: #15202b;
+                background: #16262c;
                 border-color: var(--border);
             }
             .page-eval .body-map-wrap .part {
-                fill: #2a3a4a;
-                stroke: #4a5a6a;
+                fill: #2a4a48;
+                stroke: #4a6a70;
             }
             .page-eval .body-map-wrap .part:hover {
-                fill: #3a4a5a;
-                stroke: var(--primary);
+                fill: #3a5f5c;
+                stroke: var(--primary-light);
             }
             .page-eval .body-map-wrap .part.selected {
                 fill: var(--primary) !important;
                 stroke: var(--primary-dark);
             }
-            .page-eval .body-map-wrap .part.buttock {
-                fill: #2a3a4a;
-            }
-            .page-eval .body-map-wrap .part.breast {
-                fill: #2a3a4a;
-            }
-            .page-eval .selected-box {
-                background: #1e2a3a;
-                border-color: var(--border);
-            }
+            .page-eval .body-map-wrap .part.buttock { fill: #2a4a48; }
+            .page-eval .body-map-wrap .part.breast { fill: #2a4a48; }
             .page-eval .selected-box ul li {
-                border-bottom-color: #2a3a4a;
-                color: #c8d4e0;
-            }
-            .page-eval .symptom-section {
-                background: #1e2a3a;
-                border-color: var(--border);
+                border-bottom-color: #24403f;
+                color: #c8dde0;
             }
             .page-eval .symptom-grid .sym-item {
-                background: #15202b;
-                border-color: #2a3a4a;
+                background: #10211f;
+                border-color: #24403f;
             }
             .page-eval .symptom-grid .sym-item .sym-header {
-                color: #c8d4e0;
+                color: #c8dde0;
             }
             .page-eval .symptom-grid .sym-item input[type="range"] {
-                background: #2a3a4a;
-            }
-            .page-eval .symptom-grid .sym-item input[type="range"]::-webkit-slider-thumb {
-                background: var(--primary);
-                border-color: #1a2330;
-            }
-            .page-eval .symptom-grid .sym-item input[type="range"]::-moz-range-thumb {
-                background: var(--primary);
-                border-color: #1a2330;
-            }
-            .page-eval .chart-mini {
-                background: #1e2a3a;
-                border-color: var(--border);
+                background: #2a4a48;
             }
             .page-chat .chat-messages-wrap {
-                background: #12181f;
+                background: #0f1a1e;
             }
             .page-chat .chat-messages-wrap .msg.assistant .bubble {
-                background: #1e2a3a;
-                color: #c8d4e0;
+                background: #1d3238;
+                color: #c8dde0;
             }
             .page-chat .chat-input-bar {
-                background: #1a2330;
-                border-top-color: #2a3a4a;
+                background: #16262c;
+                border-top-color: #25414a;
             }
             .page-chat .chat-input-bar input {
-                background: #15202b;
-                border-color: #2a3a4a;
-                color: #e8edf3;
-            }
-            .page-chat .chat-input-bar input:focus {
-                border-color: var(--primary);
+                background: #10211f;
+                border-color: #2a4a48;
+                color: #e6f1f2;
             }
             .page-chat .report-area {
-                background: #1a2330;
+                background: #16262c;
                 border-color: var(--border);
             }
-            .page-learn .learn-grid .media-item {
-                background: #1a2330;
+            .page-learn .learn-grid .media-item,
+            .page-learn .edu-card {
+                background: #16262c;
                 border-color: var(--border);
-            }
-            .page-learn .learn-header {
-                background: #0d1520;
             }
             .page-learn .learn-grid .learn-empty {
-                color: #7a8a9a;
-            }
-            .page-chat .chat-header-bar {
-                background: #0d1520;
+                color: #7a949b;
             }
             .page-eval .view-toggle button {
-                background: #1e2a3a;
-                color: #8a9aa8;
+                background: #1d3238;
+                color: #8aa5ac;
             }
             .page-eval .view-toggle button.active {
                 background: var(--primary);
                 color: #fff;
             }
+            .depth-picker .depth-chip {
+                background: #10211f;
+                border-color: #2a4a48;
+                color: #8aa5ac;
+            }
+            .unit-chip {
+                background: #10211f;
+                border-color: #2a4a48;
+                color: var(--primary-light);
+            }
             .modal-overlay .modal-content {
-                background: #0d1520;
+                background: #0d2026;
             }
             .modal-overlay .modal-content .modal-info {
                 background: rgba(0, 0, 0, 0.6);
@@ -1380,8 +1473,8 @@
 
         /* ===== 工具类 ===== */
         .field-error {
-            border-color: #c0392b !important;
-            box-shadow: 0 0 0 3px rgba(192, 57, 43, 0.12) !important;
+            border-color: #e05b4f !important;
+            box-shadow: 0 0 0 3px rgba(224, 91, 79, 0.14) !important;
         }
         .text-muted {
             color: var(--text-secondary);
@@ -1443,7 +1536,7 @@
     <div id="app">
         <!-- ===== 顶部栏 ===== -->
         <header class="app-header">
-            <span class="title">🔥 烧伤ePRO</span>
+            <span class="title">🩺 烧伤ePRO智能症状管理平台</span>
             <span class="sub"><span class="accent">陆军军医大学</span> · 护理系</span>
         </header>
 
@@ -1460,7 +1553,10 @@
                     </div>
                     <div class="field">
                         <label>年龄 <span class="required">*</span></label>
-                        <input type="number" id="patientAge" placeholder="岁" min="0" max="150" step="1" />
+                        <div class="input-with-unit">
+                            <input type="number" id="patientAge" placeholder="请输入" min="0" max="150" step="1" />
+                            <span class="unit-chip">岁</span>
+                        </div>
                     </div>
                     <div class="field">
                         <label>性别 <span class="required">*</span></label>
@@ -1472,20 +1568,22 @@
                     </div>
                     <div class="field field-full">
                         <label>烧伤总面积 <span class="required">*</span></label>
-                        <div style="display:flex;align-items:center;gap:6px;">
-                            <input type="number" id="totalBurnArea" placeholder="%" min="0" max="100" step="0.5" value="0" style="flex:1;" />
-                            <span style="font-size:13px;color:var(--text-secondary);">% TBSA</span>
+                        <div class="input-with-unit">
+                            <input type="number" id="totalBurnArea" placeholder="请输入" min="0" max="100" step="0.5" value="0" style="flex:1;" />
+                            <span class="unit-chip">% TBSA</span>
                         </div>
+                        <div class="field-note">TBSA：总体表面积百分比，用手掌法/九分法估算</div>
                     </div>
                 </div>
 
-                <!-- 视图切换 + 人体图 -->
+                <!-- 视图切换 -->
                 <div class="view-toggle">
                     <button id="btnFront" class="active" onclick="switchView('front')">🧍 正面</button>
                     <button id="btnBack" onclick="switchView('back')">🔄 背面</button>
                     <span id="genderBadge" class="text-muted" style="display:none;margin-left:6px;"></span>
                 </div>
 
+                <!-- 人形图（缩小） + 已选部位/深度 -->
                 <div class="body-section">
                     <div class="body-map-wrap" id="bodyMapContainer">
                         <!-- 男性正面 -->
@@ -1534,41 +1632,43 @@
                             <ellipse cx="75" cy="192" rx="26" ry="20" class="part buttock" data-part="左臀部" data-percent="2.5" onclick="selectPart(this)" />
                             <ellipse cx="125" cy="192" rx="26" ry="20" class="part buttock" data-part="右臀部" data-percent="2.5" onclick="selectPart(this)" />
                         </svg>
+                        <div class="map-tip">点击部位选中 / 再点取消</div>
                     </div>
 
                     <div class="right-panel">
                         <div class="selected-box">
                             <div class="title-row">
-                                ✅ 已选部位
-                                <span>（点击部位选中，✕ 移除）</span>
+                                ✅ 已选部位与深度
+                                <span>点部位选中，可在下方改深度</span>
                             </div>
                             <ul id="selectedPartsList">
-                                <li style="color:var(--text-secondary);justify-content:center;font-size:13px;">点击人体图选择</li>
+                                <li style="color:var(--text-secondary);justify-content:center;font-size:13px;">点击左侧人体图选择</li>
                             </ul>
                             <div class="total-row">
                                 <span>🔥 烧伤总面积</span>
                                 <span class="num" id="totalPercentDisplay">0.0 %</span>
                             </div>
-                            <div class="hint">💡 顶部填实际总面积，部位用于标记</div>
+                            <div class="hint">💡 顶部填写实际总烧伤面积（%TBSA）；部位用于标记分布，深度用于评估严重程度</div>
                         </div>
-
-                        <div class="symptom-section">
-                            <div class="sym-title">
-                                📋 症状评分
-                                <span>（0=无，4=最重）</span>
-                            </div>
-                            <div class="symptom-grid" id="symptomGrid"></div>
-                        </div>
-
-                        <div class="chart-mini">
-                            <canvas id="burnChart" width="400" height="200"></canvas>
-                        </div>
-
-                        <button class="btn-send" onclick="sendBurnInfoToChat()">
-                            🤖 将病情发送给 小愈
-                        </button>
                     </div>
                 </div>
+
+                <!-- 症状评分：占满整行，空间更大 -->
+                <div class="symptom-section">
+                    <div class="sym-title section-title">
+                        📋 症状评分评估
+                        <span class="title-tip">0 = 无症状，4 = 极重，拖动滑块打分</span>
+                    </div>
+                    <div class="symptom-grid" id="symptomGrid"></div>
+                </div>
+
+                <div class="chart-mini">
+                    <canvas id="burnChart" width="400" height="200"></canvas>
+                </div>
+
+                <button class="btn-send" onclick="sendBurnInfoToChat()">
+                    🤖 将病情发送给 小愈
+                </button>
             </div>
 
             <!-- ===== 页面2：小愈 ===== -->
@@ -1588,7 +1688,7 @@
                         <div class="avatar-icon">🤖</div>
                         <div class="bubble">
                             你好！我是小愈 😊<br>
-                            请先在「评估」页填写患者信息、选择烧伤部位并评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。
+                            请先在「评估」页填写患者信息、选择烧伤部位与深度并评估症状，然后点击「将病情发送给小愈」，我会为你提供专业建议。
                             <span class="time">刚刚</span>
                         </div>
                     </div>
@@ -1605,7 +1705,7 @@
                     <p><strong>年龄：</strong><span id="r_age"></span> 岁 &nbsp;|&nbsp; <strong>性别：</strong><span id="r_gender"></span></p>
                     <p><strong>烧伤总面积：</strong><span id="r_totalArea"></span> % TBSA</p>
                     <p><strong>评估时间：</strong><span id="r_time"></span></p>
-                    <h4>烧伤部位</h4>
+                    <h4>烧伤部位与深度</h4>
                     <ul id="r_parts"></ul>
                     <h4>症状评分（0-4分）</h4>
                     <ul id="r_symptoms"></ul>
@@ -1616,9 +1716,18 @@
 
             <!-- ===== 页面3：学习中心 ===== -->
             <div class="page page-learn" id="pageLearn">
+                <!-- 术前术后知识 -->
+                <div class="edu-section">
+                    <div class="edu-title">
+                        📖 术前术后知识
+                        <span class="edu-sub">点击卡片展开/收起</span>
+                    </div>
+                    <div class="edu-grid" id="eduGrid"></div>
+                </div>
+
                 <div class="learn-header">
                     <h3>
-                        📚 烧伤学习中心
+                        📚 学习资料库
                         <span id="mediaCount">0</span>
                     </h3>
                     <div class="actions">
@@ -1672,12 +1781,14 @@
         const API_URL = 'https://cloud.fastgpt.cn/api/v1/chat/completions';
         const API_KEY = 'fastgpt-uqFyIGGcF5SrfET9BSYLyNooreUIUEnRnWVQCEY0GCXBVBECXfV6ob';
 
+        const STORAGE_KEY = 'burnEPRO_patientProfile_v1';
+
         // ================================================================
         // ===== 状态 =====
         // ================================================================
         let currentView = 'front';
         let currentGender = '';
-        let selectedParts = {};
+        let selectedParts = {};   // { 部位名: { percent: Number, depth: String } }
         let myChart = null;
         let reportChart = null;
         let db = null;
@@ -1698,6 +1809,94 @@
         ];
 
         // ================================================================
+        // ===== 烧伤深度定义 =====
+        // ================================================================
+        const DEPTH_OPTIONS = ['Ⅰ度', '浅Ⅱ度', '深Ⅱ度', 'Ⅲ度'];
+        const DEFAULT_DEPTH = '浅Ⅱ度';
+        const DEPTH_DESC = {
+            'Ⅰ度': '伤及表皮浅层，红斑、无水疱、干燥',
+            '浅Ⅱ度': '伤及表皮全层与真皮浅层，水疱大、剧痛',
+            '深Ⅱ度': '伤及真皮深层，水疱小、痛觉迟钝',
+            'Ⅲ度': '伤及皮肤全层，焦痂、痛觉消失'
+        };
+        function depthClass(depth) {
+            return { 'Ⅰ度': 'd1', '浅Ⅱ度': 'd2', '深Ⅱ度': 'd3', 'Ⅲ度': 'd4' }[depth] || 'd2';
+        }
+
+        // ================================================================
+        // ===== 持久化：患者信息 / 部位 / 评分 =====
+        // ================================================================
+        function saveProfile() {
+            try {
+                const profile = {
+                    patientId: document.getElementById('patientId').value,
+                    patientAge: document.getElementById('patientAge').value,
+                    patientGender: document.getElementById('patientGender').value,
+                    totalBurnArea: document.getElementById('totalBurnArea').value,
+                    currentGender: currentGender,
+                    currentView: currentView,
+                    selectedParts: selectedParts,
+                    symptoms: {}
+                };
+                symptomDefs.forEach(def => {
+                    const el = document.getElementById(def.id);
+                    if (el) profile.symptoms[def.id] = el.value;
+                });
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(profile));
+            } catch (e) { /* 隐私模式等情况下静默失败 */ }
+        }
+
+        function restoreProfile() {
+            let profile = null;
+            try {
+                const raw = localStorage.getItem(STORAGE_KEY);
+                if (raw) profile = JSON.parse(raw);
+            } catch (e) { return false; }
+            if (!profile) return false;
+
+            if (profile.patientId != null) document.getElementById('patientId').value = profile.patientId;
+            if (profile.patientAge != null) document.getElementById('patientAge').value = profile.patientAge;
+            if (profile.totalBurnArea != null) document.getElementById('totalBurnArea').value = profile.totalBurnArea;
+
+            if (profile.patientGender === '男' || profile.patientGender === '女') {
+                currentGender = profile.patientGender;
+                document.getElementById('patientGender').value = profile.patientGender;
+                const badge = document.getElementById('genderBadge');
+                badge.style.display = 'inline-block';
+                badge.textContent = profile.patientGender === '男' ? '♂ 男性' : '♀ 女性';
+            }
+
+            if (profile.currentView === 'back') switchView('back');
+
+            // 恢复部位与深度（不触发清空逻辑）
+            if (profile.selectedParts && typeof profile.selectedParts === 'object') {
+                const restored = {};
+                for (const [name, obj] of Object.entries(profile.selectedParts)) {
+                    const percent = (obj && typeof obj === 'object') ? Number(obj.percent) || 0 : Number(obj) || 0;
+                    const depth = (obj && typeof obj === 'object' && DEPTH_OPTIONS.includes(obj.depth)) ? obj.depth : DEFAULT_DEPTH;
+                    if (percent > 0) restored[name] = { percent, depth };
+                }
+                selectedParts = restored;
+                document.querySelectorAll('.part').forEach(el => {
+                    el.classList.toggle('selected', !!selectedParts[el.getAttribute('data-part')]);
+                });
+            }
+
+            // 恢复症状评分
+            if (profile.symptoms) {
+                symptomDefs.forEach(def => {
+                    const el = document.getElementById(def.id);
+                    const v = profile.symptoms[def.id];
+                    if (el && v != null) {
+                        el.value = v;
+                        document.getElementById(def.id + '_val').textContent = v;
+                    }
+                });
+            }
+            return true;
+        }
+
+        // ================================================================
         // ===== 页面切换 =====
         // ================================================================
         function switchPage(pageId) {
@@ -1706,14 +1905,11 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.querySelector(`.nav-item[data-page="${pageId}"]`).classList.add('active');
 
-            // 如果切换到聊天页，滚动到底部
             if (pageId === 'pageChat') {
                 const wrap = document.getElementById('chatMessagesWrap');
                 setTimeout(() => { wrap.scrollTop = wrap.scrollHeight; }, 100);
-                // 隐藏小红点
                 document.getElementById('chatBadge').style.display = 'none';
             }
-            // 如果切换到学习页，刷新网格
             if (pageId === 'pageLearn') {
                 renderMediaGrid();
             }
@@ -1735,6 +1931,7 @@
             clearAllSelections();
             updateBodyView();
             updateChart();
+            saveProfile();
             if (currentGender) {
                 addChatMessage('assistant', `👤 已切换至${currentGender}性烧伤评估视图，请重新选择烧伤部位。`);
             }
@@ -1775,6 +1972,7 @@
             document.querySelectorAll('.part').forEach(el => el.classList.remove('selected'));
             updateSelectedList();
             updateTotalDisplay();
+            saveProfile();
         }
 
         // ================================================================
@@ -1793,27 +1991,46 @@
                 delete selectedParts[partName];
                 allParts.forEach(el => el.classList.remove('selected'));
             } else {
-                selectedParts[partName] = defaultPercent;
+                selectedParts[partName] = { percent: defaultPercent, depth: DEFAULT_DEPTH };
                 allParts.forEach(el => el.classList.add('selected'));
             }
             updateSelectedList();
             updateTotalDisplay();
             updateChart();
+            saveProfile();
+        }
+
+        function setPartDepth(partName, depth) {
+            if (selectedParts[partName] && DEPTH_OPTIONS.includes(depth)) {
+                selectedParts[partName].depth = depth;
+                updateSelectedList();
+                saveProfile();
+            }
         }
 
         function updateSelectedList() {
             const listEl = document.getElementById('selectedPartsList');
             const keys = Object.keys(selectedParts);
             if (keys.length === 0) {
-                listEl.innerHTML = '<li style="color:var(--text-secondary);justify-content:center;font-size:13px;">点击人体图选择</li>';
+                listEl.innerHTML = '<li style="color:var(--text-secondary);justify-content:center;font-size:13px;">点击左侧人体图选择</li>';
                 return;
             }
             let html = '';
             for (let part of keys) {
+                const info = selectedParts[part];
+                const chips = DEPTH_OPTIONS.map(d =>
+                    `<button class="depth-chip ${d === info.depth ? 'active' : ''}" onclick="event.stopPropagation(); setPartDepth('${part}', '${d}')">${d}</button>`
+                ).join('');
                 html += `
                     <li>
-                        <span class="part-name">${part}</span>
-                        <button class="remove-btn" onclick="removePart('${part}')" aria-label="移除">✕</button>
+                        <div class="li-main">
+                            <span class="part-name">${part}</span>
+                            <button class="remove-btn" onclick="removePart('${part}')" aria-label="移除">✕</button>
+                        </div>
+                        <div class="li-sub">
+                            <div class="depth-picker">${chips}</div>
+                            <span class="part-percent">占 ${info.percent}%</span>
+                        </div>
                     </li>
                 `;
             }
@@ -1827,6 +2044,7 @@
                 updateSelectedList();
                 updateTotalDisplay();
                 updateChart();
+                saveProfile();
                 if ('vibrate' in navigator && window.innerWidth <= 768) {
                     navigator.vibrate && navigator.vibrate(8);
                 }
@@ -1847,6 +2065,7 @@
         document.getElementById('totalBurnArea').addEventListener('input', function() {
             updateTotalDisplay();
             updateChart();
+            saveProfile();
         });
 
         // ================================================================
@@ -1863,9 +2082,9 @@
                         <span>${def.label}</span>
                         <span class="val" id="${def.id}_val">0</span>
                     </div>
-                    <input type="range" id="${def.id}" min="0" max="4" step="1" value="0" 
+                    <input type="range" id="${def.id}" min="0" max="4" step="1" value="0"
                            oninput="updateSymptomValue('${def.id}')">
-                    <div class="range-labels"><span>0</span><span>4</span></div>
+                    <div class="range-labels"><span>0 · 无</span><span>2 · 中</span><span>4 · 极重</span></div>
                 `;
                 grid.appendChild(div);
             });
@@ -1875,6 +2094,7 @@
             const slider = document.getElementById(id);
             const val = parseInt(slider.value);
             document.getElementById(id + '_val').textContent = val;
+            saveProfile();
         }
 
         function getSymptomValues() {
@@ -1891,6 +2111,9 @@
         // ================================================================
         // ===== 图表 =====
         // ================================================================
+        const CHART_COLORS = ['#0d9488', '#14b8a6', '#2dd4bf', '#0ea5e9', '#6366f1', '#8b5cf6',
+            '#f59e0b', '#f97316', '#ef4444', '#10b981', '#3b82f6', '#a855f7'];
+
         function updateChart() {
             const ctx = document.getElementById('burnChart').getContext('2d');
             const partNames = Object.keys(selectedParts);
@@ -1901,18 +2124,15 @@
             if (partNames.length === 0 || totalArea === 0) {
                 myChart = new Chart(ctx, {
                     type: 'pie',
-                    data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e4e9ef'] }] },
+                    data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e2ecef'] }] },
                     options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
                 });
                 return;
             }
 
-            const weights = partNames.map(p => selectedParts[p]);
+            const weights = partNames.map(p => selectedParts[p].percent);
             const sumWeights = weights.reduce((a, b) => a + b, 0);
             const data = weights.map(w => (w / sumWeights) * totalArea);
-            const colors = ['#c4450c', '#d45a2a', '#e67e22', '#f39c12', '#c0392b', '#e74c3c', '#8e44ad', '#2980b9', '#1abc9c',
-                '#27ae60', '#2ecc71', '#3498db'
-            ];
 
             myChart = new Chart(ctx, {
                 type: 'pie',
@@ -1920,7 +2140,7 @@
                     labels: partNames,
                     datasets: [{
                         data: data,
-                        backgroundColor: colors.slice(0, partNames.length),
+                        backgroundColor: CHART_COLORS.slice(0, partNames.length),
                         borderColor: '#ffffff',
                         borderWidth: 2
                     }]
@@ -1934,16 +2154,16 @@
                             labels: {
                                 padding: 10,
                                 font: { size: 11, family: '-apple-system, sans-serif' },
-                                color: '#2c3e50',
+                                color: '#2c4a52',
                                 boxWidth: 12,
                                 usePointStyle: true
                             }
                         },
                         title: {
                             display: true,
-                            text: '烧伤部位分布',
+                            text: '烧伤部位分布（按面积占比）',
                             font: { size: 13, weight: '600' },
-                            color: '#1a2635',
+                            color: '#102330',
                             padding: { bottom: 6 }
                         },
                         tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%` } }
@@ -1952,8 +2172,8 @@
             });
             // 暗色模式适配
             if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                myChart.options.plugins.legend.labels.color = '#c8d4e0';
-                myChart.options.plugins.title.color = '#e8edf3';
+                myChart.options.plugins.legend.labels.color = '#c8dde0';
+                myChart.options.plugins.title.color = '#e6f1f2';
                 myChart.update();
             }
         }
@@ -1988,7 +2208,6 @@
             wrap.scrollTop = wrap.scrollHeight;
             chatMessageCount++;
 
-            // 如果聊天页未激活，显示小红点
             const chatPage = document.getElementById('pageChat');
             if (!chatPage.classList.contains('active')) {
                 document.getElementById('chatBadge').style.display = 'inline-block';
@@ -2130,15 +2349,15 @@
             const age = document.getElementById('patientAge').value.trim();
             const gender = document.getElementById('patientGender').value;
             const totalArea = parseFloat(document.getElementById('totalBurnArea').value).toFixed(1);
-            const partsDesc = Object.keys(selectedParts).join('、');
+            const partsDesc = Object.keys(selectedParts)
+                .map(p => `${p}（${selectedParts[p].depth}）`).join('、');
             const symptomReport = getSymptomReport();
 
             const message =
-                `患者ID：${patientId}，年龄：${age}岁，性别：${gender}，烧伤总面积：${totalArea}% TBSA，烧伤部位：${partsDesc}，症状评分：${symptomReport}。`;
+                `患者ID：${patientId}，年龄：${age}岁，性别：${gender}，烧伤总面积：${totalArea}% TBSA，烧伤部位及深度：${partsDesc}，症状评分：${symptomReport}。请结合烧伤深度给出针对性建议。`;
 
-            // 切换到聊天页
+            saveProfile();
             switchPage('pageChat');
-            // 延迟发送消息
             setTimeout(() => {
                 callFastGPT(message);
             }, 400);
@@ -2174,7 +2393,9 @@
                 partsList.innerHTML = '<li>未选择任何部位</li>';
             } else {
                 let html = '';
-                for (let part of keys) html += `<li>${part}</li>`;
+                for (let part of keys) {
+                    html += `<li>${part} —— <span class="depth-tag ${depthClass(selectedParts[part].depth)}">${selectedParts[part].depth}</span>（约 ${selectedParts[part].percent}%）</li>`;
+                }
                 partsList.innerHTML = html;
             }
 
@@ -2183,7 +2404,6 @@
             for (let s of symObjs) symHtml += `<li>${s.name}：${s.value} 分</li>`;
             document.getElementById('r_symptoms').innerHTML = symHtml;
 
-            // 报告图表
             const reportCanvas = document.getElementById('reportChart');
             const ctx = reportCanvas.getContext('2d');
             if (reportChart) reportChart.destroy();
@@ -2191,23 +2411,20 @@
             if (keys.length === 0 || parseFloat(totalArea) === 0) {
                 reportChart = new Chart(ctx, {
                     type: 'pie',
-                    data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e4e9ef'] }] },
+                    data: { labels: ['暂无数据'], datasets: [{ data: [1], backgroundColor: ['#e2ecef'] }] },
                     options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { display: false } } }
                 });
             } else {
-                const weights = keys.map(p => selectedParts[p]);
+                const weights = keys.map(p => selectedParts[p].percent);
                 const sumWeights = weights.reduce((a, b) => a + b, 0);
                 const data = weights.map(w => (w / sumWeights) * parseFloat(totalArea));
-                const colors = ['#c4450c', '#d45a2a', '#e67e22', '#f39c12', '#c0392b', '#e74c3c', '#8e44ad', '#2980b9', '#1abc9c',
-                    '#27ae60', '#2ecc71', '#3498db'
-                ];
                 reportChart = new Chart(ctx, {
                     type: 'pie',
                     data: {
                         labels: keys,
                         datasets: [{
                             data: data,
-                            backgroundColor: colors.slice(0, keys.length),
+                            backgroundColor: CHART_COLORS.slice(0, keys.length),
                             borderColor: '#ffffff',
                             borderWidth: 2
                         }]
@@ -2220,20 +2437,19 @@
                                 position: 'bottom',
                                 labels: { padding: 10, font: { size: 11 }, boxWidth: 12, usePointStyle: true }
                             },
-                            title: { display: true, text: '烧伤部位分布', font: { size: 13, weight: '600' } },
+                            title: { display: true, text: '烧伤部位分布（按面积占比）', font: { size: 13, weight: '600' } },
                             tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.raw.toFixed(1)}%` } }
                         }
                     }
                 });
                 if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    reportChart.options.plugins.legend.labels.color = '#c8d4e0';
-                    reportChart.options.plugins.title.color = '#e8edf3';
+                    reportChart.options.plugins.legend.labels.color = '#c8dde0';
+                    reportChart.options.plugins.title.color = '#e6f1f2';
                     reportChart.update();
                 }
             }
 
             document.getElementById('reportArea').classList.add('show');
-            // 滚动到报告区
             const area = document.getElementById('reportArea');
             setTimeout(() => {
                 area.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -2245,9 +2461,62 @@
         }
 
         // ================================================================
+        // ===== 术前术后知识 =====
+        // ================================================================
+        const EDU_CARDS = [
+            {
+                tag: '术前', tagClass: 'pre', title: '术前准备须知',
+                brief: '术前按医嘱禁食禁水（通常成人禁食8小时、禁水4小时）；术区皮肤清洁备皮，勿涂抹护肤品；保证充足睡眠，练习深呼吸放松；有发热、女性月经来潮等情况及时告知医护人员。'
+            },
+            {
+                tag: '术前', tagClass: 'pre', title: '缓解紧张与恐惧',
+                brief: '手术前感到紧张、恐惧是正常反应。可尝试：①腹式呼吸：吸气4秒、呼气6秒，循环5分钟；②听舒缓音乐或冥想引导；③与病友交流手术经验；④把疑问写下来，主动询问医生，了解得越清楚越安心。'
+            },
+            {
+                tag: '术后', tagClass: 'post', title: '术后疼痛管理',
+                brief: '疼痛不必硬扛。按时服用镇痛药物效果更好，不要等剧痛再用药；可采用0-10分自评疼痛，≥4分请告知护士；更换敷料前30分钟可预防性用药；配合深呼吸、听音乐等放松疗法可增强药效。'
+            },
+            {
+                tag: '术后', tagClass: 'post', title: '术后瘙痒护理',
+                brief: '创面愈合期瘙痒常见，切勿抓挠！可：①轻拍或冷敷代替抓挠；②穿着纯棉宽松衣物减少摩擦；③保持皮肤湿润，遵医嘱使用抗瘙痒药膏；④夜间痒感加重时可提前用药，戴棉质手套入睡防抓伤。'
+            },
+            {
+                tag: '康复', tagClass: 'rehab', title: '瘢痕康复与加压治疗',
+                brief: '创面愈合后即进入瘢痕防治期：坚持佩戴加压衣/加压套（每日≥23小时，坚持6-12个月）；配合硅酮制剂抗瘢痕；避免日光暴晒以免色素沉着；按康复师指导进行关节活动训练，防止瘢痕挛缩影响功能。'
+            },
+            {
+                tag: '康复', tagClass: 'rehab', title: '营养与心理社会回归',
+                brief: '高蛋白饮食（鸡蛋、瘦肉、鱼、奶）促进创面修复，每日热量较正常增加；接纳身体变化，出现情绪低落、回避社交时及时寻求心理支持；循序渐进恢复工作与社交，家属的陪伴与鼓励是康复良药。'
+            }
+        ];
+
+        function renderEduCards() {
+            const grid = document.getElementById('eduGrid');
+            grid.innerHTML = EDU_CARDS.map((c, i) => `
+                <div class="edu-card" onclick="toggleEduCard(${i})">
+                    <span class="edu-tag ${c.tagClass}">${c.tag}</span>
+                    <div class="edu-name">${c.title}</div>
+                    <div class="edu-brief">${c.brief}</div>
+                    <div class="edu-arrow">展开 ▾</div>
+                </div>
+            `).join('');
+        }
+
+        function toggleEduCard(index) {
+            const cards = document.querySelectorAll('#eduGrid .edu-card');
+            const card = cards[index];
+            if (!card) return;
+            card.classList.toggle('expanded');
+            card.querySelector('.edu-arrow').textContent = card.classList.contains('expanded') ? '收起 ▴' : '展开 ▾';
+        }
+
+        // ================================================================
         // ===== 学习中心 =====
         // ================================================================
         const SHARED_MEDIA = [
+            { name: '宣传海报 · 术前准备篇', url: 'posters/poster-preop.png', type: 'image' },
+            { name: '宣传海报 · 术后疼痛管理篇', url: 'posters/poster-pain.png', type: 'image' },
+            { name: '宣传海报 · 瘙痒与瘢痕康复篇', url: 'posters/poster-rehab.png', type: 'image' },
             { name: '怎么判断烧烫伤的不同程度？', url: 'https://zhangxiaoodi.github.io/assets/怎么判断烧烫伤的不同程度？.jpg',
             type: 'image' },
             { name: '手术紧张手册', url: 'https://zhangxiaoodi.github.io/assets/手术紧张手册.png', type: 'image' },
@@ -2383,7 +2652,7 @@
                 grid.innerHTML = html;
             }).catch(err => {
                 console.error('渲染媒体网格失败:', err);
-                grid.innerHTML = `<div class="learn-empty" style="color:#c0392b;">⚠️ 加载失败，请刷新重试</div>`;
+                grid.innerHTML = `<div class="learn-empty" style="color:#c2483c;">⚠️ 加载失败，请刷新重试</div>`;
             });
         }
 
@@ -2415,7 +2684,6 @@
                 let msg = `✅ 成功上传 ${successCount} 个${type === 'image' ? '图片' : '视频'}`;
                 if (failCount > 0) msg += `，${failCount} 个失败`;
                 addChatMessage('assistant', `📚 学习中心：${msg}`);
-                // 如果学习页未激活，显示小红点
                 if (!document.getElementById('pageLearn').classList.contains('active')) {
                     document.getElementById('chatBadge').style.display = 'inline-block';
                 }
@@ -2455,7 +2723,7 @@
                 html = `<video src="${url}" controls autoplay playsinline></video>`;
             } else {
                 html =
-                    `<div style="color:#fff;padding:40px;text-align:center;font-size:18px;">📄 ${name}<br><a href="${url}" target="_blank" style="color:#c4450c;text-decoration:underline;">点击下载/查看</a></div>`;
+                    `<div style="color:#fff;padding:40px;text-align:center;font-size:18px;">📄 ${name}<br><a href="${url}" target="_blank" style="color:#2dd4bf;text-decoration:underline;">点击下载/查看</a></div>`;
             }
             content.innerHTML = html;
             info.textContent = name;
@@ -2494,8 +2762,8 @@
             area.addEventListener('dragover', (e) => {
                 e.preventDefault();
                 e.stopPropagation();
-                area.style.borderColor = '#c4450c';
-                area.style.boxShadow = '0 0 0 3px rgba(196,69,12,0.12)';
+                area.style.borderColor = '#0d9488';
+                area.style.boxShadow = '0 0 0 3px rgba(13,148,136,0.14)';
             });
             area.addEventListener('dragleave', (e) => {
                 e.preventDefault();
@@ -2543,11 +2811,10 @@
                 await openDB();
                 renderMediaGrid();
                 setupDragDrop();
-                addChatMessage('assistant', '📚 烧伤学习中心已加载！点击图片可放大查看，你也可以上传自己的学习资料（保存在本地浏览器）。');
             } catch (err) {
                 console.error('学习中心初始化失败:', err);
                 document.getElementById('learnGrid').innerHTML =
-                    `<div class="learn-empty" style="color:#c0392b;">⚠️ 本地存储不可用，请检查浏览器设置</div>`;
+                    `<div class="learn-empty" style="color:#c2483c;">⚠️ 本地存储不可用，请检查浏览器设置</div>`;
             }
         }
 
@@ -2556,6 +2823,7 @@
         // ================================================================
         window.selectPart = selectPart;
         window.removePart = removePart;
+        window.setPartDepth = setPartDepth;
         window.switchView = switchView;
         window.onGenderChange = onGenderChange;
         window.sendBurnInfoToChat = sendBurnInfoToChat;
@@ -2569,12 +2837,14 @@
         window.closeModal = closeModal;
         window.switchPage = switchPage;
         window.updateSymptomValue = updateSymptomValue;
+        window.toggleEduCard = toggleEduCard;
 
         // ================================================================
         // ===== 初始化 =====
         // ================================================================
         window.addEventListener('load', () => {
             initSymptoms();
+            renderEduCards();
 
             // 默认男性
             currentGender = '男';
@@ -2582,6 +2852,8 @@
             document.getElementById('genderBadge').style.display = 'inline-block';
             document.getElementById('genderBadge').textContent = '♂ 男性';
 
+            // 恢复上次输入的患者信息 / 部位 / 评分
+            const restored = restoreProfile();
             updateTotalDisplay();
             updateBodyView();
             updateChart();
@@ -2589,6 +2861,7 @@
 
             document.querySelectorAll('input, select').forEach(el => {
                 el.addEventListener('focus', () => el.classList.remove('field-error'));
+                el.addEventListener('change', saveProfile);
             });
             document.getElementById('totalBurnArea').addEventListener('change', updateChart);
 
@@ -2596,7 +2869,7 @@
             if (window.innerWidth <= 768) {
                 document.querySelectorAll('.sym-item input[type="range"]').forEach(slider => {
                     slider.addEventListener('touchstart', function() {
-                        this.style.accentColor = '#c4450c';
+                        this.style.accentColor = '#0d9488';
                     }, { passive: true });
                 });
             }
@@ -2611,6 +2884,7 @@
                         updateSelectedList();
                         updateTotalDisplay();
                         updateChart();
+                        saveProfile();
                         if ('vibrate' in navigator) navigator.vibrate && navigator.vibrate(15);
                     }
                 }
@@ -2627,7 +2901,11 @@
                 }
             }, { passive: true });
 
-            addChatMessage('assistant', '👤 当前为男性烧伤评估视图，如需切换请修改性别。');
+            if (restored) {
+                addChatMessage('assistant', '👋 欢迎回来！已自动恢复上次填写的患者资料与评估进度，如需修改可直接编辑。');
+            } else {
+                addChatMessage('assistant', '👤 当前为男性烧伤评估视图，如需切换请修改性别。');
+            }
         });
 
         // 窗口大小变化时重绘图表
@@ -2644,14 +2922,14 @@
         window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', function() {
             if (myChart) {
                 const isDark = this.matches;
-                myChart.options.plugins.legend.labels.color = isDark ? '#c8d4e0' : '#2c3e50';
-                myChart.options.plugins.title.color = isDark ? '#e8edf3' : '#1a2635';
+                myChart.options.plugins.legend.labels.color = isDark ? '#c8dde0' : '#2c4a52';
+                myChart.options.plugins.title.color = isDark ? '#e6f1f2' : '#102330';
                 myChart.update();
             }
             if (reportChart) {
                 const isDark = this.matches;
-                reportChart.options.plugins.legend.labels.color = isDark ? '#c8d4e0' : '#2c3e50';
-                reportChart.options.plugins.title.color = isDark ? '#e8edf3' : '#1a2635';
+                reportChart.options.plugins.legend.labels.color = isDark ? '#c8dde0' : '#2c4a52';
+                reportChart.options.plugins.title.color = isDark ? '#e6f1f2' : '#102330';
                 reportChart.update();
             }
         });
